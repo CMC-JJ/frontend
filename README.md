@@ -13,3 +13,5 @@ brew install gitmoji
 ```bash
 gitmoji -c
 ```
+
+<img width="443" alt="image" src="https://user-images.githubusercontent.com/53992007/193393579-c58ca1b8-8af2-44dd-8dd9-337854a1c958.png">
