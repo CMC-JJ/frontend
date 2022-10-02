@@ -1,6 +1,14 @@
 # Team-JJ Frontend Repository
 
-## gitmoji를 이용한 커밋
+## 브랜치 관리
+
+현재 main 브랜치에 바로 푸시 불가
+
+브런치를 만들고 pull request를 올려 approve가 1개 이상일때 머지 가능
+
+## 커밋 컨벤션
+
+### gitmoji를 이용한 커밋
 
 1. gitmoji 설치
 
