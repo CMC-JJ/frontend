@@ -14,20 +14,12 @@ export function SignInForm() {
     setForm({...form, [name]: value});
   };
 
-  const isTextExisted = (value: string) => value.length > 0;
-
-  const clearButtonHandler = (name: string) => () => {
-    setForm({...form, [name]: ''});
-  };
-
   // 로그인 정보 서버로 보내는 로직 구현 필요
 
   return (
     <>
       <BottomBorderedInput
         hasMarginBottom
-        isTextExisted={isTextExisted(form.username)}
-        clearButtonHandler={clearButtonHandler('username')}
         value={form.username}
         onChangeText={createChangeTextHandler('username')}
         placeholder="아이디"
@@ -37,8 +29,6 @@ export function SignInForm() {
         onSubmitEditing={() => passwordRef.current?.focus()}
       />
       <BottomBorderedInput
-        isTextExisted={isTextExisted(form.password)}
-        clearButtonHandler={clearButtonHandler('password')}
         placeholder="비밀번호"
         value={form.password}
         onChangeText={createChangeTextHandler('password')}

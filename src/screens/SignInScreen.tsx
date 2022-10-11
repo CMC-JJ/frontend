@@ -20,6 +20,8 @@ function SignInScreen() {
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState<boolean>(false);
   const [isFormValid] = useState<boolean>(true);
 
+  // 폼 validation 체크
+
   // 폼이 완성되었을때, isFormValid를 true로 바꿔주는 로직 필요
 
   // 아이디, 비밀번호 찾기 페이지로 이동하는 라우팅 작성 필요
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard',
     fontWeight: '700',
     fontSize: 26,
+    lineHeight: 34,
     color: 'black',
   },
   form: {
@@ -147,6 +150,7 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   memberContainer: {
+    marginTop: 20,
     flexDirection: 'row',
 
     alignItems: 'center',
