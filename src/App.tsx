@@ -1,4 +1,6 @@
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 // import React, {useState} from 'react';
 // import Onboarding from './screens/OnBoarding';
 import RootStack from './screens/RootStack';
@@ -10,7 +12,9 @@ function App() {
   // -> 홈 화면
   return (
     <NavigationContainer>
-      <RootStack />
+      <SafeAreaProvider>
+        <RootStack />
+      </SafeAreaProvider>
     </NavigationContainer>
   );
 }
