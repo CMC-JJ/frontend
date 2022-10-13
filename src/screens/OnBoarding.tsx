@@ -1,12 +1,10 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-function Onboarding() {
+export function Onboarding() {
   return (
     <View>
       <Text>Onboarding</Text>
     </View>
   );
 }
-
-export default Onboarding;

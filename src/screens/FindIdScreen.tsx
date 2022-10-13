@@ -1,12 +1,20 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ArrowBack} from '../components';
 
-function FindIdScreen() {
+export function FindIdScreen() {
   return (
-    <View>
+    <SafeAreaView style={styles.fill}>
       <Text>아이디 찾기 페이지</Text>
-    </View>
+      <ArrowBack size={28} />
+    </SafeAreaView>
   );
 }
 
-export default FindIdScreen;
+const styles = StyleSheet.create({
+  fill: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});

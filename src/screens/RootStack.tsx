@@ -3,10 +3,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import SignInScreen from './SignInScreen';
-import FindIdScreen from './FindIdScreen';
-import FindPasswordScreen from './FindPasswordScreen';
-import SignUpScreen from './SignUpScreen';
+import {SignInScreen, FindIdScreen, FindPasswordScreen, SignUpScreen} from './';
 
 type RootStackParamList = {
   SignIn: undefined;
