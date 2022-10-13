@@ -1,20 +1,19 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {TextInput} from 'react-native';
 import {BottomBorderedInput} from './';
 
-export function SignInForm() {
+type Form = {
+  username: string;
+  password: string;
+};
+
+type SignInFormProps = {
+  form: Form;
+  createChangeTextHandler: (key: string) => (value: string) => void;
+};
+
+export function SignInForm({form, createChangeTextHandler}: SignInFormProps) {
   const passwordRef = useRef<TextInput>(null);
-
-  const [form, setForm] = useState({
-    username: '',
-    password: '',
-  });
-
-  const createChangeTextHandler = (name: string) => (value: string) => {
-    setForm({...form, [name]: value});
-  };
-
-  // 로그인 정보 서버로 보내는 로직 구현 필요
 
   return (
     <>

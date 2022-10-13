@@ -1,44 +1,53 @@
 import CheckBox from '@react-native-community/checkbox';
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform, StyleSheet, Text, View, StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {SignInForm} from '../components';
+import {ArrowBack, SignButton, FormHeader, SignInForm} from '../components';
 import {RootStackNavigationProp} from './RootStack';
 
-function SignInScreen() {
+export function SignInScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
 
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+  });
+
+  const createChangeTextHandler = (name: string) => (value: string) => {
+    setForm({...form, [name]: value});
+  };
+
+  // 자동 로그인 활용한 로직 추가 필요
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState<boolean>(false);
-  const [isFormValid] = useState<boolean>(true);
 
-  // 폼 validation 체크
+  // 폼 validation 체크 현재는 간단하게 하고 있지만 자세하게 필요!
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-  // 폼이 완성되었을때, isFormValid를 true로 바꿔주는 로직 필요
+  useEffect(() => {
+    setIsFormValid(
+      form.username.trim().length >= 1 && form.password.trim().length >= 1,
+    );
+  }, [form.password, form.username]);
 
-  // 아이디, 비밀번호 찾기 페이지로 이동하는 라우팅 작성 필요
+  // 로그인 정보 서버로 보내는 로직 구현 필요
+  // 이 부분은 backend와 상의를 다 한 후 구현하겠습니다.
+  // const onSubmit = async () => {
+  //   Keyboard.dismiss();
+  // };
 
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={styles.back}>
-        <Icon name="arrow-back" size={28} color="black" />
+        <ArrowBack size={28} />
       </View>
-      <View style={styles.container}>
-        <Text style={styles.header}>
-          아이디와 비밀번호를{'\n'}입력해주세요.
-        </Text>
-      </View>
+      <FormHeader text={'아이디와 비밀번호를\n입력해주세요.'} />
       <View style={styles.form}>
-        <SignInForm />
+        <SignInForm
+          form={form}
+          createChangeTextHandler={createChangeTextHandler}
+        />
         <View style={styles.memberContainer}>
           <View style={styles.autologin}>
             {Platform.OS === 'ios' ? (
@@ -93,21 +102,7 @@ function SignInScreen() {
         </View>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity>
-          <View
-            style={[
-              styles.buttonStyle,
-              isFormValid && styles.validButtonStyle,
-            ]}>
-            <Text
-              style={[
-                styles.buttonText,
-                isFormValid && styles.validButtonText,
-              ]}>
-              로그인
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <SignButton isValid={isFormValid} buttonText="로그인" />
         <View style={styles.footerQuestion}>
           <Text style={styles.question}>아직 가치자가 회원이 아니세요?</Text>
           <Text
@@ -131,19 +126,6 @@ const styles = StyleSheet.create({
   back: {
     paddingTop: 5,
     paddingLeft: 20,
-  },
-  container: {
-    flex: 0.5,
-    paddingTop: 20,
-    paddingHorizontal: 28,
-  },
-  header: {
-    marginTop: 20,
-    fontFamily: 'Pretendard',
-    fontWeight: '700',
-    fontSize: 26,
-    lineHeight: 34,
-    color: 'black',
   },
   form: {
     flex: 1,
@@ -189,28 +171,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  buttonStyle: {
-    width: 325,
-    height: 56,
-    backgroundColor: '#F0F0F0',
-    borderRadius: 12,
-
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  validButtonStyle: {
-    backgroundColor: '#0066FF',
-  },
-  buttonText: {
-    fontFamily: 'Pretendard',
-    fontWeight: '700',
-    fontSize: 18,
-    lineHeight: 28,
-    color: '#909397',
-  },
-  validButtonText: {
-    color: 'white',
-  },
   footerQuestion: {
     flexDirection: 'row',
 
@@ -230,5 +190,3 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 });
-
-export default SignInScreen;
