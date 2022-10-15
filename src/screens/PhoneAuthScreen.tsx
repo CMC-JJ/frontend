@@ -16,62 +16,57 @@ import {
   SignButton,
 } from '../components';
 import {
+  AUTHENTICATION_TIME,
+  AUTH_NUMBER_LENGTH,
+  PHONE_NUMBER_INPUT_LENGTH,
+} from '../constants';
+import {useAuthTimer, useIsPhoneNumberValid, useVerifyCode} from '../hooks';
+import {useSignUpStore} from '../store';
+import {
   convertPhoneNumberFormat,
   forceNumber,
-  isValidNumberLength,
   convertNumberToMMSS,
   request,
 } from '../utils';
 import {RootStackNavigationProp} from './RootStack';
 
-const PHONE_NUMBER_INPUT_LENGTH = 13;
-const PHONE_NUMBER_LENGTH = 11;
-const AUTH_NUMBER_LENGTH = 6;
-const AUTHENTICATION_TIME = 180;
-
 export function PhoneAuthScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState<boolean>(false);
+  const {
+    signUpForm: {phoneNumber},
+    setSignUpForm,
+    initializeSignUpForm,
+  } = useSignUpStore();
 
+  // 데이터 초기화
   useEffect(() => {
-    setIsPhoneNumberValid(
-      isValidNumberLength(phoneNumber, PHONE_NUMBER_LENGTH),
-    );
-  }, [phoneNumber]);
+    initializeSignUpForm();
+  }, [initializeSignUpForm]);
 
+  const isPhoneNumberValid = useIsPhoneNumberValid(phoneNumber);
   const [didPressAuthButton, setDidPressAuthButton] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const {time, setTime} = useAuthTimer(isSuccess, didPressAuthButton);
 
-  const onPressAuthButton = async () => {
+  const onPressAuth = async () => {
     Alert.alert('인증번호가 발송되었습니다. 3분 안에 인증번호를 입력해주세요.');
-    setDidPressAuthButton(true);
 
-    await request(
-      'web/auth/phone',
-      {phoneNumber: convertPhoneNumberFormat(phoneNumber)},
-      'POST',
-    );
-  };
-
-  const [verifyCode, setVerifyCode] = useState<string>('');
-  const [isVerifyCodeValid, setIsVerifyCodeValid] = useState<boolean>(false);
-  const [time, setTime] = useState<number>(AUTHENTICATION_TIME);
-
-  useEffect(() => {
-    setIsVerifyCodeValid(isValidNumberLength(verifyCode, AUTH_NUMBER_LENGTH));
-  }, [verifyCode]);
-
-  const onPressResend = async () => {
-    Alert.alert('인증번호가 발송되었습니다. 3분 안에 인증번호를 입력해주세요.');
+    if (!didPressAuthButton) {
+      setDidPressAuthButton(true);
+    }
 
     setTime(AUTHENTICATION_TIME);
 
+    setSignUpForm('phoneNumber', convertPhoneNumberFormat(phoneNumber));
+
     await request(
       'web/auth/phone',
       {phoneNumber: convertPhoneNumberFormat(phoneNumber)},
       'POST',
     );
   };
+
+  const {verifyCode, setVerifyCode, isVerifyCodeValid} = useVerifyCode();
 
   const onPressNext = async () => {
     const result = await request(
@@ -82,6 +77,7 @@ export function PhoneAuthScreen() {
 
     // 임시 코드
     if (true) {
+      setIsSuccess(true);
       navigation.navigate('SignUp');
     } else {
       Alert.alert(result.message);
@@ -95,25 +91,6 @@ export function PhoneAuthScreen() {
     // }
   };
 
-  useEffect(() => {
-    if (time > 0) {
-      return;
-    }
-    Alert.alert('인증시간이 만료되었습니다. 다시 인증해주세요.');
-  }, [time]);
-
-  useEffect(() => {
-    if (didPressAuthButton) {
-      if (time > 0) {
-        const interval = setInterval(() => {
-          setTime(prevTime => prevTime - 1);
-        }, 1000);
-
-        return () => clearInterval(interval);
-      }
-    }
-  }, [didPressAuthButton, time]);
-
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -125,7 +102,7 @@ export function PhoneAuthScreen() {
         <BottomBorderedInput
           value={convertPhoneNumberFormat(phoneNumber)}
           onChangeText={(text: any) => {
-            setPhoneNumber(forceNumber(text));
+            setSignUpForm('phoneNumber', forceNumber(text));
           }}
           placeholder="전화번호"
           keyboardType="phone-pad"
@@ -139,7 +116,7 @@ export function PhoneAuthScreen() {
             <SignButton
               isValid={isPhoneNumberValid}
               buttonText="인증번호 받기"
-              onPress={onPressAuthButton}
+              onPress={onPressAuth}
             />
           </View>
         </View>
@@ -156,7 +133,7 @@ export function PhoneAuthScreen() {
               style={styles.verifyCodeInput}
             />
             <TouchableOpacity
-              onPress={onPressResend}
+              onPress={onPressAuth}
               style={styles.buttonContainer}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>재전송</Text>

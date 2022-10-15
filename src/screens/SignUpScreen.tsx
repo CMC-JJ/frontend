@@ -1,8 +1,13 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 import {ArrowBack, FormHeader} from '../components';
+import {useSignUpStore} from '../store';
 
 export function SignUpScreen() {
+  const {signUpForm} = useSignUpStore();
+
+  console.log(signUpForm);
+
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
