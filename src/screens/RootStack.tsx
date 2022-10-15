@@ -4,11 +4,13 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import {SignInScreen, FindIdScreen, FindPasswordScreen, SignUpScreen} from './';
+import {PhoneAuthScreen} from './PhoneAuthScreen';
 
 type RootStackParamList = {
   SignIn: undefined;
   FindId: undefined;
   FindPassword: undefined;
+  PhoneAuth: undefined;
   SignUp: undefined;
 };
 
@@ -37,6 +39,11 @@ function RootStack() {
       <Stack.Screen
         name="FindPassword"
         component={FindPasswordScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PhoneAuth"
+        component={PhoneAuthScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

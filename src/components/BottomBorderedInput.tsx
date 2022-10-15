@@ -4,6 +4,7 @@ import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 // 사용자 정의 prop
 type ExtraInputProps = {
   hasMarginBottom?: boolean;
+  style?: TextInputProps['style'];
 };
 
 // 기존 TextInputProps와 사용자 정의 prop을 합친 타입
@@ -14,7 +15,7 @@ export const BottomBorderedInput = forwardRef<
   BottomBorderedInputProps
 >(
   (
-    {hasMarginBottom, ...rest}: BottomBorderedInputProps,
+    {hasMarginBottom, style, ...rest}: BottomBorderedInputProps,
     ref: Ref<TextInput>,
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -23,6 +24,7 @@ export const BottomBorderedInput = forwardRef<
       <TextInput
         ref={ref}
         style={[
+          style,
           styles.input,
           hasMarginBottom && styles.margin,
           isFocused && styles.focused,
@@ -37,6 +39,7 @@ export const BottomBorderedInput = forwardRef<
 
 const styles = StyleSheet.create({
   input: {
+    width: '100%',
     borderColor: 'black',
     borderBottomWidth: 1,
     color: 'black',

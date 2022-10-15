@@ -107,7 +107,7 @@ export function SignInScreen() {
           <Text style={styles.question}>아직 가치자가 회원이 아니세요?</Text>
           <Text
             onPress={() => {
-              navigation.navigate('SignUp');
+              navigation.navigate('PhoneAuth');
             }}
             style={styles.signup}>
             회원가입

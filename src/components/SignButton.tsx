@@ -4,11 +4,16 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 type ConditionalButtonProps = {
   isValid: boolean;
   buttonText: string;
+  onPress?: () => void;
 };
 
-export function SignButton({isValid, buttonText}: ConditionalButtonProps) {
+export function SignButton({
+  isValid,
+  buttonText,
+  onPress,
+}: ConditionalButtonProps) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity disabled={!isValid} onPress={onPress}>
       <View style={[styles.button, isValid && styles.validButton]}>
         <Text style={[styles.buttonText, isValid && styles.validButtonText]}>
           {buttonText}
