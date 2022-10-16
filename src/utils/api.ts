@@ -2,16 +2,18 @@ import {Alert} from 'react-native';
 
 const BASE_URL = 'https://dev.jj-gotogether.shop/';
 
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
 type Options = {
   headers?: any;
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method?: HTTPMethod;
   body?: any;
 };
 
 export const request = async (
   url: string,
   data = {},
-  method: 'GET' | 'POST' = 'GET',
+  method: HTTPMethod = 'GET',
 ) => {
   const options: Options = {
     headers: {

@@ -2,7 +2,7 @@ import create from 'zustand';
 
 export type Auth = {
   phoneNumber: string;
-  userName: string;
+  userId: number;
   nickName: string;
   jwtToken: string;
 };
@@ -15,7 +15,7 @@ type SignUpStore = {
 
 const initialState: Auth = {
   phoneNumber: '',
-  userName: '',
+  userId: 0,
   nickName: '',
   jwtToken: '',
 };

@@ -33,12 +33,11 @@ export function SignUpComplete() {
       'POST',
     );
 
-    // TODO: 이 부분 backend api 변경되면 signupForm이 아닌 result에서 가져오는것으로 변경!
     if (result.isSuccess) {
       const form = {
-        phoneNumber: signUpForm.phoneNumber,
-        userName: signUpForm.userName,
-        nickName: signUpForm.nickName,
+        phoneNumber: result.result.phoneNumber,
+        userId: result.result.createdUserId,
+        nickName: result.result.nickName,
         jwtToken: result.result.jwt,
       };
 
@@ -49,8 +48,6 @@ export function SignUpComplete() {
       Alert.alert(result.message);
     }
   };
-
-  console.log(signUpForm);
 
   return (
     <SafeAreaView style={styles.fill}>

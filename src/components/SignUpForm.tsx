@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
-  Alert,
   Platform,
   StyleSheet,
   Text,
@@ -9,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {BottomBorderedInput} from '.';
-import {request} from '../utils';
+import {useIdCheck, usePasswordCheck} from '../hooks';
 
 type Form = {
   userName: string;
@@ -30,61 +29,13 @@ export function SignUpForm({
 }: SignUpFormProps) {
   const confirmPasswordRef = useRef<TextInput>(null);
 
-  const [isIdValid, setIsIdValid] = useState<boolean>(false);
-  const [isDuplicatedCheckCompleted, setIsDuplicatedCheckCompleted] =
-    useState<boolean>(false);
+  const {isIdValid, isDuplicatedCheckCompleted, onPressDuplicateId} =
+    useIdCheck(form.userName);
 
-  useEffect(() => {
-    if (form.userName.length >= 1 && form.userName.length <= 15) {
-      setIsIdValid(true);
-    } else {
-      setIsIdValid(false);
-    }
-
-    setIsDuplicatedCheckCompleted(false);
-  }, [form.userName.length]);
-
-  const onPressDuplicateId = async () => {
-    const result = await request(
-      'web/auth/duplicate-id',
-      {userName: form.userName},
-      'GET',
-    );
-
-    if (!result.isSuccess) {
-      Alert.alert('이미 존재하는 아이디입니다.');
-    } else {
-      setIsDuplicatedCheckCompleted(true);
-      Alert.alert('사용 가능한 아이디입니다.');
-    }
-  };
-
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
-
-  useEffect(() => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
-    const isValidPassword = passwordRegex.test(form.password);
-
-    if (isValidPassword) {
-      setIsPasswordValid(true);
-    } else {
-      setIsPasswordValid(false);
-    }
-  }, [form.password]);
-
-  const [isConfirmPasswordValid, setIsConfirmPasswordValid] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    if (
-      form.password === form.confirmPassword &&
-      form.confirmPassword.length > 0
-    ) {
-      setIsConfirmPasswordValid(true);
-    } else {
-      setIsConfirmPasswordValid(false);
-    }
-  }, [form.confirmPassword, form.password]);
+  const {isPasswordValid, isConfirmPasswordValid} = usePasswordCheck(
+    form.password,
+    form.confirmPassword,
+  );
 
   useEffect(() => {
     if (

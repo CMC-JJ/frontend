@@ -12,11 +12,14 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack, SignButton, FormHeader, SignInForm} from '../components';
+import {useAuthStore, useSignUpStore} from '../store';
 import {request} from '../utils';
 import {RootStackNavigationProp} from './RootStack';
 
 export function SignInScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
+  const {initializeSignUpForm} = useSignUpStore();
+  const {setAuth} = useAuthStore();
 
   const [form, setForm] = useState({
     userName: '',
@@ -51,7 +54,15 @@ export function SignInScreen() {
     );
 
     if (result.isSuccess) {
-      // TODO: useAuthStore에 정보 저장하는 로직 필요(backend API 변경 이후)
+      const authForm = {
+        phoneNumber: result.result.phoneNumber,
+        userId: result.result.userId,
+        nickName: result.result.nickName,
+        jwtToken: result.result.jwt,
+      };
+
+      setAuth(authForm);
+      initializeSignUpForm();
       navigation.navigate('MainTab');
     } else {
       Alert.alert(result.message);

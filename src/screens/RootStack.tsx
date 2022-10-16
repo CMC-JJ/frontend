@@ -12,12 +12,21 @@ import {
   SignUpNickName,
   SignUpComplete,
   MainTab,
+  FindIdComplete,
+  FindPasswordComplete,
 } from './';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   SignIn: undefined;
   FindId: undefined;
+  FindIdComplete: {
+    userName: string;
+    createdAt: string;
+  };
   FindPassword: undefined;
+  FindPasswordComplete: {
+    userId: number;
+  };
   PhoneAuth: undefined;
   SignUp: undefined;
   NickName: undefined;
@@ -48,8 +57,18 @@ function RootStack() {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="FindIdComplete"
+        component={FindIdComplete}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="FindPassword"
         component={FindPasswordScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FindPasswordComplete"
+        component={FindPasswordComplete}
         options={{headerShown: false}}
       />
       <Stack.Screen

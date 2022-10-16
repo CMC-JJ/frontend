@@ -5,17 +5,29 @@ type ConditionalButtonProps = {
   isValid: boolean;
   buttonText: string;
   onPress?: () => void;
+  isbackgroundWhite?: boolean;
 };
 
 export function SignButton({
   isValid,
   buttonText,
   onPress,
+  isbackgroundWhite = false,
 }: ConditionalButtonProps) {
   return (
     <TouchableOpacity disabled={!isValid} onPress={onPress}>
-      <View style={[styles.button, isValid && styles.validButton]}>
-        <Text style={[styles.buttonText, isValid && styles.validButtonText]}>
+      <View
+        style={[
+          styles.button,
+          isValid && styles.validButton,
+          isbackgroundWhite && styles.backgroundWhite,
+        ]}>
+        <Text
+          style={[
+            styles.buttonText,
+            isValid && styles.validButtonText,
+            isbackgroundWhite && styles.colorBlue,
+          ]}>
           {buttonText}
         </Text>
       </View>
@@ -42,6 +54,16 @@ const styles = StyleSheet.create({
   },
   validButton: {
     backgroundColor: '#0066FF',
+  },
+  backgroundWhite: {
+    marginBottom: 12,
+
+    borderWidth: 1,
+    borderColor: '#0066FF',
+    backgroundColor: 'white',
+  },
+  colorBlue: {
+    color: '#0066FF',
   },
   validButtonText: {
     color: 'white',
