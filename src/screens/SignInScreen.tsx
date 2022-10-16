@@ -1,16 +1,25 @@
 import CheckBox from '@react-native-community/checkbox';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet, Text, View, StatusBar} from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  Keyboard,
+  Alert,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack, SignButton, FormHeader, SignInForm} from '../components';
+import {request} from '../utils';
 import {RootStackNavigationProp} from './RootStack';
 
 export function SignInScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const [form, setForm] = useState({
-    username: '',
+    userName: '',
     password: '',
   });
 
@@ -21,20 +30,33 @@ export function SignInScreen() {
   // 자동 로그인 활용한 로직 추가 필요
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState<boolean>(false);
 
-  // 폼 validation 체크 현재는 간단하게 하고 있지만 자세하게 필요!
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
   useEffect(() => {
     setIsFormValid(
-      form.username.trim().length >= 1 && form.password.trim().length >= 1,
+      form.userName.trim().length >= 1 && form.password.trim().length >= 1,
     );
-  }, [form.password, form.username]);
+  }, [form.password, form.userName]);
 
-  // 로그인 정보 서버로 보내는 로직 구현 필요
-  // 이 부분은 backend와 상의를 다 한 후 구현하겠습니다.
-  // const onSubmit = async () => {
-  //   Keyboard.dismiss();
-  // };
+  const onSubmit = async () => {
+    Keyboard.dismiss();
+
+    const result = await request(
+      'web/auth/sign-in',
+      {
+        userName: form.userName,
+        password: form.password,
+      },
+      'POST',
+    );
+
+    if (result.isSuccess) {
+      // TODO: useAuthStore에 정보 저장하는 로직 필요(backend API 변경 이후)
+      navigation.navigate('MainTab');
+    } else {
+      Alert.alert(result.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -102,7 +124,11 @@ export function SignInScreen() {
         </View>
       </View>
       <View style={styles.footer}>
-        <SignButton isValid={isFormValid} buttonText="로그인" />
+        <SignButton
+          isValid={isFormValid}
+          buttonText="로그인"
+          onPress={onSubmit}
+        />
         <View style={styles.footerQuestion}>
           <Text style={styles.question}>아직 가치자가 회원이 아니세요?</Text>
           <Text

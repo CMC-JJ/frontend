@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
+  Keyboard,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -25,6 +26,8 @@ export function SignUpScreen() {
   };
 
   const onPress = () => {
+    Keyboard.dismiss();
+
     setSignUpForm('userName', form.userName);
     setSignUpForm('password', form.password);
 

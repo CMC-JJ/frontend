@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
+  Keyboard,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -49,6 +50,7 @@ export function SignUpPhoneAuth() {
   const {time, setTime} = useAuthTimer(isSuccess, didPressAuthButton);
 
   const onPressAuth = async () => {
+    Keyboard.dismiss();
     Alert.alert('인증번호가 발송되었습니다. 3분 안에 인증번호를 입력해주세요.');
 
     if (!didPressAuthButton) {
@@ -69,6 +71,8 @@ export function SignUpPhoneAuth() {
   const {verifyCode, setVerifyCode, isVerifyCodeValid} = useVerifyCode();
 
   const onPressNext = async () => {
+    Keyboard.dismiss();
+
     const result = await request(
       'web/auth/phone/verify',
       {verifyCode, phoneNumber: convertPhoneNumberFormat(phoneNumber)},

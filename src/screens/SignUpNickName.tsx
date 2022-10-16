@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
+  Keyboard,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -33,6 +34,8 @@ export function SignUpNickName() {
   }, [nickName.length]);
 
   const onPress = () => {
+    Keyboard.dismiss();
+
     setSignUpForm('nickName', nickName);
     navigation.navigate('SignUpComplete');
   };

@@ -3,7 +3,7 @@ import {TextInput} from 'react-native';
 import {BottomBorderedInput} from './';
 
 type Form = {
-  username: string;
+  userName: string;
   password: string;
 };
 
@@ -19,8 +19,8 @@ export function SignInForm({form, createChangeTextHandler}: SignInFormProps) {
     <>
       <BottomBorderedInput
         hasMarginBottom
-        value={form.username}
-        onChangeText={createChangeTextHandler('username')}
+        value={form.userName}
+        onChangeText={createChangeTextHandler('userName')}
         placeholder="아이디"
         autoCapitalize="none"
         autoCorrect={false}

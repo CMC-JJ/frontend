@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Alert,
+  Keyboard,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -19,6 +20,8 @@ export function SignUpComplete() {
   const {signUpForm, initializeSignUpForm} = useSignUpStore();
   const {setAuth} = useAuthStore();
   const onPress = async () => {
+    Keyboard.dismiss();
+
     const result = await request(
       'web/users',
       {
@@ -30,6 +33,7 @@ export function SignUpComplete() {
       'POST',
     );
 
+    // TODO: 이 부분 backend api 변경되면 signupForm이 아닌 result에서 가져오는것으로 변경!
     if (result.isSuccess) {
       const form = {
         phoneNumber: signUpForm.phoneNumber,

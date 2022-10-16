@@ -32,6 +32,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
   //   const navigation = useNavigation<RootStackNavigationProp>();
+
+  // TODO: 유저의 정보가 있으면 Stack에서 필요없는 screen 제거!
+
   return (
     <Stack.Navigator>
       <Stack.Screen
