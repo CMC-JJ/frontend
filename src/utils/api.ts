@@ -3,6 +3,7 @@ import {Alert} from 'react-native';
 const BASE_URL = 'https://dev.jj-gotogether.shop/';
 
 type Options = {
+  headers?: any;
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   body?: any;
 };
@@ -13,8 +14,12 @@ export const request = async (
   method: 'GET' | 'POST' = 'GET',
 ) => {
   const options: Options = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method,
   };
+
   if (method === 'GET') {
     url += '?' + new URLSearchParams(data).toString();
   } else {

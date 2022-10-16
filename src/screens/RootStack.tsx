@@ -3,8 +3,16 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import {SignInScreen, FindIdScreen, FindPasswordScreen, SignUpScreen} from './';
-import {PhoneAuthScreen} from './PhoneAuthScreen';
+import {
+  SignInScreen,
+  FindIdScreen,
+  FindPasswordScreen,
+  SignUpScreen,
+  SignUpPhoneAuth,
+  SignUpNickName,
+  SignUpComplete,
+  MainTab,
+} from './';
 
 type RootStackParamList = {
   SignIn: undefined;
@@ -12,6 +20,9 @@ type RootStackParamList = {
   FindPassword: undefined;
   PhoneAuth: undefined;
   SignUp: undefined;
+  NickName: undefined;
+  SignUpComplete: undefined;
+  MainTab: undefined;
 };
 
 export type RootStackNavigationProp =
@@ -21,9 +32,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootStack() {
   //   const navigation = useNavigation<RootStackNavigationProp>();
-  //   console.log(styles.test);
-  //   console.log(styles.test2);
-
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -43,12 +51,27 @@ function RootStack() {
       />
       <Stack.Screen
         name="PhoneAuth"
-        component={PhoneAuthScreen}
+        component={SignUpPhoneAuth}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NickName"
+        component={SignUpNickName}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SignUpComplete"
+        component={SignUpComplete}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MainTab"
+        component={MainTab}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

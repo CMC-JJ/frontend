@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
+  Platform,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -30,7 +31,7 @@ import {
 } from '../utils';
 import {RootStackNavigationProp} from './RootStack';
 
-export function PhoneAuthScreen() {
+export function SignUpPhoneAuth() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const {
     signUpForm: {phoneNumber},
@@ -38,7 +39,6 @@ export function PhoneAuthScreen() {
     initializeSignUpForm,
   } = useSignUpStore();
 
-  // 데이터 초기화
   useEffect(() => {
     initializeSignUpForm();
   }, [initializeSignUpForm]);
@@ -75,27 +75,19 @@ export function PhoneAuthScreen() {
       'GET',
     );
 
-    // 임시 코드
-    if (true) {
+    if (result.isSuccess) {
       setIsSuccess(true);
       navigation.navigate('SignUp');
     } else {
       Alert.alert(result.message);
     }
-
-    // 원래 코드
-    // if (result.isSuccess) {
-    //   navigation.navigate('SignUp');
-    // } else {
-    //   Alert.alert(result.message);
-    // }
   };
 
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={styles.back}>
-        <ArrowBack size={28} />
+        {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <FormHeader text={'회원가입을 위한\n전화번호를 입력해주세요.'} />
       <View style={styles.form}>
@@ -134,7 +126,10 @@ export function PhoneAuthScreen() {
             />
             <TouchableOpacity
               onPress={onPressAuth}
-              style={styles.buttonContainer}>
+              style={[
+                styles.buttonContainer,
+                Platform.OS === 'android' && {marginTop: 10},
+              ]}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>재전송</Text>
               </View>

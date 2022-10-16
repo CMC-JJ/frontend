@@ -5,6 +5,7 @@ import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 type ExtraInputProps = {
   hasMarginBottom?: boolean;
   style?: TextInputProps['style'];
+  isValid?: boolean;
 };
 
 // 기존 TextInputProps와 사용자 정의 prop을 합친 타입
@@ -15,7 +16,7 @@ export const BottomBorderedInput = forwardRef<
   BottomBorderedInputProps
 >(
   (
-    {hasMarginBottom, style, ...rest}: BottomBorderedInputProps,
+    {hasMarginBottom, style, isValid = true, ...rest}: BottomBorderedInputProps,
     ref: Ref<TextInput>,
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -28,6 +29,7 @@ export const BottomBorderedInput = forwardRef<
           styles.input,
           hasMarginBottom && styles.margin,
           isFocused && styles.focused,
+          !isValid && styles.warning,
         ]}
         {...rest}
         onBlur={() => setIsFocused(false)}
@@ -53,6 +55,9 @@ const styles = StyleSheet.create({
   },
   focused: {
     borderColor: '#0066FF',
+  },
+  warning: {
+    borderColor: '#FF0000',
   },
   margin: {
     marginBottom: 50,
