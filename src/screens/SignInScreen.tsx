@@ -40,7 +40,7 @@ export function SignInScreen() {
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={styles.back}>
-        <ArrowBack size={28} />
+        {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <FormHeader text={'아이디와 비밀번호를\n입력해주세요.'} />
       <View style={styles.form}>
@@ -107,7 +107,7 @@ export function SignInScreen() {
           <Text style={styles.question}>아직 가치자가 회원이 아니세요?</Text>
           <Text
             onPress={() => {
-              navigation.navigate('SignUp');
+              navigation.navigate('PhoneAuth');
             }}
             style={styles.signup}>
             회원가입

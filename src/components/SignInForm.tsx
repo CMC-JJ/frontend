@@ -34,13 +34,6 @@ export function SignInForm({form, createChangeTextHandler}: SignInFormProps) {
         secureTextEntry
         returnKeyType="done"
         ref={passwordRef}
-        // onSubmitEditing={() => {
-        //     if (isSignUp) {
-        //       confirmPasswordRef.current.focus();
-        //     } else {
-        //       onSubmit();
-        //     }
-        //   }}
       />
     </>
   );
