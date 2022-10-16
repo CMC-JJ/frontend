@@ -1,4 +1,4 @@
-export const forceNumber = (value: any) => value.replace(/[^0-9]/g, '');
+export const forceNumber = (value: string) => value.replace(/[^0-9]/g, '');
 
 export const convertPhoneNumberFormat = (text: string) =>
   text
