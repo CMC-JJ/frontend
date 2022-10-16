@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<!-- 🚨 Keep only the permissions used in your app 🚨 -->
+	<!-- <key>NSFaceIDUsageDescription</key>
+  <string>YOUR TEXT</string> -->
+	<key>NSContactsUsageDescription</key>
+  <string>YOUR TEXT</string>
+	<!-- <key>NSCameraUsageDescription</key>
+  <string>YOUR TEXT</string> -->
+
+	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
