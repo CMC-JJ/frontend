@@ -1,18 +1,22 @@
-import {NavigationContainer} from '@react-navigation/native';
-// import React, {useState} from 'react';
-// import Onboarding from './screens/OnBoarding';
-import RootStack from './screens/RootStack';
+import {} from 'react-native';
+import React, {Component} from 'react';
 
-function App() {
-  // 앱권한 O, 자동로그인 X
-  // 앱권한 O, 자동로그인 O
-  // -> 로그인 화면
-  // -> 홈 화면
-  return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
-  );
+import OnboardingScreen from './screens/OnBoardingScreen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+export default class App extends Component {
+  render() {
+    return (
+      <>
+        <SafeAreaProvider>
+          {/* <View> */}
+          <OnboardingScreen />
+          {/* <Test /> */}
+          {/* </View> */}
+        </SafeAreaProvider>
+      </>
+    );
+  }
 }
 
-export default App;
+// const styles = StyleSheet.create({});
