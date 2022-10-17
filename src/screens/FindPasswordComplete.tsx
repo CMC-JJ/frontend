@@ -176,5 +176,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     marginBottom: 34,
+    paddingHorizontal: 25,
   },
 });

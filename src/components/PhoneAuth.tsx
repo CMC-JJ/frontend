@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
   },
   verifyCode: {
     marginTop: 18,
+    width: '100%',
     alignItems: 'center',
   },
   verifyCodeInputContainer: {
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   verifyCodeInput: {
-    flex: 0.6,
+    flex: 0.65,
   },
   buttonContainer: {
     flex: 0.3,

@@ -15,7 +15,10 @@ export function SignButton({
   isbackgroundWhite = false,
 }: ConditionalButtonProps) {
   return (
-    <TouchableOpacity disabled={!isValid} onPress={onPress}>
+    <TouchableOpacity
+      disabled={!isValid}
+      onPress={onPress}
+      style={styles.touchable}>
       <View
         style={[
           styles.button,
@@ -36,8 +39,10 @@ export function SignButton({
 }
 
 const styles = StyleSheet.create({
+  touchable: {
+    width: '100%',
+  },
   button: {
-    width: 325,
     height: 56,
     backgroundColor: '#F0F0F0',
     borderRadius: 12,

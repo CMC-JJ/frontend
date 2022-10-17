@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 
 type FormHeaderProps = {
   text: string;
@@ -8,7 +8,13 @@ type FormHeaderProps = {
 export function FormHeader({text}: FormHeaderProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{text}</Text>
+      <Text
+        style={[
+          styles.header,
+          Platform.OS === 'android' && {fontWeight: '900'},
+        ]}>
+        {text}
+      </Text>
     </View>
   );
 }
@@ -22,7 +28,7 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 20,
     fontFamily: 'Pretendard',
-    fontWeight: '700',
+    fontWeight: '600',
     fontSize: 26,
     lineHeight: 34,
     color: 'black',
