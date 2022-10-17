@@ -30,7 +30,7 @@ export function SignInScreen() {
     setForm({...form, [name]: value});
   };
 
-  // 자동 로그인 활용한 로직 추가 필요
+  // TODO: 자동 로그인 활용한 로직 추가 필요
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState<boolean>(false);
 
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
@@ -207,6 +207,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+
+    paddingHorizontal: 25,
   },
   footerQuestion: {
     flexDirection: 'row',

@@ -56,7 +56,7 @@ export function SignUpComplete() {
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <View style={styles.header}>
-        <Text style={styles.name}>안녕하세요 줄리!</Text>
+        <Text style={styles.name}>안녕하세요 {signUpForm.nickName}!</Text>
         <Text style={styles.welcome}>가치가자 회원이 되신걸 환영합니다.</Text>
       </View>
       <View style={styles.centerImage}>
@@ -116,5 +116,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     marginBottom: 34,
+    paddingHorizontal: 25,
   },
 });
