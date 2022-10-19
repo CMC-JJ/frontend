@@ -60,6 +60,7 @@ export function FindPasswordScreen() {
       <View style={styles.form}>
         <BottomBorderedInput
           hasMarginBottom
+          isCharacterExisted={signUpForm.userName.length > 0}
           value={signUpForm.userName}
           onChangeText={text => setSignUpForm('userName', text)}
           placeholder="아이디"

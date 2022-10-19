@@ -82,6 +82,7 @@ export function FindPasswordComplete() {
       <View style={styles.form}>
         <View style={styles.passwordContainer}>
           <BottomBorderedInput
+            isCharacterExisted={form.password.length > 0}
             placeholder="비밀번호"
             value={form.password}
             isValid={form.password.length > 0 ? isPasswordValid : true}
@@ -102,6 +103,7 @@ export function FindPasswordComplete() {
         </View>
         <View style={styles.confirmPasswordContainer}>
           <BottomBorderedInput
+            isCharacterExisted={form.confirmPassword.length > 0}
             placeholder="비밀번호 확인"
             value={form.confirmPassword}
             onChangeText={text => setForm({...form, confirmPassword: text})}

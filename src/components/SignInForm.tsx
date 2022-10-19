@@ -15,11 +15,14 @@ type SignInFormProps = {
 export function SignInForm({form, createChangeTextHandler}: SignInFormProps) {
   const passwordRef = useRef<TextInput>(null);
 
+  console.log(form.userName.length);
+
   return (
     <>
       <BottomBorderedInput
         hasMarginBottom
         value={form.userName}
+        isCharacterExisted={form.userName.length > 0}
         onChangeText={createChangeTextHandler('userName')}
         placeholder="아이디"
         autoCapitalize="none"
@@ -28,6 +31,7 @@ export function SignInForm({form, createChangeTextHandler}: SignInFormProps) {
         onSubmitEditing={() => passwordRef.current?.focus()}
       />
       <BottomBorderedInput
+        isCharacterExisted={form.password.length > 0}
         placeholder="비밀번호"
         value={form.password}
         onChangeText={createChangeTextHandler('password')}

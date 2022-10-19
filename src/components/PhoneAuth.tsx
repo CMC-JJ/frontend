@@ -69,6 +69,7 @@ export function PhoneAuth({
   return (
     <>
       <BottomBorderedInput
+        isCharacterExisted={phoneNumber.length > 0}
         value={convertPhoneNumberFormat(phoneNumber)}
         onChangeText={(text: string) => {
           setSignUpForm('phoneNumber', forceNumber(text));
@@ -94,6 +95,7 @@ export function PhoneAuth({
       <View style={!didPressAuthButton && styles.none}>
         <View style={styles.verifyCodeInputContainer}>
           <BottomBorderedInput
+            isCharacterExisted={verifyCode.length > 0}
             value={verifyCode}
             onChangeText={(text: string) => {
               setVerifyCode(forceNumber(text));

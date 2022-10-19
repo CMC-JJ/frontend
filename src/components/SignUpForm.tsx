@@ -61,6 +61,7 @@ export function SignUpForm({
       <View style={styles.duplicateIdContainer}>
         <BottomBorderedInput
           hasMarginBottom
+          isCharacterExisted={form.userName.length > 0}
           value={form.userName}
           onChangeText={createChangeTextHandler('userName')}
           placeholder="아이디"
@@ -85,6 +86,7 @@ export function SignUpForm({
       </View>
       <View style={styles.passwordContainer}>
         <BottomBorderedInput
+          isCharacterExisted={form.password.length > 0}
           placeholder="비밀번호"
           value={form.password}
           isValid={form.password.length > 0 ? isPasswordValid : true}
@@ -103,6 +105,7 @@ export function SignUpForm({
       </View>
       <View style={styles.confirmPasswordContainer}>
         <BottomBorderedInput
+          isCharacterExisted={form.confirmPassword.length > 0}
           placeholder="비밀번호 확인"
           value={form.confirmPassword}
           onChangeText={createChangeTextHandler('confirmPassword')}

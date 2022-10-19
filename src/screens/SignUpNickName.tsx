@@ -48,6 +48,7 @@ export function SignUpNickName() {
       <FormHeader text={'회원가입을 위한 아이디와\n비밀번호를 입력해주세요.'} />
       <View style={styles.form}>
         <BottomBorderedInput
+          isCharacterExisted={nickName.length > 0}
           value={nickName}
           onChangeText={setNickName}
           placeholder="닉네임(한글 2자 이상)"

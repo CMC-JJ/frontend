@@ -141,7 +141,7 @@ export function SignInScreen() {
           onPress={onSubmit}
         />
         <View style={styles.footerQuestion}>
-          <Text style={styles.question}>아직 가치자가 회원이 아니세요?</Text>
+          <Text style={styles.question}>아직 가치가자 회원이 아니세요?</Text>
           <Text
             onPress={() => {
               navigation.navigate('PhoneAuth');
