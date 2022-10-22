@@ -28,8 +28,6 @@ export const BottomBorderedInput = forwardRef<
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
 
-    console.log(isCharacterExisted);
-
     return (
       <TextInput
         ref={ref}

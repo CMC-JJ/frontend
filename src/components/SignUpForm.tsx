@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   passwordContainer: {
-    marginBottom: 50,
+    height: 90,
   },
   validPassword: {
     fontFamily: 'Pretendard',
@@ -185,5 +185,4 @@ const styles = StyleSheet.create({
 
     textAlign: 'right',
   },
-  confirmPasswordContainer: {},
 });
