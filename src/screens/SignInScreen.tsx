@@ -31,6 +31,9 @@ export function SignInScreen() {
   };
 
   // TODO: 자동 로그인 활용한 로직 추가 필요
+  // 스플래시 뜨면 바로 메인화면
+  // 자동로그인이 아닌 경우 다시 로그인
+  // 자동로그인 API를 활용하여 여기서 검증 실패하면 로그인 화면
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState<boolean>(false);
 
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
@@ -63,7 +66,7 @@ export function SignInScreen() {
 
       setAuth(authForm);
       initializeSignUpForm();
-      navigation.navigate('MainTab');
+      navigation.navigate('MainTab', {screen: 'Home'});
     } else {
       Alert.alert(result.message);
     }

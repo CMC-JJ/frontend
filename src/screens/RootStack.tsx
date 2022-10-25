@@ -14,6 +14,7 @@ import {
   MainTab,
   FindIdComplete,
   FindPasswordComplete,
+  MainTabNavigationScreenParams,
 } from './';
 
 export type RootStackParamList = {
@@ -31,7 +32,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   NickName: undefined;
   SignUpComplete: undefined;
-  MainTab: undefined;
+  MainTab: MainTabNavigationScreenParams;
 };
 
 export type RootStackNavigationProp =

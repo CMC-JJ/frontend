@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 type ArrowBackProps = {
   size: number;
@@ -11,7 +11,7 @@ export function ArrowBack({size}: ArrowBackProps) {
 
   return (
     <Icon
-      name="arrow-back"
+      name="arrowleft"
       size={size}
       color="black"
       onPress={() => {
