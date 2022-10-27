@@ -5,3 +5,4 @@ export * from './PhoneAuth';
 export * from './SignButton';
 export * from './SignInForm';
 export * from './SignUpForm';
+export * from './TabHedaer';

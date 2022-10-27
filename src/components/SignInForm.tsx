@@ -15,8 +15,6 @@ type SignInFormProps = {
 export function SignInForm({form, createChangeTextHandler}: SignInFormProps) {
   const passwordRef = useRef<TextInput>(null);
 
-  console.log(form.userName.length);
-
   return (
     <>
       <BottomBorderedInput
