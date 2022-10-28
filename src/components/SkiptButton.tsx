@@ -9,18 +9,7 @@ import {
   View,
 } from 'react-native';
 
-// const DoneButton = ({skipLabel, isLight, ...rest}: any) => (
-//   <View style={styles.container}>
-//     <TextButton
-//       size={BUTTON_SIZE}
-//       style={styles.skipButton}
-//       textStyle={getDefaultStyle(isLight)}
-//       {...rest}>
-//       {skipLabel}
-//     </TextButton>
-//   </View>
-// );
-const SkipButton2 = ({isLight, ...rest}: any) => (
+const SkipButton = ({isLight, ...rest}: any) => (
   <View style={styles.container}>
     <TouchableOpacity
       activeOpacity={0.8}
@@ -34,6 +23,7 @@ const SkipButton2 = ({isLight, ...rest}: any) => (
 const textStyle = StyleSheet.create({
   text: {
     fontSize: BUTTON_SIZE / 2.5,
+    fontWeight: '700',
   },
 });
 const styles = StyleSheet.create({
@@ -55,4 +45,4 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
 });
-export default SkipButton2;
+export default SkipButton;
