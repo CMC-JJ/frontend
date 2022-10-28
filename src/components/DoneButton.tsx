@@ -9,17 +9,6 @@ import {
   View,
 } from 'react-native';
 
-// const DoneButton = ({skipLabel, isLight, ...rest}: any) => (
-//   <View style={styles.container}>
-//     <TextButton
-//       size={BUTTON_SIZE}
-//       style={styles.skipButton}
-//       textStyle={getDefaultStyle(isLight)}
-//       {...rest}>
-//       {skipLabel}
-//     </TextButton>
-//   </View>
-// );
 const Done = ({isLight, ...rest}: any) => (
   <View style={styles.container}>
     <TouchableOpacity

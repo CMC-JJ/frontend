@@ -1,37 +1,58 @@
 import React from 'react';
 
-import TextButton from './TextButton';
 import {BUTTON_SIZE, getDefaultStyle} from '../constants/skipButton';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-const SkipButton = ({skipLabel, isLight, ...rest}: any) => (
+// const DoneButton = ({skipLabel, isLight, ...rest}: any) => (
+//   <View style={styles.container}>
+//     <TextButton
+//       size={BUTTON_SIZE}
+//       style={styles.skipButton}
+//       textStyle={getDefaultStyle(isLight)}
+//       {...rest}>
+//       {skipLabel}
+//     </TextButton>
+//   </View>
+// );
+const SkipButton2 = ({isLight, ...rest}: any) => (
   <View style={styles.container}>
-    <TextButton
-      size={BUTTON_SIZE}
+    <TouchableOpacity
+      activeOpacity={0.8}
+      // title={'done'}
       style={styles.skipButton}
-      textStyle={getDefaultStyle(isLight)}
       {...rest}>
-      {skipLabel}
-    </TextButton>
+      <Text style={[getDefaultStyle(isLight), textStyle.text]}>시작하기</Text>
+    </TouchableOpacity>
   </View>
 );
-
+const textStyle = StyleSheet.create({
+  text: {
+    fontSize: BUTTON_SIZE / 2.5,
+  },
+});
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     width: Dimensions.get('window').width,
-
     marginBottom: 100,
     alignItems: 'center',
   },
   skipButton: {
+    position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30,
-    width: '40%',
+    width: 200,
     height: 50,
     backgroundColor: 'white',
     borderRadius: 10,
+    zIndex: 0,
   },
 });
-export default SkipButton;
+export default SkipButton2;

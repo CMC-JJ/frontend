@@ -1,18 +1,17 @@
 import React from 'react';
-import {Alert, Button, View, StyleSheet} from 'react-native';
+import {Alert, View, StyleSheet} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Done from '../components/DoneButton';
 import SkipButton from '../components/SkiptButton';
-
-const Square = ({isLight, selected}: any) => {
+// import SkipButton2 from '../components/SkipButton2';
+const Square = ({selected}: any) => {
   let backgroundColor;
-  if (isLight) {
-    backgroundColor = selected ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.3)';
-  } else {
-    backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';
-  }
-  return <View style={navBarStyle(backgroundColor).navBar} />;
+  backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';
+  return (
+    <View style={{}}>
+      <View style={[navBarStyle(backgroundColor).navBar]} />
+    </View>
+  );
 };
 
 // const Done = ({...props}: any) => (
@@ -29,40 +28,39 @@ function OnboardingScreen() {
       <Onboarding
         showDone={true}
         DotComponent={Square}
-        // NextButtonComponent={Next}
+        // NextButtonComponent={SkipButton2}
         SkipButtonComponent={SkipButton}
-        DoneButtonComponent={Done}
+        DoneButtonComponent={SkipButton}
         bottomBarHighlight={false}
         bottomBarHeight={50}
         showNext={false}
         onSkip={() => Alert.alert('Skipped')}
-        // onDone
-        skipLabel={'시작하기?'}
         onDone={() => Alert.alert('Skipped')}
         pages={[
           {
-            title: 'Hey!',
-            subtitle: 'Welcome to $App!',
-            backgroundColor: '#003c8f',
+            title: '오늘 비행기를 타고 \n 국내 여행을 떠나시나요?',
+            subtitle: '',
+            backgroundColor: 'rgb(5,73,255)',
             image: <Icon name="home" size={100} color="white" />,
           },
           {
-            title: 'Send Messages',
-            subtitle: 'You can reach everybody with us',
-            backgroundColor: '#5e92f3',
+            title: '친구들을 등록해서 \n 서로의 위치를 확인할 수 있어요!',
+            subtitle: '',
+            backgroundColor: 'rgba(5,73,255,0.9)',
             image: <Icon name="search" size={100} color="white" />,
           },
           {
-            title: 'Get Notified',
-            subtitle:
-              'We will send you notification as soon as something happened',
-            backgroundColor: '#1565c0',
+            title:
+              '공항, 항공사에서 제공하는 \n 교통약자 서비스를 \n 한눈에 살펴볼 수 있어요!',
             image: <Icon name="view-stream" size={100} color="white" />,
+            subtitle: '',
+            backgroundColor: 'rgb(5,73,255)',
           },
           {
-            title: "That's Enough",
-            subtitle: <Button title="Learn More" />,
-            backgroundColor: '#003c8f',
+            title:
+              '고객센터, 사이트로 바로 연결해 \n 교통약자 서비를 쉽게 신청해보세요',
+            subtitle: '',
+            backgroundColor: 'rgba(5,73,255,0.9)',
             image: <Icon name="search" size={100} color="white" />,
           },
         ]}
@@ -70,32 +68,16 @@ function OnboardingScreen() {
     </>
   );
 }
-// const styles = StyleSheet.create({
-//   button: {
-//     // backgroundColor: 'white',
-//     borderRadius: 25,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     width: 50,
-//     height: 50,
-//     marginBottom: 10,
-//     marginRight: 10,
-//   },
-//   buttonText: {
-//     fontSize: 15,
-//     textAlign: 'center',
-//   },
-//   test: {flex: 1, backgroundColor: 'black'},
-// });
 
 const navBarStyle = (backgroundColor: string) =>
   StyleSheet.create({
     navBar: {
-      width: 50,
-      height: 5,
+      width: 80,
+      height: 3,
       marginHorizontal: 6,
       backgroundColor: backgroundColor,
-      marginBottom: 300,
+      bottom: 700,
+      zIndex: 100,
     },
   });
 export default OnboardingScreen;
