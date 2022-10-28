@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 import {TabHeader} from '../components';
+import {useAuthStore} from '../store';
+import Icon from 'react-native-vector-icons/Entypo';
 
 export function ScheduleScreen() {
   const [currentTab, setCurrentTab] = useState<'registered' | 'past'>(
@@ -16,6 +18,12 @@ export function ScheduleScreen() {
   );
 
   const isCurrentRegisteredTabActive = currentTab === 'registered';
+
+  const {auth} = useAuthStore();
+
+  console.log(auth);
+
+  //TODO: 일정 리스트를 조회하는 부분에 있어서 데이터 캐싱이 필요함(서버 데이터 관리 -> query 사용..?)
 
   //TODO: 무한 스크롤 구현 필요
 
@@ -67,7 +75,8 @@ export function ScheduleScreen() {
           </View>
         </View>
         <TouchableOpacity style={styles.addSchedule}>
-          <Text style={styles.addText}>일정 추가하기 {'>'}</Text>
+          <Text style={styles.addText}>일정 추가하기</Text>
+          <Icon name="chevron-right" color="#0066FF" size={20} />
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -137,10 +146,14 @@ const styles = StyleSheet.create({
     lineHeight: 23,
   },
   addSchedule: {
+    flexDirection: 'row',
     marginTop: 10,
+
     alignItems: 'center',
+    justifyContent: 'center',
   },
   addText: {
+    marginRight: 2,
     fontFamily: 'Pretendard',
     fontWeight: '700',
     fontSize: 18,

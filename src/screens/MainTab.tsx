@@ -10,9 +10,9 @@ import React from 'react';
 import OctIcon from 'react-native-vector-icons/Octicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {useAuthStore} from '../store';
 import {HomeScreen, ServiceScreen, ScheduleScreen, MyPageScreen} from './';
 import {RootStackNavigationProp} from './RootStack';
+import {Platform} from 'react-native';
 
 type MainTabParamList = {
   Home: undefined;
@@ -32,26 +32,29 @@ export type MainTabNavigationScreenParams =
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 export function MainTab() {
-  const {auth} = useAuthStore();
-
-  console.log(auth);
-
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
         tabBarInactiveTintColor: '#D9D9D9',
-        tabBarStyle: {
-          position: 'absolute',
-          borderTopLeftRadius: 12,
-          borderTopRightRadius: 12,
-          backgroundColor: '#ffffff',
-          shadowColor: 'rgba(0, 0, 0, 0.25)',
-          shadowOffset: {width: 0, height: -3},
-          shadowOpacity: 0.5,
-          elevation: 10,
+        tabBarLabelStyle: {
+          position: 'relative',
+          top: Platform.OS === 'ios' ? -5 : 0,
         },
+        tabBarStyle: [
+          {
+            position: 'absolute',
+            borderTopLeftRadius: 12,
+            borderTopRightRadius: 12,
+            backgroundColor: '#ffffff',
+            shadowColor: 'rgba(0, 0, 0, 0.25)',
+            shadowOffset: {width: 0, height: -3},
+            shadowOpacity: 0.5,
+            elevation: 10,
+          },
+          Platform.OS === 'ios' && {height: 96},
+        ],
       }}>
       <Tab.Screen
         name="Home"
@@ -67,7 +70,7 @@ export function MainTab() {
         name="Service"
         component={ServiceScreen}
         options={{
-          title: '공항서비스',
+          title: '항공서비스',
           tabBarIcon: ({color, size}) => (
             <IonIcon
               name="airplane-outline"
