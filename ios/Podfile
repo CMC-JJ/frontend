@@ -7,9 +7,8 @@ install! 'cocoapods', :deterministic_uuids => false
 target 'frontend' do
   #Permission
   permissions_path = '../node_modules/react-native-permissions/ios'
-  # pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
-  # pod 'Permission-FaceID', :path => "#{permissions_path}/FaceID"
-  # pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
   pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts"
 
 
