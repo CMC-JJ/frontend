@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SkipButton from '../components/SkiptButton';
@@ -7,6 +7,9 @@ import {
   // widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackNavigationProp} from './RootStack';
+// import {SafeAreaView} from 'react-native-safe-area-context';
 const Square = ({selected}: any) => {
   let backgroundColor;
   backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';
@@ -17,8 +20,10 @@ const Square = ({selected}: any) => {
   );
 };
 
-function OnboardingScreen() {
+export function OnboardingScreen() {
+  const navigation = useNavigation<RootStackNavigationProp>();
   return (
+    // <SafeAreaView>
     <>
       <Onboarding
         showDone={true}
@@ -29,8 +34,8 @@ function OnboardingScreen() {
         bottomBarHighlight={false}
         bottomBarHeight={50}
         showNext={false}
-        onSkip={() => Alert.alert('Skipped')}
-        onDone={() => Alert.alert('Skipped')}
+        onSkip={() => navigation.navigate('SignIn')}
+        onDone={() => navigation.navigate('SignIn')}
         titleStyles={pageStyles.title}
         imageContainerStyles={pageStyles.imageContainer}
         pages={[
@@ -79,6 +84,7 @@ function OnboardingScreen() {
         ]}
       />
     </>
+    // </SafeAreaView>
   );
 }
 const pageStyles = StyleSheet.create({
@@ -106,4 +112,3 @@ const navBarStyle = (backgroundColor: string) =>
       zIndex: 100,
     },
   });
-export default OnboardingScreen;

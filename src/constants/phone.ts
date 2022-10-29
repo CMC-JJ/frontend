@@ -1,0 +1,3 @@
+export const PHONE_NUMBER_INPUT_LENGTH = 13;
+
+export const PHONE_NUMBER_LENGTH = 11;
