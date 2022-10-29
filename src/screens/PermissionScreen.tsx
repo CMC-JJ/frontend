@@ -17,9 +17,11 @@ import PermissionForm from '../components/PermissionForm';
 import {
   checkPermissionsANDROID,
   checkPermissionsIOS,
-} from '../components/CheckPermission';
-
-export default function Permissions() {
+} from '../hooks/CheckPermission';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackNavigationProp} from './RootStack';
+export function PermissionScreen() {
+  const navigation = useNavigation<RootStackNavigationProp>();
   const requestMultiplePermissions = async () => {
     if (Platform.OS === 'ios') {
       await requestMultiple([
@@ -27,6 +29,7 @@ export default function Permissions() {
         PERMISSIONS.IOS.CONTACTS,
       ]).then(res => {
         checkPermissionsIOS(res);
+        navigation.navigate('SignIn');
       });
     } else if (Platform.OS === 'android') {
       await requestMultiple([
@@ -37,6 +40,7 @@ export default function Permissions() {
       });
     }
   };
+
   const checkMultiplePermissions = async () => {
     if (Platform.OS === 'ios') {
       await checkMultiple([
@@ -63,7 +67,7 @@ export default function Permissions() {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Image
         style={styles.logo}
         source={require('../assets/images/permissionImage.png')}

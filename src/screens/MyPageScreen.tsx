@@ -1,12 +1,10 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-function Onboarding() {
+export function MyPageScreen() {
   return (
     <View>
-      <Text>Onboarding</Text>
+      <Text>마이페이지</Text>
     </View>
   );
 }
-
-export default Onboarding;
