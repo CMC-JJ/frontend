@@ -6,14 +6,18 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
-  // checkMultiple,
+  checkMultiple,
   PERMISSIONS,
   requestMultiple,
 } from 'react-native-permissions';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import PermissionForm from '../components/PermissionForm';
+import {
+  checkPermissionsANDROID,
+  checkPermissionsIOS,
+} from '../components/CheckPermission';
 
 export default function Permissions() {
   const requestMultiplePermissions = async () => {
@@ -22,50 +26,41 @@ export default function Permissions() {
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
         PERMISSIONS.IOS.CONTACTS,
       ]).then(res => {
-        if (
-          res['ios.permission.CONTACTS'] &&
-          res['ios.permission.LOCATION_WHEN_IN_USE'] === 'granted'
-        ) {
-          console.log('위치정보 ', res[PERMISSIONS.IOS.LOCATION_WHEN_IN_USE]);
-          console.log('모든권한획득', res);
-        } else {
-          console.log('실패');
-        }
+        checkPermissionsIOS(res);
       });
     } else if (Platform.OS === 'android') {
       await requestMultiple([
         PERMISSIONS.ANDROID.CALL_PHONE,
         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
       ]).then(res => {
-        if (
-          res['android.permission.CALL_PHONE'] &&
-          res['android.permission.ACCESS_FINE_LOCATION'] === 'granted'
-        ) {
-          console.log(
-            '위치정보 ',
-            res[PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION],
-          );
-          console.log('모든권한획득', res);
-        } else {
-          console.log('거절');
-        }
+        checkPermissionsANDROID(res);
       });
     }
   };
-  // const checkMultiplePermissions = () => {
-  //   checkMultiple([PERMISSIONS.IOS.CONTACTS, PERMISSIONS.IOS.CAMERA]).then(
-  //     response => {
-  //       console.log('MULTIPLE CHECK RESPONSE : ', response);
-  //     },
-  //   );
-  // };
-  // useEffect(() => {
-  //   checkMultiple([PERMISSIONS.IOS.CONTACTS, PERMISSIONS.IOS.CAMERA]).then(
-  //     response => {
-  //       console.log('MULTIPLE CHECK RESPONSE : ', response);
-  //     },
-  //   );
-  // }, []);
+  const checkMultiplePermissions = async () => {
+    if (Platform.OS === 'ios') {
+      await checkMultiple([
+        PERMISSIONS.IOS.CONTACTS,
+        PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+      ]).then(res => {
+        checkPermissionsIOS(res);
+        console.log('체크해요 : ', res);
+      });
+    } else if (Platform.OS === 'android') {
+      await checkMultiple([
+        PERMISSIONS.ANDROID.CALL_PHONE,
+        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+      ]).then(res => {
+        checkPermissionsANDROID(res);
+        console.log('체크해요 : ', res);
+      });
+    }
+  };
+
+  useEffect(() => {
+    //훅으로 뺄 예정
+    checkMultiplePermissions();
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -103,6 +98,7 @@ export default function Permissions() {
             설정하실 수 있습니다.
           </Text>
         </View>
+
         <TouchableOpacity
           onPress={() => requestMultiplePermissions()}
           style={styles.button}>
