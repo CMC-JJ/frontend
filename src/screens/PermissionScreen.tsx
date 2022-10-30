@@ -13,13 +13,13 @@ import {
   requestMultiple,
 } from 'react-native-permissions';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import PermissionForm from '../components/PermissionForm';
 import {
   checkPermissionsANDROID,
   checkPermissionsIOS,
 } from '../hooks/CheckPermission';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from './RootStack';
+import {PermissionForm} from '../components';
 export function PermissionScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const requestMultiplePermissions = async () => {
@@ -114,7 +114,11 @@ export function PermissionScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {padding: 30, flex: 1, justifyContent: 'space-between'},
+  container: {
+    padding: 30,
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   title: {
     fontSize: 25,
     fontWeight: '700',
