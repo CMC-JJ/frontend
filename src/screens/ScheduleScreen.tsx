@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  ActivityIndicator,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -12,10 +13,12 @@ import {TabHeader} from '../components';
 import {useAuthStore} from '../store';
 import Icon from 'react-native-vector-icons/Entypo';
 
+type currentTabType = 'registered' | 'past';
+
 export function ScheduleScreen() {
-  const [currentTab, setCurrentTab] = useState<'registered' | 'past'>(
-    'registered',
-  );
+  const [currentTab, setCurrentTab] = useState<currentTabType>('registered');
+
+  const [isLoading] = useState<boolean>(false);
 
   const isCurrentRegisteredTabActive = currentTab === 'registered';
 
@@ -67,17 +70,27 @@ export function ScheduleScreen() {
       </View>
       <ScrollView style={styles.scrollContainer}>
         {/* 데이터가 없는 경우 이 부분 표시 */}
-        <View style={styles.container}>
-          <View style={styles.circle} />
-          <View style={styles.announcementMessage}>
-            <Text style={styles.message}>즐거운 여행길</Text>
-            <Text style={styles.message}>일정과 항공편을 등록해 보세요.</Text>
+        {isLoading ? (
+          <View style={styles.loading}>
+            <ActivityIndicator color="#0066ff" />
           </View>
-        </View>
-        <TouchableOpacity style={styles.addSchedule}>
-          <Text style={styles.addText}>일정 추가하기</Text>
-          <Icon name="chevron-right" color="#0066FF" size={20} />
-        </TouchableOpacity>
+        ) : (
+          <>
+            <View style={styles.container}>
+              <View style={styles.circle} />
+              <View style={styles.announcementMessage}>
+                <Text style={styles.message}>즐거운 여행길</Text>
+                <Text style={styles.message}>
+                  일정과 항공편을 등록해 보세요.
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity style={styles.addSchedule}>
+              <Text style={styles.addText}>일정 추가하기</Text>
+              <Icon name="chevron-right" color="#0066FF" size={20} />
+            </TouchableOpacity>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -123,6 +136,9 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
   },
+  loading: {
+    marginTop: 230,
+  },
   container: {
     marginTop: 120,
 
@@ -144,6 +160,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 15,
     lineHeight: 23,
+
+    color: '#000000',
   },
   addSchedule: {
     flexDirection: 'row',
