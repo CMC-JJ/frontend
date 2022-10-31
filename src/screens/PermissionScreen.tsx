@@ -37,6 +37,7 @@ export function PermissionScreen() {
         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
       ]).then(res => {
         checkPermissionsANDROID(res);
+        navigation.navigate('OnBoarding');
       });
     }
   };

@@ -14,3 +14,4 @@ export * from './ServiceScreen';
 export * from './MyPageScreen';
 export * from './PermissionScreen';
 export * from './OnBoardingScreen';
+export * from './StartScreen';

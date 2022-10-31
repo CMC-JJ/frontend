@@ -18,11 +18,13 @@ import {
   PermissionScreen,
   OnboardingScreen,
 } from './';
+import StartScreen from './StartScreen';
 // import Permissions from './Permissions';
 
 export type RootStackParamList = {
   Permission: undefined;
   OnBoarding: undefined;
+  Start: undefined;
   SignIn: undefined;
   FindId: undefined;
   FindIdComplete: {
@@ -62,7 +64,11 @@ function RootStack() {
         component={OnboardingScreen}
         options={{headerShown: false}}
       />
-
+      <Stack.Screen
+        name="Start"
+        component={StartScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}

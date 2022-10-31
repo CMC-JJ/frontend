@@ -32,8 +32,8 @@ export function OnboardingScreen() {
         bottomBarHighlight={false}
         bottomBarHeight={50}
         showNext={false}
-        onSkip={() => navigation.navigate('SignIn')}
-        onDone={() => navigation.navigate('SignIn')}
+        onSkip={() => navigation.navigate('Start')}
+        onDone={() => navigation.navigate('Start')}
         pages={[
           {
             title: '',
@@ -72,7 +72,7 @@ export function OnboardingScreen() {
             image: (
               <ImageText
                 text={
-                  '고객센터, 사이트로 바로 연결해 \n교통약자 서비를 쉽게신청해보세요.'
+                  '고객센터, 사이트로 바로 연결해\n교통약자 서비를 쉽게신청해보세요.'
                 }
               />
             ),
