@@ -9,12 +9,7 @@ interface IForm {
   iconName: string;
   detailInfo?: string;
 }
-export default function PermissionForm({
-  title,
-  subtitle,
-  iconName,
-  detailInfo,
-}: IForm) {
+export function PermissionForm({title, subtitle, iconName, detailInfo}: IForm) {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -32,7 +27,9 @@ export default function PermissionForm({
 }
 
 const styles = StyleSheet.create({
-  container: {marginBottom: 10, display: 'flex', flexWrap: 'wrap'},
+  container: {
+    marginBottom: 10,
+  },
   form: {
     flexDirection: 'row',
   },
@@ -60,5 +57,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#63666A',
     textDecorationLine: 'underline',
+    flexWrap: 'wrap',
   },
 });
