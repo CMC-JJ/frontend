@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   form: {
     flexDirection: 'row',
   },
-  textContainer: {marginTop: 3, marginLeft: 20, flexShrink: 1},
+  textContainer: {marginTop: 3, marginLeft: 15, flexShrink: 1},
   iconForm: {
     alignItems: 'center',
     justifyContent: 'center',

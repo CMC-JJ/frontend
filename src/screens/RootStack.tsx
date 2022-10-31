@@ -53,13 +53,13 @@ function RootStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="OnBoarding"
-        component={OnboardingScreen}
+        name="Permission"
+        component={PermissionScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Permission"
-        component={PermissionScreen}
+        name="OnBoarding"
+        component={OnboardingScreen}
         options={{headerShown: false}}
       />
 
