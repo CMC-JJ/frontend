@@ -33,10 +33,9 @@ export default function PermissionForm({
 const styles = StyleSheet.create({
   container: {marginBottom: 10, display: 'flex', flexWrap: 'wrap'},
   form: {
-    // flex: 1,
     flexDirection: 'row',
   },
-  textContainer: {marginTop: 3, marginLeft: 20},
+  textContainer: {marginTop: 3, marginLeft: 20, flexShrink: 1},
   iconForm: {
     alignItems: 'center',
     justifyContent: 'center',

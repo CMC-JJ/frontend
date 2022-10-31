@@ -62,6 +62,7 @@ function RootStack() {
         component={PermissionScreen}
         options={{headerShown: false}}
       />
+
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}
