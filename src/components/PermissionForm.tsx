@@ -1,7 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FontText from './FontText';
 interface IForm {
   title: string;
   subtitle: string;
@@ -21,9 +22,9 @@ export default function PermissionForm({
           <Icon style={styles.icon} name={iconName} size={25} color="gray" />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
-          <Text style={styles.detailInfo}>{detailInfo}</Text>
+          <FontText style={styles.title}>{title}</FontText>
+          <FontText style={styles.subtitle}>{subtitle}</FontText>
+          <FontText style={styles.detailInfo}>{detailInfo}</FontText>
         </View>
       </View>
     </View>
@@ -47,17 +48,17 @@ const styles = StyleSheet.create({
   icon: {
     color: 'black',
   },
-  title: {fontSize: 20, marginBottom: 6},
+  title: {fontSize: 20, marginBottom: 6, color: '#3A3D40'},
   subtitle: {
     fontSize: 15,
-    color: 'rgba(80, 80, 80,0.7)',
+    color: '#63666A',
     display: 'flex',
     flexWrap: 'wrap',
     marginBottom: 8,
   },
   detailInfo: {
     fontSize: 15,
-    color: 'rgba(80, 80, 80,0.7)',
+    color: '#63666A',
     textDecorationLine: 'underline',
   },
 });

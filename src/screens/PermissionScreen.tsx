@@ -20,6 +20,7 @@ import {
 } from '../hooks/CheckPermission';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from './RootStack';
+import FontText from '../components/FontText';
 export function PermissionScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const requestMultiplePermissions = async () => {
@@ -69,18 +70,25 @@ export function PermissionScreen() {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <Image
-        style={styles.logo}
-        source={require('../assets/images/permissionImage.png')}
-      />
+      <View style={styles.logo}>
+        {/* <Image source={require('../assets/images/logo_sub.png')} />
+        <Image
+          style={{resizeMode: 'stretch'}}
+          source={require('../assets/images/test.png')}
+        /> */}
+        <Image
+          style={styles.logo}
+          source={require('../assets/images/permissionImage.png')}
+        />
+      </View>
       <View style={styles.container}>
         <View>
           <View style={styles.textForm}>
-            <Text style={styles.title}>앱 이용 안내</Text>
-            <Text style={styles.subtitle}>필수적 접근 권한</Text>
-            <Text style={styles.grayFont}>
+            <FontText style={styles.title}>앱 이용 안내</FontText>
+            <FontText style={styles.subtitle}>필수적 접근 권한</FontText>
+            <FontText style={styles.grayFont}>
               허용 거부 시 가치가자 서비스를 이용할 수 없습니다.
-            </Text>
+            </FontText>
           </View>
           <View style={styles.permissionForm}>
             <PermissionForm
@@ -98,10 +106,10 @@ export function PermissionScreen() {
             />
           </View>
 
-          <Text style={styles.grayFont}>
+          <FontText style={styles.grayFont}>
             * 설정 {'>'} 애플리케이션 {'>'} 가치가자 {'>'} 권한 메뉴에서도
             설정하실 수 있습니다.
-          </Text>
+          </FontText>
         </View>
 
         <TouchableOpacity
@@ -120,12 +128,20 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '700',
     marginBottom: 15,
+    color: '#121212',
   },
-  subtitle: {fontSize: 15, fontWeight: '700', marginBottom: 3},
-  grayFont: {color: 'rgba(80, 80, 80,0.7)'},
+  subtitle: {
+    fontSize: 15,
+    fontWeight: '400',
+    marginBottom: 3,
+    color: '#121212',
+  },
+  grayFont: {color: '#63666A'},
   logo: {
     resizeMode: 'contain',
-    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   textForm: {
     marginBottom: 30,
