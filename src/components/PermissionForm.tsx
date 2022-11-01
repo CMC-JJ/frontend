@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FontText from './FontText';
 // import {Linking} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackNavigationProp} from '../screens/RootStack';
-import {data} from '../assets/texts/TermsText';
+import {RootStackNavigationProp} from '@/screens';
+import {data} from '@/assets/texts/TermsText';
 interface IForm {
   title: string;
   subtitle: string;

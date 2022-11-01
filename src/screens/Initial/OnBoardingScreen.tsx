@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
-import SkipButton from '../components/SkiptButton';
+import SkipButton from '@/components/SkiptButton';
 import {
   // widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackNavigationProp} from './RootStack';
-import ImageText from '../components/onBoarding/ImageText';
+import {RootStackNavigationProp} from '@/screens';
+import ImageText from '@/components/ImageText';
 const Square = ({selected}: any) => {
   let backgroundColor;
   backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';

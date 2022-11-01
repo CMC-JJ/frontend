@@ -11,10 +11,10 @@ import {
   Alert,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ArrowBack, SignButton, FormHeader, SignInForm} from '../components';
-import {useAuthStore, useSignUpStore} from '../store';
-import {request} from '../utils';
-import {RootStackNavigationProp} from './RootStack';
+import {ArrowBack, SignButton, FormHeader, SignInForm} from '@/components';
+import {useAuthStore, useSignUpStore} from '@/store';
+import {request} from '@/utils';
+import type {RootStackNavigationProp} from '@/screens';
 
 export function SignInScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();

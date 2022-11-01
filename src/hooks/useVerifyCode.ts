@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {AUTH_NUMBER_LENGTH} from '../constants';
-import {isValidNumberLength} from '../utils';
+import {AUTH_NUMBER_LENGTH} from '@/constants';
+import {isValidNumberLength} from '@/utils';
 
 export const useVerifyCode = () => {
   const [verifyCode, setVerifyCode] = useState<string>('');

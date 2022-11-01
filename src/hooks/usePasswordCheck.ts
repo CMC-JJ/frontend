@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import {request} from '../utils';
+import {request} from '@/utils';
 
 export const useIdCheck = (userName: string) => {
   const [isIdValid, setIsIdValid] = useState<boolean>(false);

@@ -10,10 +10,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import {ArrowBack, SignButton} from '../components';
-import {useAuthStore, useSignUpStore} from '../store';
-import {request} from '../utils';
-import {RootStackNavigationProp} from './RootStack';
+import {ArrowBack, SignButton} from '@/components';
+import {useAuthStore, useSignUpStore} from '@/store';
+import {request} from '@/utils';
+import type {RootStackNavigationProp} from '@/screens';
 
 export function SignUpComplete() {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -43,7 +43,7 @@ export function SignUpComplete() {
 
       setAuth(form);
       initializeSignUpForm();
-      navigation.navigate('MainTab');
+      navigation.navigate('MainTab', {screen: 'Home'});
     } else {
       Alert.alert(result.message);
     }

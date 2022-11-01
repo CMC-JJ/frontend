@@ -1,9 +1,9 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {SignButton} from '../components';
-import FontText from '../components/FontText';
-import {RootStackNavigationProp} from './RootStack';
+import {SignButton} from '@/components';
+import FontText from '@/components/FontText';
+import {RootStackNavigationProp} from '@/screens';
 import {useNavigation} from '@react-navigation/native';
 
 export function StartScreen() {
@@ -15,7 +15,7 @@ export function StartScreen() {
           marginTop: 80,
           marginLeft: -9,
         }}
-        source={require('../assets/images/logo.png')}
+        source={require('@/assets/images/logo.png')}
       />
 
       <FontText style={styles.header}>

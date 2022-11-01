@@ -16,10 +16,10 @@ import {
   BottomBorderedInput,
   FormHeader,
   SignButton,
-} from '../components';
-import {usePasswordCheck} from '../hooks';
-import {request} from '../utils';
-import {RootStackNavigationProp, RootStackParamList} from './RootStack';
+} from '@/components';
+import {usePasswordCheck} from '@/hooks';
+import {request} from '@/utils';
+import type {RootStackNavigationProp, RootStackParamList} from '@/screens';
 
 type FindPasswordCompleteRouteProp = RouteProp<
   RootStackParamList,

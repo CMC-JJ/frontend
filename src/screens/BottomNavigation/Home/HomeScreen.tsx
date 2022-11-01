@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {ArrowBack} from '../components';
+import {ArrowBack} from '@/components';
 
 export function HomeScreen() {
   return (

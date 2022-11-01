@@ -8,9 +8,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {ArrowBack, FormHeader, SignButton, SignUpForm} from '../components';
-import {useSignUpStore} from '../store';
-import {RootStackNavigationProp} from './RootStack';
+import {ArrowBack, FormHeader, SignButton, SignUpForm} from '@/components';
+import {useSignUpStore} from '@/store';
+import type {RootStackNavigationProp} from '@/screens';
 
 export function SignUpScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();

@@ -4,25 +4,21 @@ import {
   Alert,
   Keyboard,
   Platform,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
-import {
-  ArrowBack,
-  BottomBorderedInput,
-  FormHeader,
-  PhoneAuth,
-  SignButton,
-} from '../components';
-import {useVerifyCode} from '../hooks';
-import {useSignUpStore} from '../store';
-import {convertPhoneNumberFormat, request} from '../utils';
-import {RootStackNavigationProp} from './RootStack';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ArrowBack, FormHeader, PhoneAuth, SignButton} from '@/components';
+import {useVerifyCode} from '@/hooks';
+import {useSignUpStore} from '@/store';
+import {convertPhoneNumberFormat, request} from '@/utils';
+import type {RootStackNavigationProp} from '@/screens';
 
-export function FindPasswordScreen() {
-  const {signUpForm, setSignUpForm} = useSignUpStore();
+export function FindIdScreen() {
+  const {
+    signUpForm: {phoneNumber},
+  } = useSignUpStore();
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -32,19 +28,28 @@ export function FindPasswordScreen() {
     Keyboard.dismiss();
 
     const result = await request(
-      'web/auth/id-phonenumber',
-      {
-        userName: signUpForm.userName,
-        phoneNumber: convertPhoneNumberFormat(signUpForm.phoneNumber),
-      },
+      'web/auth/phone/verify',
+      {verifyCode, phoneNumber: convertPhoneNumberFormat(phoneNumber)},
       'GET',
     );
 
     if (result.isSuccess) {
       setIsSuccess(true);
-      navigation.navigate('FindPasswordComplete', {
-        userId: result.result.userId,
-      });
+
+      const res = await request(
+        'web/auth/id',
+        {phoneNumber: convertPhoneNumberFormat(phoneNumber)},
+        'GET',
+      );
+
+      if (res.isSuccess) {
+        navigation.navigate('FindIdComplete', {
+          userName: res.result.userName,
+          createdAt: res.result.createdAt,
+        });
+      } else {
+        Alert.alert(res.message);
+      }
     } else {
       Alert.alert(result.message);
     }
@@ -56,17 +61,8 @@ export function FindPasswordScreen() {
       <View style={styles.back}>
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
-      <FormHeader text={'비밀번호를 찾기 위한 정보를\n입력해 주세요.'} />
+      <FormHeader text={'등록된 전화번호를\n입력해 주세요.'} />
       <View style={styles.form}>
-        <BottomBorderedInput
-          hasMarginBottom
-          isCharacterExisted={signUpForm.userName.length > 0}
-          value={signUpForm.userName}
-          onChangeText={text => setSignUpForm('userName', text)}
-          placeholder="아이디"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
         <PhoneAuth
           isSuccess={isSuccess}
           verifyCode={verifyCode}
@@ -76,7 +72,7 @@ export function FindPasswordScreen() {
       <View style={styles.footer}>
         <SignButton
           isValid={isVerifyCodeValid}
-          buttonText="다음"
+          buttonText="확인"
           onPress={onPressNext}
         />
       </View>

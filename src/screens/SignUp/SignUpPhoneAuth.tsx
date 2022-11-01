@@ -9,11 +9,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {ArrowBack, FormHeader, PhoneAuth, SignButton} from '../components';
-import {useVerifyCode} from '../hooks';
-import {useSignUpStore} from '../store';
-import {convertPhoneNumberFormat, request} from '../utils';
-import {RootStackNavigationProp} from './RootStack';
+import {ArrowBack, FormHeader, PhoneAuth, SignButton} from '@/components';
+import {useVerifyCode} from '@/hooks';
+import {useSignUpStore} from '@/store';
+import {convertPhoneNumberFormat, request} from '@/utils';
+import type {RootStackNavigationProp} from '@/screens';
 
 export function SignUpPhoneAuth() {
   const navigation = useNavigation<RootStackNavigationProp>();

@@ -1,10 +1,11 @@
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
-import FontText from '../components/FontText';
+
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {RootStackParamList} from './RootStack';
-import {ArrowBack} from '../components';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ArrowBack} from '@/components';
+import {RootStackParamList} from '@/screens';
+import FontText from '@/components/FontText';
 type FindIdCompleteRouteProp = RouteProp<RootStackParamList, 'Terms'>;
 export function TermsScreen() {
   const {params} = useRoute<FindIdCompleteRouteProp>();
