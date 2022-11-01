@@ -10,14 +10,15 @@ import React from 'react';
 import OctIcon from 'react-native-vector-icons/Octicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {HomeScreen, ServiceScreen, ScheduleScreen, MyPageScreen} from './';
+import {HomeScreen, ServiceScreen, MyPageScreen} from './';
 import {RootStackNavigationProp} from './RootStack';
 import {Platform} from 'react-native';
+import {ScheduleStack, ScheduleStackParamList} from './ScheduleStack';
 
 type MainTabParamList = {
   Home: undefined;
   Service: undefined;
-  Schedule: undefined;
+  Schedule: ScheduleStackParamList;
   MyPage: undefined;
 };
 
@@ -83,7 +84,7 @@ export function MainTab() {
       />
       <Tab.Screen
         name="Schedule"
-        component={ScheduleScreen}
+        component={ScheduleStack}
         options={{
           title: '일정',
           tabBarIcon: ({color, size}) => (

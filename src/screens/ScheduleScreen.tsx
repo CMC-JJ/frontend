@@ -12,19 +12,37 @@ import {
 import {TabHeader} from '../components';
 import {useAuthStore} from '../store';
 import Icon from 'react-native-vector-icons/Entypo';
+import {useQuery} from 'react-query';
+// import {request} from '../utils';
+import {useNavigation} from '@react-navigation/native';
+import {ScheduleNavigationProp} from './ScheduleStack';
 
-type currentTabType = 'registered' | 'past';
+type currentTabType = 'future' | 'past';
 
 export function ScheduleScreen() {
-  const [currentTab, setCurrentTab] = useState<currentTabType>('registered');
-
-  const [isLoading] = useState<boolean>(false);
-
-  const isCurrentRegisteredTabActive = currentTab === 'registered';
-
   const {auth} = useAuthStore();
+  const navigation = useNavigation<ScheduleNavigationProp>();
+  const [currentTab, setCurrentTab] = useState<currentTabType>('future');
 
-  console.log(auth);
+  console.log(auth.jwtToken);
+
+  const {data, isLoading} = useQuery(currentTab, () =>
+    fetch(
+      `https://dev.jj-gotogether.shop/web/schedules?${new URLSearchParams({
+        type: currentTab,
+      }).toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${auth.jwtToken}`,
+        },
+      },
+    ).then(res => res.json()),
+  );
+
+  console.log(data);
+
+  const isCurrentFutureTabActive = currentTab === 'future';
 
   //TODO: 일정 리스트를 조회하는 부분에 있어서 데이터 캐싱이 필요함(서버 데이터 관리 -> query 사용..?)
 
@@ -38,15 +56,15 @@ export function ScheduleScreen() {
         <TouchableOpacity
           style={[
             styles.textContainer,
-            isCurrentRegisteredTabActive && styles.activeContainer,
+            isCurrentFutureTabActive && styles.activeContainer,
           ]}
           onPress={() => {
-            setCurrentTab('registered');
+            setCurrentTab('future');
           }}>
           <Text
             style={[
               styles.tabText,
-              isCurrentRegisteredTabActive && styles.activeText,
+              isCurrentFutureTabActive && styles.activeText,
             ]}>
             등록된 일정
           </Text>
@@ -54,7 +72,7 @@ export function ScheduleScreen() {
         <TouchableOpacity
           style={[
             styles.textContainer,
-            !isCurrentRegisteredTabActive && styles.activeContainer,
+            !isCurrentFutureTabActive && styles.activeContainer,
           ]}
           onPress={() => {
             setCurrentTab('past');
@@ -62,7 +80,7 @@ export function ScheduleScreen() {
           <Text
             style={[
               styles.tabText,
-              !isCurrentRegisteredTabActive && styles.activeText,
+              !isCurrentFutureTabActive && styles.activeText,
             ]}>
             지난 일정
           </Text>
@@ -70,7 +88,33 @@ export function ScheduleScreen() {
       </View>
       <ScrollView style={styles.scrollContainer}>
         {/* 데이터가 없는 경우 이 부분 표시 */}
-        {isLoading ? (
+        {isCurrentFutureTabActive ? (
+          isLoading ? (
+            <View style={styles.loading}>
+              <ActivityIndicator color="#0066ff" />
+            </View>
+          ) : (
+            <>
+              <View style={styles.container}>
+                <View style={styles.circle} />
+                <View style={styles.announcementMessage}>
+                  <Text style={styles.message}>즐거운 여행길</Text>
+                  <Text style={styles.message}>
+                    일정과 항공편을 등록해 보세요.
+                  </Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                style={styles.addSchedule}
+                onPress={() => {
+                  navigation.navigate('Date');
+                }}>
+                <Text style={styles.addText}>일정 추가하기</Text>
+                <Icon name="chevron-right" color="#0066FF" size={20} />
+              </TouchableOpacity>
+            </>
+          )
+        ) : isLoading ? (
           <View style={styles.loading}>
             <ActivityIndicator color="#0066ff" />
           </View>
@@ -79,10 +123,8 @@ export function ScheduleScreen() {
             <View style={styles.container}>
               <View style={styles.circle} />
               <View style={styles.announcementMessage}>
-                <Text style={styles.message}>즐거운 여행길</Text>
-                <Text style={styles.message}>
-                  일정과 항공편을 등록해 보세요.
-                </Text>
+                <Text style={styles.message}>지난 일정이 없습니다!</Text>
+                <Text style={styles.message}>일정을 추가해주세요</Text>
               </View>
             </View>
             <TouchableOpacity style={styles.addSchedule}>
