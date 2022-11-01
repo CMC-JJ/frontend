@@ -59,6 +59,11 @@ function RootStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="MainTab"
+        component={MainTab}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Permission"
         component={PermissionScreen}
         options={{headerShown: false}}
@@ -121,11 +126,6 @@ function RootStack() {
       <Stack.Screen
         name="SignUpComplete"
         component={SignUpComplete}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="MainTab"
-        component={MainTab}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
