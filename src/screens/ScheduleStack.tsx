@@ -9,7 +9,7 @@ import {MainTabNavigationProp} from './MainTab';
 import {ScheduleScreen} from './ScheduleScreen';
 
 export type ScheduleStackParamList = {
-  Schedule: undefined;
+  Home: undefined;
   Title: undefined;
   Date: undefined;
   AirService: undefined;
@@ -28,7 +28,7 @@ export function ScheduleStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Schedule"
+        name="Home"
         component={ScheduleScreen}
         options={{headerShown: false}}
       />
