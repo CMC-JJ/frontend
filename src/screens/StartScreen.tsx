@@ -6,7 +6,7 @@ import FontText from '../components/FontText';
 import {RootStackNavigationProp} from './RootStack';
 import {useNavigation} from '@react-navigation/native';
 
-export default function StartScreen() {
+export function StartScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <SafeAreaView style={styles.container}>

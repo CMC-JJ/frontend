@@ -17,14 +17,18 @@ import {
   MainTabNavigationScreenParams,
   PermissionScreen,
   OnboardingScreen,
+  StartScreen,
+  TermsScreen,
 } from './';
-import StartScreen from './StartScreen';
-// import Permissions from './Permissions';
 
 export type RootStackParamList = {
   Permission: undefined;
   OnBoarding: undefined;
   Start: undefined;
+  Terms: {
+    title: string;
+    text: string;
+  };
   SignIn: undefined;
   FindId: undefined;
   FindIdComplete: {
@@ -67,6 +71,11 @@ function RootStack() {
       <Stack.Screen
         name="Start"
         component={StartScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

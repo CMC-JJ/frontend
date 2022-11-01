@@ -15,3 +15,4 @@ export * from './MyPageScreen';
 export * from './PermissionScreen';
 export * from './OnBoardingScreen';
 export * from './StartScreen';
+export * from './TermsScreen';

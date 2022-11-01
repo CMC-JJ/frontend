@@ -3,6 +3,10 @@ import React from 'react';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontText from './FontText';
+// import {Linking} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackNavigationProp} from '../screens/RootStack';
+import {data} from '../assets/texts/TermsText';
 interface IForm {
   title: string;
   subtitle: string;
@@ -10,6 +14,7 @@ interface IForm {
   detailInfo?: string;
 }
 export function PermissionForm({title, subtitle, iconName, detailInfo}: IForm) {
+  const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -19,7 +24,16 @@ export function PermissionForm({title, subtitle, iconName, detailInfo}: IForm) {
         <View style={styles.textContainer}>
           <FontText style={styles.title}>{title}</FontText>
           <FontText style={styles.subtitle}>{subtitle}</FontText>
-          <FontText style={styles.detailInfo}>{detailInfo}</FontText>
+          <FontText
+            onPress={() =>
+              navigation.navigate('Terms', {
+                title: data[0].title,
+                text: data[0].text,
+              })
+            }
+            style={styles.detailInfo}>
+            {detailInfo}
+          </FontText>
         </View>
       </View>
     </View>
