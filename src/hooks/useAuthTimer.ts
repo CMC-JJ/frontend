@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import {AUTHENTICATION_TIME} from '../constants';
+import {AUTHENTICATION_TIME} from '@/constants';
 
 export const useAuthTimer = (
   isSuccess: boolean,

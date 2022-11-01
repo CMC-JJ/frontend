@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {TextInput} from 'react-native';
-import {BottomBorderedInput} from './';
+import {BottomBorderedInput} from '@/components';
 
 type Form = {
   userName: string;

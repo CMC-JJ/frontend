@@ -1,12 +1,9 @@
-import {CompositeNavigationProp} from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
 import React from 'react';
-import {DateScreen} from './DateScreen';
-import {MainTabNavigationProp} from './MainTab';
-import {ScheduleScreen} from './ScheduleScreen';
+import type {CompositeNavigationProp} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {DateScreen, ScheduleScreen} from '@/screens';
+import type {MainTabNavigationProp} from '@/screens';
 
 export type ScheduleStackParamList = {
   Home: undefined;

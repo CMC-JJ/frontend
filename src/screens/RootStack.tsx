@@ -1,8 +1,6 @@
 import React from 'react';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   SignInScreen,
   FindIdScreen,
@@ -14,8 +12,8 @@ import {
   MainTab,
   FindIdComplete,
   FindPasswordComplete,
-  MainTabNavigationScreenParams,
-} from './';
+} from '@/screens';
+import type {MainTabNavigationScreenParams} from '@/screens';
 
 export type RootStackParamList = {
   SignIn: undefined;

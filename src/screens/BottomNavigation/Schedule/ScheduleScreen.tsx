@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {TabHeader} from '../components';
-import {useAuthStore} from '../store';
+import {TabHeader} from '@/components';
+import {useAuthStore} from '@/store';
 import Icon from 'react-native-vector-icons/Entypo';
 import {useQuery} from 'react-query';
-// import {request} from '../utils';
 import {useNavigation} from '@react-navigation/native';
-import {ScheduleNavigationProp} from './ScheduleStack';
+import type {ScheduleNavigationProp} from '@/screens';
+// import {request} from '../utils';
 
 type currentTabType = 'future' | 'past';
 

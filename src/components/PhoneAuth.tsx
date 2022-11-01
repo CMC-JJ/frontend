@@ -8,20 +8,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {BottomBorderedInput, SignButton} from '../components';
+import {BottomBorderedInput, SignButton} from '@/components';
 import {
   AUTHENTICATION_TIME,
   AUTH_NUMBER_LENGTH,
   PHONE_NUMBER_INPUT_LENGTH,
-} from '../constants';
-import {useAuthTimer, useIsPhoneNumberValid} from '../hooks';
-import {useSignUpStore} from '../store';
+} from '@/constants';
+import {useAuthTimer, useIsPhoneNumberValid} from '@/hooks';
+import {useSignUpStore} from '@/store';
 import {
   convertNumberToMMSS,
   convertPhoneNumberFormat,
   forceNumber,
   request,
-} from '../utils';
+} from '@/utils';
 
 type PhoneAuthProps = {
   isSignUp?: boolean;
