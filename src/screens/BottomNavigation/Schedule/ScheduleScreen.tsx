@@ -19,25 +19,40 @@ import type {ScheduleNavigationProp} from '@/screens';
 
 type currentTabType = 'future' | 'past';
 
+type queryParamsType = {
+  type: currentTabType;
+  sort?: 'latest' | 'oldest' | 'boardingTime';
+  page?: string;
+};
+
+const fetchSchedule = (type: currentTabType, jwtToken: string) => {
+  const params: queryParamsType = {type};
+
+  if (type === 'past') {
+    params.sort = 'latest';
+    params.page = '1';
+  }
+
+  return fetch(
+    `https://dev.jj-gotogether.shop/web/schedules?${new URLSearchParams(
+      params,
+    ).toString()}`,
+    {
+      method: 'GET',
+      headers: {
+        'x-access-token': `${jwtToken}`,
+      },
+    },
+  ).then(res => res.json());
+};
+
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
   const [currentTab, setCurrentTab] = useState<currentTabType>('future');
 
-  console.log(auth.jwtToken);
-
   const {data, isLoading} = useQuery(currentTab, () =>
-    fetch(
-      `https://dev.jj-gotogether.shop/web/schedules?${new URLSearchParams({
-        type: currentTab,
-      }).toString()}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${auth.jwtToken}`,
-        },
-      },
-    ).then(res => res.json()),
+    fetchSchedule(currentTab, auth.jwtToken),
   );
 
   console.log(data);
@@ -88,46 +103,33 @@ export function ScheduleScreen() {
       </View>
       <ScrollView style={styles.scrollContainer}>
         {/* 데이터가 없는 경우 이 부분 표시 */}
-        {isCurrentFutureTabActive ? (
-          isLoading ? (
-            <View style={styles.loading}>
-              <ActivityIndicator color="#0066ff" />
-            </View>
-          ) : (
-            <>
-              <View style={styles.container}>
-                <View style={styles.circle} />
-                <View style={styles.announcementMessage}>
-                  <Text style={styles.message}>즐거운 여행길</Text>
-                  <Text style={styles.message}>
-                    일정과 항공편을 등록해 보세요.
-                  </Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={styles.addSchedule}
-                onPress={() => {
-                  navigation.navigate('Date');
-                }}>
-                <Text style={styles.addText}>일정 추가하기</Text>
-                <Icon name="chevron-right" color="#0066FF" size={20} />
-              </TouchableOpacity>
-            </>
-          )
-        ) : isLoading ? (
+        {isLoading ? (
           <View style={styles.loading}>
             <ActivityIndicator color="#0066ff" />
           </View>
         ) : (
+          // TODO: 데이터 있고 없고 분리(flat list로 데이터 보여주기)
           <>
             <View style={styles.container}>
               <View style={styles.circle} />
               <View style={styles.announcementMessage}>
-                <Text style={styles.message}>지난 일정이 없습니다!</Text>
-                <Text style={styles.message}>일정을 추가해주세요</Text>
+                <Text style={styles.message}>
+                  {isCurrentFutureTabActive
+                    ? '즐거운 여행길'
+                    : '지난 일정이 없습니다!'}
+                </Text>
+                <Text style={styles.message}>
+                  {isCurrentFutureTabActive
+                    ? '일정과 항공편을 등록해 보세요'
+                    : '일정을 추가해주세요'}
+                </Text>
               </View>
             </View>
-            <TouchableOpacity style={styles.addSchedule}>
+            <TouchableOpacity
+              style={styles.addSchedule}
+              onPress={() => {
+                navigation.navigate('Title');
+              }}>
               <Text style={styles.addText}>일정 추가하기</Text>
               <Icon name="chevron-right" color="#0066FF" size={20} />
             </TouchableOpacity>
