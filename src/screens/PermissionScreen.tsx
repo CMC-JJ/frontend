@@ -136,11 +136,11 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 15,
-    fontWeight: '400',
+    fontWeight: '700',
     marginBottom: 3,
     color: '#121212',
   },
-  grayFont: {color: '#63666A'},
+  grayFont: {color: '#63666A', fontWeight: '400'},
   logo: {
     resizeMode: 'contain',
     alignItems: 'center',

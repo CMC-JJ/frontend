@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   icon: {
     color: 'black',
   },
-  title: {fontSize: 20, marginBottom: 6, color: '#3A3D40'},
+  title: {fontSize: 15, marginBottom: 6, color: '#3A3D40', fontWeight: '500'},
   subtitle: {
     fontSize: 15,
     color: '#63666A',
