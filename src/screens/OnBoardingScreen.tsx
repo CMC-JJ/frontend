@@ -86,10 +86,13 @@ export function OnboardingScreen() {
 const navBarStyle = (backgroundColor: string) =>
   StyleSheet.create({
     navBar: {
-      width: 80,
+      alignItems: 'center',
+      width: 90,
       height: 3,
-      marginHorizontal: 6,
+      marginHorizontal: 3,
       backgroundColor: backgroundColor,
       bottom: hp('80%'),
+      borderWidth: 0,
+      borderRadius: 5,
     },
   });

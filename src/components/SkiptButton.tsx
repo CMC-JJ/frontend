@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {BUTTON_SIZE, getDefaultStyle} from '../constants/skipButton';
+import {getDefaultStyle} from '../constants/skipButton';
 import {
   Dimensions,
   StyleSheet,
@@ -19,7 +19,7 @@ const SkipButton = ({isLight, ...rest}: SkipButtonProps | DoneButtonProps) => (
 );
 const textStyle = StyleSheet.create({
   text: {
-    fontSize: BUTTON_SIZE / 2.5,
+    fontSize: 18,
     fontWeight: '700',
   },
 });
@@ -34,12 +34,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
-    width: 200,
-    height: 50,
+    width: 153,
+    height: 56,
     backgroundColor: 'white',
-    borderRadius: 10,
-    zIndex: 0,
+    borderRadius: 12,
   },
 });
 export default SkipButton;
