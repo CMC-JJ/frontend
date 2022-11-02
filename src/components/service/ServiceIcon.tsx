@@ -1,7 +1,8 @@
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FontText from '../FontText';
-
+import {IArirlineLists} from '@/screens';
+// import 'react-focus-rings/src/styles.css';
 //{result}: IArirlineLists[]
 export default function ServiceIcon({result}: any) {
   // const airlineList = useMemo(() => {
@@ -13,25 +14,28 @@ export default function ServiceIcon({result}: any) {
   //       </View>
   //     ));
   // }, [result]);
+  const [data, setData] = useState<IArirlineLists[]>();
+  useEffect(() => {
+    setData(result);
+    console.log(result);
+  }, [result]);
+  // const onToggle = (v: any) => {
+  //   setData(
+  //     data?.filter(elem =>
+  //       elem.id === v.id ? (elem.state = true) : (elem.state = false),
+  //     ),
+  //   );
+  // };
+
   return (
     <View style={styles.container}>
-      {/* <View style={styles.airlineList}>
-        <TouchableOpacity style={styles.circle}></TouchableOpacity>
-        <FontText style={styles.name}>대한항공</FontText>
-      </View> */}
-      {result &&
-        result.map((v: any) => (
+      {data &&
+        data.map((v: any) => (
           <View style={styles.airlineList} key={v.id}>
-            <TouchableOpacity style={styles.circle}>
-              <Image
-                // source={require(`${v.logoImageUrl}`)}
-                source={{uri: v.logoImageUrl}}
-                resizeMode="contain"
-                style={{
-                  width: 58,
-                  height: 58,
-                }}
-              />
+            <TouchableOpacity
+              // onPress={() => onToggle(v)}
+              style={[styles.circle, v.state && styles.activeIcon]}>
+              <Image source={{uri: v.logoImageUrl}} style={styles.image} />
             </TouchableOpacity>
             <FontText style={styles.name}>{v.name}</FontText>
           </View>
@@ -55,6 +59,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 10,
   },
   name: {marginTop: 13, fontWeight: '500', fontSize: 15},
+  image: {
+    width: 58,
+    height: 58,
+    resizeMode: 'cover',
+  },
+  activeIcon: {
+    shadowColor: '#0066FF',
+    shadowOpacity: 0.6,
+    shadowRadius: 5,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 10,
+  },
 });

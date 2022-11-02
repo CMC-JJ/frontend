@@ -32,6 +32,10 @@ export function ServiceScreen() {
   const airpostList = async () => {
     try {
       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
+      // setAirlineLists.apply(
+      //   {state: false},
+      //   {...res.result.airlines.map((v: any) => v)},
+      // );
       setAirlineLists(res.result.airlines);
     } catch (e) {
       console.log('error', e);
@@ -40,7 +44,9 @@ export function ServiceScreen() {
   useEffect(() => {
     airpostList();
   }, [airpostList]);
-
+  useEffect(() => {
+    console.log(airlineLists);
+  }, [airlineLists]);
   const isCurrentRegisteredTabActive = currentTab === 'airline';
   return (
     <SafeAreaView style={styles.container}>
