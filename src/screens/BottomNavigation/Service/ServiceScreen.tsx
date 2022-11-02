@@ -1,25 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontText from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
-// import {useAuthStore} from '../store';
-// import {request} from '../utils';
-
+import {useAuthStore} from '@/store';
+import {request} from '@/utils/api';
+import ServiceIcon from '@/components/service/ServiceIcon';
+export interface IArirlineLists {
+  id: String;
+  name: String;
+  logoImageUrl: String;
+}
 export function ServiceScreen() {
-  // const {auth} = useAuthStore();
-  // console.log(auth.jwtToken);
-  // const airpostList = async () =>
-  //   await request('web/airports', {Authorization: auth.jwtToken}, 'GET').then(
-  //     e => console.log(e),
-  //   );
-  // useEffect(() => {
-  //   airpostList();
-  // }, []);
+  const {auth} = useAuthStore();
+  const [airlineLists, setAirlineLists] = useState<IArirlineLists[]>();
+  const airpostList = async () => {
+    try {
+      await request('web/airlines', {}, 'GET', auth.jwtToken).then(res => {
+        setAirlineLists(res.result.airlines);
+      });
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
   const [currentTab, setCurrentTab] = useState<'airline' | 'airport'>(
     'airline',
   );
-
+  useEffect(() => {
+    airpostList();
+    console.log(airlineLists);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const isCurrentRegisteredTabActive = currentTab === 'airline';
   return (
     <SafeAreaView style={styles.container}>
@@ -59,10 +70,19 @@ export function ServiceScreen() {
           <FontText style={styles.allShowText}>전체보기</FontText>
         </TouchableOpacity>
       </View>
-      {/* <Button title={'버튼'} onPress={airpostList}></Button> */}
+
+      <View style={styleBody.icon}>
+        <ServiceIcon result={airlineLists} />
+      </View>
+      {/* <Button title={'버튼'} onPress={() => airpostList()} /> */}
     </SafeAreaView>
   );
 }
+const styleBody = StyleSheet.create({
+  icon: {
+    marginTop: 26,
+  },
+});
 const styles = StyleSheet.create({
   container: {
     padding: 25,
@@ -93,7 +113,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingVertical: 20,
+    paddingTop: 20,
   },
   bar: {
     width: 2,

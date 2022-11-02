@@ -14,6 +14,7 @@ export const request = async (
   url: string,
   data = {},
   method: HTTPMethod = 'GET',
+  token?: string,
 ) => {
   const options: Options = {
     headers: {
@@ -21,7 +22,9 @@ export const request = async (
     },
     method,
   };
-
+  if (token) {
+    options.headers['x-access-token'] = `${token}`;
+  }
   if (method === 'GET') {
     url += '?' + new URLSearchParams(data).toString();
   } else {
