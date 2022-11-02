@@ -8,9 +8,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {ArrowBack, SignButton} from '../components';
-import {useSignUpStore} from '../store';
-import {RootStackNavigationProp, RootStackParamList} from './RootStack';
+import {ArrowBack, SignButton} from '@/components';
+import {useSignUpStore} from '@/store';
+import type {RootStackNavigationProp, RootStackParamList} from '@/screens';
 
 type FindIdCompleteRouteProp = RouteProp<RootStackParamList, 'FindIdComplete'>;
 

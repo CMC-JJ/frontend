@@ -16,11 +16,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   checkPermissionsANDROID,
   checkPermissionsIOS,
-} from '../hooks/CheckPermission';
+} from '@/hooks/CheckPermission';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackNavigationProp} from './RootStack';
-import FontText from '../components/FontText';
-import {PermissionForm} from '../components';
+import {RootStackNavigationProp} from '@/screens';
+import FontText from '@/components/FontText';
+import {PermissionForm} from '@/components';
 export function PermissionScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const requestMultiplePermissions = async () => {
@@ -78,7 +78,7 @@ export function PermissionScreen() {
         /> */}
         <Image
           style={styles.logo}
-          source={require('../assets/images/permissionImage.png')}
+          source={require('@/assets/images/permissionImage.png')}
         />
       </View>
       <View style={styles.container}>

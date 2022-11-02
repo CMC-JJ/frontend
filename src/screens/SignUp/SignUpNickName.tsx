@@ -14,9 +14,9 @@ import {
   BottomBorderedInput,
   FormHeader,
   SignButton,
-} from '../components';
-import {useSignUpStore} from '../store';
-import {RootStackNavigationProp} from './RootStack';
+} from '@/components';
+import {useSignUpStore} from '@/store';
+import type {RootStackNavigationProp} from '@/screens';
 
 export function SignUpNickName() {
   const {setSignUpForm} = useSignUpStore();

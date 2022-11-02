@@ -1,23 +1,24 @@
-import {
-  BottomTabNavigationProp,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
-import {
-  CompositeNavigationProp,
-  NavigatorScreenParams,
-} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import type {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {NavigatorScreenParams} from '@react-navigation/native';
+import type {CompositeNavigationProp} from '@react-navigation/native';
 import React from 'react';
 import OctIcon from 'react-native-vector-icons/Octicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {HomeScreen, ServiceScreen, ScheduleScreen, MyPageScreen} from './';
-import {RootStackNavigationProp} from './RootStack';
 import {Platform} from 'react-native';
+import {
+  HomeScreen,
+  MyPageScreen,
+  ServiceScreen,
+  ScheduleStack,
+} from '@/screens';
+import type {RootStackNavigationProp, ScheduleStackParamList} from '@/screens';
 
 type MainTabParamList = {
   Home: undefined;
   Service: undefined;
-  Schedule: undefined;
+  Schedule: ScheduleStackParamList;
   MyPage: undefined;
 };
 
@@ -83,7 +84,7 @@ export function MainTab() {
       />
       <Tab.Screen
         name="Schedule"
-        component={ScheduleScreen}
+        component={ScheduleStack}
         options={{
           title: '일정',
           tabBarIcon: ({color, size}) => (

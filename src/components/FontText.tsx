@@ -11,5 +11,6 @@ export default function FontText({
 const styles = StyleSheet.create({
   font: {
     fontFamily: 'Pretendard',
+    color: 'black',
   },
 });

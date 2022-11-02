@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {BottomBorderedInput} from '.';
-import {useIdCheck, usePasswordCheck} from '../hooks';
+import {BottomBorderedInput} from '@/components';
+import {useIdCheck, usePasswordCheck} from '@/hooks';
 
 type Form = {
   userName: string;
