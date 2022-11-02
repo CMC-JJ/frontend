@@ -1,12 +1,9 @@
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import FontText from '../FontText';
 
 //{result}: IArirlineLists[]
 export default function ServiceIcon({result}: any) {
-  useEffect(() => {
-    console.log('result', result[0].logoImageUrl);
-  }, [result]);
   // const airlineList = useMemo(() => {
   //   result !== undefined &&
   //     result.map((v: any) => (

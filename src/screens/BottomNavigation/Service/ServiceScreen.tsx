@@ -14,23 +14,33 @@ export interface IArirlineLists {
 export function ServiceScreen() {
   const {auth} = useAuthStore();
   const [airlineLists, setAirlineLists] = useState<IArirlineLists[]>();
+  const [currentTab, setCurrentTab] = useState<'airline' | 'airport'>(
+    'airline',
+  );
+  // const airpostList = useCallback(() => {
+  //   async () => {
+  //     try {
+  //       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
+  //       setAirlineLists(res.result.airlines);
+  //     } catch (e) {
+  //       console.log('error', e);
+  //     }
+  //   };
+  // }, [setAirlineLists, auth.jwtToken]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const airpostList = async () => {
     try {
-      await request('web/airlines', {}, 'GET', auth.jwtToken).then(res => {
-        setAirlineLists(res.result.airlines);
-      });
+      const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
+      setAirlineLists(res.result.airlines);
     } catch (e) {
       console.log('error', e);
     }
   };
-  const [currentTab, setCurrentTab] = useState<'airline' | 'airport'>(
-    'airline',
-  );
   useEffect(() => {
     airpostList();
-    console.log(airlineLists);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [airpostList]);
+
   const isCurrentRegisteredTabActive = currentTab === 'airline';
   return (
     <SafeAreaView style={styles.container}>
