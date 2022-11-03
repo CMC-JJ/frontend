@@ -2,9 +2,10 @@ import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {ComponentProps} from 'react';
 import FontText from '../FontText';
 
-interface AirportIconProps extends ComponentProps<typeof TouchableOpacity> {
+interface ServiceIconProps extends ComponentProps<typeof TouchableOpacity> {
   name: string;
   logoImageUrl?: string;
+  region?: string;
   onClick: Boolean;
 }
 
@@ -14,13 +15,11 @@ export default function AirportIcon({
   onClick,
   style,
   ...rest
-}: AirportIconProps) {
+}: ServiceIconProps) {
   return (
     <>
       <TouchableOpacity
         {...rest}
-        // disabled={v.onClick}
-        // onPress={() => onToggle(v)}
         style={[styles.circle, onClick && styles.activeIcon, style]}>
         <Image
           source={{

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ComponentProps, useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontText from '@/components/FontText';
@@ -6,18 +6,23 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils/api';
 import ServiceIcon from '@/components/service/ServiceIcon';
-export interface ArirlineListsProps {
-  id: Number;
-  name: String;
-  logoImageUrl: String;
-  onClick: Boolean;
+import ServiceCard from '@/components/service/ServiceCard';
+
+export interface AirServiceProps
+  extends ComponentProps<typeof TouchableOpacity> {
+  id: number;
+  name: string;
+  logoImageUrl?: string;
+  region?: string;
+  onClick: boolean;
 }
 export function ServiceScreen() {
   const {auth} = useAuthStore();
-  const [airlineLists, setAirlineLists] = useState<ArirlineListsProps[]>();
+  const [airlineLists, setAirlineLists] = useState<AirServiceProps[]>();
   const [currentTab, setCurrentTab] = useState<'airline' | 'airport'>(
     'airline',
   );
+  const [currentClicked, setCurrentClicked] = useState<AirServiceProps>();
   // const airpostList = useCallback(() => {
   //   async () => {
   //     try {
@@ -89,21 +94,37 @@ export function ServiceScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* 아이콘&이름 */}
       <View style={styleBody.icon}>
-        <ServiceIcon result={airlineLists} />
+        <ServiceIcon
+          list={airlineLists}
+          setCurrentClicked={setCurrentClicked}
+        />
       </View>
-      {/* <Button title={'버튼'} onPress={() => airpostList()} /> */}
+      <View style={styleBody.line} />
+      {/* 서비스 상세정보 */}
+      <View>
+        <ServiceCard data={currentClicked} />
+      </View>
     </SafeAreaView>
   );
 }
+
 const styleBody = StyleSheet.create({
   icon: {
     marginTop: 26,
+  },
+  line: {
+    borderWidth: 1,
+    borderColor: '#DEDEDE',
+    marginTop: 15,
+    marginBottom: 25,
   },
 });
 const styles = StyleSheet.create({
   container: {
     padding: 25,
+    backgroundColor: '#FFFFFF',
   },
   titleContainer: {
     justifyContent: 'space-between',
@@ -146,6 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     position: 'absolute',
     right: 0,
+    bottom: 0,
     justifyContent: 'center',
   },
   allShowText: {

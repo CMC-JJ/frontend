@@ -1,10 +1,18 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {ArirlineListsProps} from '@/screens';
+import {AirServiceProps} from '@/screens';
 import {clickState} from '@/utils/clickUtils';
 import AirportIcon from '@/components/service/CircleTextIcon';
 
-export default function ServiceIcon({result}: any) {
+export default function ServiceIcon({
+  list,
+  setCurrentClicked,
+}: {
+  list: AirServiceProps[] | undefined;
+  setCurrentClicked: React.Dispatch<
+    React.SetStateAction<AirServiceProps | undefined>
+  >;
+}) {
   // const airlineList = useMemo(() => {
   //   result !== undefined &&
   //     result.map((v: any) => (
@@ -14,16 +22,16 @@ export default function ServiceIcon({result}: any) {
   //       </View>
   //     ));
   // }, [result]);
-  const [data, setData] = useState<ArirlineListsProps[]>();
+  const [data, setData] = useState<AirServiceProps[]>();
 
   useEffect(() => {
-    setData(result);
-  }, [result]);
+    setData(list);
+  }, [list]);
 
   //아이콘 클릭 함수
-  const onToggle = (v: ArirlineListsProps) => {
+  const onToggle = (v: AirServiceProps) => {
     setData(clickState(v, data));
-    console.log(v);
+    setCurrentClicked(v);
   };
   // useEffect(() => {
   //   console.log('data', data);
