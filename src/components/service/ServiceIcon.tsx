@@ -10,21 +10,14 @@ import {AirlinesDetailProps} from './ServiceCard';
 export default function ServiceIcon({
   list,
   setCurrentClicked,
+  isCurrentRegisteredTabActive,
 }: {
   list: AirServiceProps[] | undefined;
   setCurrentClicked: React.Dispatch<
     React.SetStateAction<AirlinesDetailProps | undefined>
   >;
+  isCurrentRegisteredTabActive: boolean;
 }) {
-  // const airlineList = useMemo(() => {
-  //   result !== undefined &&
-  //     result.map((v: any) => (
-  //       <View style={styles.airlineList}>
-  //         <TouchableOpacity style={styles.circle}></TouchableOpacity>
-  //         <FontText style={styles.name}>{v.name}</FontText>
-  //       </View>
-  //     ));
-  // }, [result]);
   const [data, setData] = useState<AirServiceProps[]>();
   const {auth} = useAuthStore();
   useEffect(() => {
@@ -38,18 +31,33 @@ export default function ServiceIcon({
         'GET',
         auth.jwtToken,
       );
-      // setCurrentClicked(res.result.airport);
-      setCurrentClicked({...res.result.airport, ...{image: v.logoImageUrl}});
+      setCurrentClicked(res.result.airport);
     } catch (e) {
-      console.log('항공사 서비스 리스트 조회 오류', e);
+      console.log('airportlist 오류', e);
+    }
+  };
+  const airlinesDetail = async (v: any) => {
+    try {
+      const res = await request(
+        `web/airlines/${v.id}`,
+        {},
+        'GET',
+        auth.jwtToken,
+      );
+      console.log(res);
+      setCurrentClicked({...res.result.airline, ...{image: v.logoImageUrl}});
+    } catch (e) {
+      console.log('airlinelist 오류', e);
     }
   };
   //아이콘 클릭 함수
   const onToggleAirports = (v: AirServiceProps) => {
     setData(clickState(v, data));
-
-    airportsDetail(v);
+    isCurrentRegisteredTabActive ? airportsDetail(v) : airlinesDetail(v);
   };
+  // useEffect(() => {
+  //   console.log('isCurrentRegisteredTabActive', isCurrentRegisteredTabActive);
+  // }, [isCurrentRegisteredTabActive]);
 
   return (
     <ScrollView
@@ -59,6 +67,7 @@ export default function ServiceIcon({
       {data &&
         data.map((v: any) => (
           <View style={styles.airlineList} key={v.id}>
+            {/* circle 이미지와 텍스트 set */}
             <AirportIcon
               name={v.name}
               logoImageUrl={v.logoImageUrl}

@@ -18,14 +18,31 @@ export interface AirlinesDetailProps {
   }[];
   image?: string;
 }
-
-export function ServiceCard({data}: {data: AirlinesDetailProps | undefined}) {
+export interface AirlinesDetailProps {
+  airlineId: number;
+  airlineName: string;
+  customerServiceNumber: string;
+  website: string;
+  avgReview: string;
+  availableAt: string;
+  airlineServices: {
+    id: number;
+    name: string;
+  }[];
+}
+export function ServiceCard({
+  data,
+  isCurrentRegisteredTabActive,
+}: {
+  data: AirlinesDetailProps | AirlinesDetailProps | undefined;
+  isCurrentRegisteredTabActive: boolean;
+}) {
   useEffect(() => {
-    console.log('ss', data?.availableAt);
+    console.log(data);
   }, [data]);
   return (
     <View style={styles.container}>
-      {/* title 부분 */}
+      {/* 타이틀 */}
       <View style={titleStyles.title}>
         {data?.image && (
           <View style={titleStyles.circle}>
@@ -37,7 +54,9 @@ export function ServiceCard({data}: {data: AirlinesDetailProps | undefined}) {
             />
           </View>
         )}
-        <FontText style={titleStyles.name}>{data?.airportName}</FontText>
+        <FontText style={titleStyles.name}>
+          {isCurrentRegisteredTabActive ? data?.airportName : data?.airlineName}
+        </FontText>
         <Icon name="star" size={13} color="#0066FF" style={titleStyles.star} />
         <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
         <IconFt
@@ -64,9 +83,14 @@ export function ServiceCard({data}: {data: AirlinesDetailProps | undefined}) {
           {data?.customerServiceNumber}
         </FontText>
       </View>
+      {/* 서비스 리스트 */}
       <View>
         <FlatList
-          data={data?.airportServices}
+          data={
+            isCurrentRegisteredTabActive
+              ? data?.airportServices
+              : data?.airlineServices
+          }
           style={infoStyles.info}
           ItemSeparatorComponent={() => <View style={infoStyles.separator} />}
           renderItem={({item}) => (
@@ -82,10 +106,11 @@ export function ServiceCard({data}: {data: AirlinesDetailProps | undefined}) {
           )}
           keyExtractor={item => item.id.toString()}
         />
-      </View>
-      <View style={availableAt.container}>
-        <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
-        <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+
+        <View style={availableAt.container}>
+          <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
+          <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+        </View>
       </View>
     </View>
   );
