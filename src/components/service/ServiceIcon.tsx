@@ -1,9 +1,9 @@
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import FontText from '../FontText';
-import {IArirlineLists} from '@/screens';
-// import 'react-focus-rings/src/styles.css';
-//{result}: IArirlineLists[]
+import {ArirlineListsProps} from '@/screens';
+import {clickState} from '@/utils/clickUtils';
+import AirportIcon from '@/components/service/CircleTextIcon';
+
 export default function ServiceIcon({result}: any) {
   // const airlineList = useMemo(() => {
   //   result !== undefined &&
@@ -14,49 +14,45 @@ export default function ServiceIcon({result}: any) {
   //       </View>
   //     ));
   // }, [result]);
-  const [data, setData] = useState<IArirlineLists[]>();
+  const [data, setData] = useState<ArirlineListsProps[]>();
+
   useEffect(() => {
     setData(result);
-    // console.log(result);
   }, [result]);
-  const onToggle = (v: any) => {
-    setData(
-      data?.map((elem: any) => {
-        if (elem.id === v.id) {
-          if (elem.onClick === false) {
-            elem.onClick = true;
-            return elem;
-          }
-        } else {
-          elem.onClick = false;
-          return elem;
-        }
-      }),
-    );
+
+  //아이콘 클릭 함수
+  const onToggle = (v: ArirlineListsProps) => {
+    setData(clickState(v, data));
+    console.log(v);
   };
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log('data', data);
+  // }, [data]);
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}>
       {data &&
         data.map((v: any) => (
           <View style={styles.airlineList} key={v.id}>
-            <TouchableOpacity
+            <AirportIcon
+              name={v.name}
+              logoImageUrl={v.logoImageUrl}
+              onClick={v.onClick}
               onPress={() => onToggle(v)}
-              style={[styles.circle, v.onClick && styles.activeIcon]}>
-              <Image source={{uri: v.logoImageUrl}} style={styles.image} />
-            </TouchableOpacity>
-            <FontText style={[styles.name, v.onClick && styles.activeText]}>
-              {v.name}
-            </FontText>
+              disabled={v.onClick}
+            />
           </View>
         ))}
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 10,
+    paddingLeft: 10,
+    left: -10,
     flexDirection: 'row',
   },
   airlineList: {

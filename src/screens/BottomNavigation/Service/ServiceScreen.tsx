@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils/api';
 import ServiceIcon from '@/components/service/ServiceIcon';
-export interface IArirlineLists {
+export interface ArirlineListsProps {
   id: Number;
   name: String;
   logoImageUrl: String;
@@ -14,7 +14,7 @@ export interface IArirlineLists {
 }
 export function ServiceScreen() {
   const {auth} = useAuthStore();
-  const [airlineLists, setAirlineLists] = useState<IArirlineLists[]>();
+  const [airlineLists, setAirlineLists] = useState<ArirlineListsProps[]>();
   const [currentTab, setCurrentTab] = useState<'airline' | 'airport'>(
     'airline',
   );
@@ -32,14 +32,11 @@ export function ServiceScreen() {
   const airpostList = async () => {
     try {
       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
-      // setAirlineLists.apply(
-      //   {state: false},
-      //   {...res.result.airlines.map((v: any) => v)},
-      // );
-      // setAirlineLists(res.result.airlines);
       setAirlineLists(
         res.result.airlines.map((v: any) => ({...v, ...{onClick: false}})),
       );
+      // setAirlineLists(v => v?.concat(res.result.airlines));
+      // setAirlineLists(v => v?.concat(res.result.airlines));
     } catch (e) {
       console.log('error', e);
     }
