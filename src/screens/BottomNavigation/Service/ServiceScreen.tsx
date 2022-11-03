@@ -6,7 +6,10 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils/api';
 import ServiceIcon from '@/components/service/ServiceIcon';
-import ServiceCard from '@/components/service/ServiceCard';
+import {
+  AirlinesDetailProps,
+  ServiceCard,
+} from '@/components/service/ServiceCard';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -22,7 +25,7 @@ export function ServiceScreen() {
   const [currentTab, setCurrentTab] = useState<'airline' | 'airport'>(
     'airline',
   );
-  const [currentClicked, setCurrentClicked] = useState<AirServiceProps>();
+  const [currentClicked, setCurrentClicked] = useState<AirlinesDetailProps>();
   // const airpostList = useCallback(() => {
   //   async () => {
   //     try {
@@ -34,7 +37,7 @@ export function ServiceScreen() {
   //   };
   // }, [setAirlineLists, auth.jwtToken]);
 
-  const airpostList = async () => {
+  const airlineList = async () => {
     try {
       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
       setAirlineLists(
@@ -47,13 +50,13 @@ export function ServiceScreen() {
     }
   };
   useEffect(() => {
-    airpostList();
+    airlineList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    console.log(airlineLists);
-  }, [airlineLists]);
+    console.log(currentClicked);
+  }, [currentClicked]);
   const isCurrentRegisteredTabActive = currentTab === 'airline';
   return (
     <SafeAreaView style={styles.container}>

@@ -6,7 +6,7 @@ interface ServiceIconProps extends ComponentProps<typeof TouchableOpacity> {
   name: string;
   logoImageUrl?: string;
   region?: string;
-  onClick: Boolean;
+  onClick: boolean;
 }
 
 export default function AirportIcon({
