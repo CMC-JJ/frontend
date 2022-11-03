@@ -17,27 +17,39 @@ export default function ServiceIcon({result}: any) {
   const [data, setData] = useState<IArirlineLists[]>();
   useEffect(() => {
     setData(result);
-    console.log(result);
+    // console.log(result);
   }, [result]);
-  // const onToggle = (v: any) => {
-  //   setData(
-  //     data?.filter(elem =>
-  //       elem.id === v.id ? (elem.state = true) : (elem.state = false),
-  //     ),
-  //   );
-  // };
-
+  const onToggle = (v: any) => {
+    setData(
+      data?.map((elem: any) => {
+        if (elem.id === v.id) {
+          if (elem.onClick === false) {
+            elem.onClick = true;
+            return elem;
+          }
+        } else {
+          elem.onClick = false;
+          return elem;
+        }
+      }),
+    );
+  };
+  useEffect(() => {
+    console.log('data', data);
+  }, [data]);
   return (
     <View style={styles.container}>
       {data &&
         data.map((v: any) => (
           <View style={styles.airlineList} key={v.id}>
             <TouchableOpacity
-              // onPress={() => onToggle(v)}
-              style={[styles.circle, v.state && styles.activeIcon]}>
+              onPress={() => onToggle(v)}
+              style={[styles.circle, v.onClick && styles.activeIcon]}>
               <Image source={{uri: v.logoImageUrl}} style={styles.image} />
             </TouchableOpacity>
-            <FontText style={styles.name}>{v.name}</FontText>
+            <FontText style={[styles.name, v.onClick && styles.activeText]}>
+              {v.name}
+            </FontText>
           </View>
         ))}
     </View>
@@ -50,7 +62,7 @@ const styles = StyleSheet.create({
   airlineList: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 14,
+    marginRight: 25,
   },
   circle: {
     width: 66,
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
     },
     elevation: 10,
   },
-  name: {marginTop: 13, fontWeight: '500', fontSize: 15},
+  name: {marginTop: 13, fontWeight: '500', fontSize: 15, color: '#979797'},
   image: {
     width: 58,
     height: 58,
@@ -84,4 +96,5 @@ const styles = StyleSheet.create({
     },
     elevation: 10,
   },
+  activeText: {fontWeight: '600', fontSize: 15, color: 'black'},
 });

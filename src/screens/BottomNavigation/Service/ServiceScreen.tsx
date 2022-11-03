@@ -7,9 +7,10 @@ import {useAuthStore} from '@/store';
 import {request} from '@/utils/api';
 import ServiceIcon from '@/components/service/ServiceIcon';
 export interface IArirlineLists {
-  id: String;
+  id: Number;
   name: String;
   logoImageUrl: String;
+  onClick: Boolean;
 }
 export function ServiceScreen() {
   const {auth} = useAuthStore();
@@ -28,7 +29,6 @@ export function ServiceScreen() {
   //   };
   // }, [setAirlineLists, auth.jwtToken]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const airpostList = async () => {
     try {
       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
@@ -36,14 +36,19 @@ export function ServiceScreen() {
       //   {state: false},
       //   {...res.result.airlines.map((v: any) => v)},
       // );
-      setAirlineLists(res.result.airlines);
+      // setAirlineLists(res.result.airlines);
+      setAirlineLists(
+        res.result.airlines.map((v: any) => ({...v, ...{onClick: false}})),
+      );
     } catch (e) {
       console.log('error', e);
     }
   };
   useEffect(() => {
     airpostList();
-  }, [airpostList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     console.log(airlineLists);
   }, [airlineLists]);
