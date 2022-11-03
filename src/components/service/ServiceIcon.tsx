@@ -38,6 +38,7 @@ export default function ServiceIcon({
         'GET',
         auth.jwtToken,
       );
+      // setCurrentClicked(res.result.airport);
       setCurrentClicked({...res.result.airport, ...{image: v.logoImageUrl}});
     } catch (e) {
       console.log('항공사 서비스 리스트 조회 오류', e);

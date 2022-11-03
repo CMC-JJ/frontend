@@ -1,8 +1,9 @@
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, FlatList} from 'react-native';
 import React, {useEffect} from 'react';
 import FontText from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFt from 'react-native-vector-icons/Feather';
+import IconOct from 'react-native-vector-icons/Octicons';
 
 export interface AirlinesDetailProps {
   airportId: number;
@@ -10,7 +11,7 @@ export interface AirlinesDetailProps {
   customerServiceNumber: string;
   website: string;
   avgReview: string;
-  availdableAt: string;
+  availableAt: string;
   airportServices: {
     id: number;
     name: string;
@@ -20,7 +21,7 @@ export interface AirlinesDetailProps {
 
 export function ServiceCard({data}: {data: AirlinesDetailProps | undefined}) {
   useEffect(() => {
-    console.log('ss', data);
+    console.log('ss', data?.availableAt);
   }, [data]);
   return (
     <View style={styles.container}>
@@ -52,20 +53,73 @@ export function ServiceCard({data}: {data: AirlinesDetailProps | undefined}) {
           style={titleStyles.link}
         />
       </View>
-
-      <View />
-      <View />
-      <View />
+      {/* 전화번호 */}
+      <View
+        style={
+          data?.image
+            ? [titleStyles.phNumContainer, {marginLeft: 53}]
+            : titleStyles.phNumContainer
+        }>
+        <FontText style={titleStyles.phNum}>
+          {data?.customerServiceNumber}
+        </FontText>
+      </View>
+      <View>
+        <FlatList
+          data={data?.airportServices}
+          style={infoStyles.info}
+          ItemSeparatorComponent={() => <View style={infoStyles.separator} />}
+          renderItem={({item}) => (
+            <View style={infoStyles.infoContainer}>
+              <IconOct
+                style={infoStyles.dot}
+                size={20}
+                color="black"
+                name="dot-fill"
+              />
+              <FontText style={infoStyles.text}>{item.name}</FontText>
+            </View>
+          )}
+          keyExtractor={item => item.id.toString()}
+        />
+      </View>
+      <View style={availableAt.container}>
+        <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
+        <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+      </View>
     </View>
   );
 }
+const infoStyles = StyleSheet.create({
+  info: {
+    marginBottom: 32,
+  },
+  separator: {
+    height: 10,
+  },
+  text: {fontWeight: '500', fontSize: 14},
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dot: {
+    marginLeft: 10,
+    marginRight: 31,
+  },
+});
+const availableAt = StyleSheet.create({
+  container: {
+    marginLeft: 51,
+  },
+  title: {fontSize: 15, fontWeight: '600', marginBottom: 11},
+  time: {fontSize: 14, fontWeight: '500', color: '#7C7C7C'},
+});
 const titleStyles = StyleSheet.create({
   title: {flexDirection: 'row', alignItems: 'center'},
   name: {fontWeight: '700', fontSize: 20},
   circle: {
     width: 33,
     height: 33,
-    marginRight: 20,
     borderRadius: 15,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -78,6 +132,7 @@ const titleStyles = StyleSheet.create({
       width: 1,
     },
     elevation: 10,
+    marginRight: 20,
   },
   star: {
     marginLeft: 10,
@@ -94,6 +149,20 @@ const titleStyles = StyleSheet.create({
     right: 50,
   },
   link: {position: 'absolute', right: 0},
+  phNumContainer: {
+    width: 100,
+    height: 26,
+    borderRadius: 29,
+    backgroundColor: '#F8F8F8',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 9,
+    marginBottom: 32,
+  },
+  phNum: {
+    fontSize: 12,
+    fontWeight: '500',
+  },
 });
 
 const styles = StyleSheet.create({
@@ -108,9 +177,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 34,
   },
-
-  info: {},
-  availableAt: {},
 
   image: {
     width: 30,
