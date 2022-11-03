@@ -7,13 +7,18 @@ import FontText from './FontText';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';
 import {data} from '@/assets/texts/TermsText';
-interface IForm {
+interface PermissionFormProps {
   title: string;
   subtitle: string;
   iconName: string;
   detailInfo?: string;
 }
-export function PermissionForm({title, subtitle, iconName, detailInfo}: IForm) {
+export function PermissionForm({
+  title,
+  subtitle,
+  iconName,
+  detailInfo,
+}: PermissionFormProps) {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <View style={styles.container}>
