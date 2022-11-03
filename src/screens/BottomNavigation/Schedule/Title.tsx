@@ -14,17 +14,6 @@ import {ScheduleNavigationProp} from './ScheduleStack';
 export function Title() {
   const navigation = useNavigation<ScheduleNavigationProp>();
 
-  // useEffect(() => {
-  //   navigation.getParent()?.setOptions({
-  //     tabBarStyle: {display: 'none'},
-  //   });
-  //   return () =>
-  //     navigation.getParent()?.setOptions({
-  //       tabBarStyle: undefined,
-  //     });
-  // }, [navigation]);
-
-  // TODO: 이 부분 바텀 내비게이션 제대로 ios에서 안빠지는 이슈가 있음
   useFocusEffect(
     useCallback(() => {
       navigation.getParent()?.setOptions({
@@ -32,7 +21,19 @@ export function Title() {
       });
       return () => {
         navigation.getParent()?.setOptions({
-          tabBarStyle: {display: 'flex'},
+          tabBarStyle: [
+            {
+              position: 'absolute',
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              backgroundColor: '#ffffff',
+              shadowColor: 'rgba(0, 0, 0, 0.25)',
+              shadowOffset: {width: 0, height: -3},
+              shadowOpacity: 0.5,
+              elevation: 10,
+            },
+            Platform.OS === 'ios' && {height: 96},
+          ],
         });
       };
     }, [navigation]),
