@@ -12,10 +12,21 @@ import {
   MainTab,
   FindIdComplete,
   FindPasswordComplete,
+  PermissionScreen,
+  OnboardingScreen,
+  StartScreen,
+  TermsScreen,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 
 export type RootStackParamList = {
+  Permission: undefined;
+  OnBoarding: undefined;
+  Start: undefined;
+  Terms: {
+    title: string;
+    text: string;
+  };
   SignIn: undefined;
   FindId: undefined;
   FindIdComplete: {
@@ -45,6 +56,26 @@ function RootStack() {
 
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Permission"
+        component={PermissionScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OnBoarding"
+        component={OnboardingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Start"
+        component={StartScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}

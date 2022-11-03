@@ -21,5 +21,5 @@ function App() {
     </QueryClientProvider>
   );
 }
-
 export default App;
+// const styles = StyleSheet.create({});
