@@ -1,24 +1,28 @@
-import React from 'react';
+import React, {ComponentProps} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-type ConditionalButtonProps = {
+interface ConditionalButtonProps
+  extends ComponentProps<typeof TouchableOpacity> {
   isValid: boolean;
   buttonText: string;
   onPress?: () => void;
   isbackgroundWhite?: boolean;
-};
+}
 
 export function SignButton({
   isValid,
   buttonText,
   onPress,
   isbackgroundWhite = false,
+  style,
+  ...rest
 }: ConditionalButtonProps) {
   return (
     <TouchableOpacity
       disabled={!isValid}
       onPress={onPress}
-      style={styles.touchable}>
+      style={[styles.touchable, style]}
+      {...rest}>
       <View
         style={[
           styles.button,

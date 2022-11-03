@@ -5,8 +5,16 @@ platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'frontend' do
-  config = use_native_modules!
+  #Permission
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts"
 
+
+
+  config = use_native_modules!
+  
   # Flags change depending on the env values.
   flags = get_default_flags()
 

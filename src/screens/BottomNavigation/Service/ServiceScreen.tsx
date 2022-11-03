@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export function ServiceScreen() {
   return (
-    <View>
+    <SafeAreaView>
       <Text>서비스</Text>
-    </View>
+    </SafeAreaView>
   );
 }
