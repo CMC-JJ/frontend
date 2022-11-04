@@ -1,6 +1,5 @@
 import create from 'zustand';
 
-// userId 필요
 export type Schedule = {
   name: string;
   startAt: Date;
@@ -31,7 +30,7 @@ const initialState: Schedule = {
   airlineServiceIds: [],
 };
 
-export const useAuthStore = create<ScheduleStore>(set => ({
+export const useScheduleStore = create<ScheduleStore>(set => ({
   schedule: initialState,
   setSchedule: (key, value) =>
     set(state => ({

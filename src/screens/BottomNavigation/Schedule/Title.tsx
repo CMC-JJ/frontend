@@ -1,4 +1,6 @@
 import {ArrowBack, BottomBorderedInput, SignButton} from '@/components';
+import FontText from '@/components/FontText';
+import {useScheduleStore} from '@/store';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useState, useCallback, useEffect} from 'react';
 import {
@@ -6,13 +8,13 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import {ScheduleNavigationProp} from './ScheduleStack';
 
 export function Title() {
   const navigation = useNavigation<ScheduleNavigationProp>();
+  const {schedule, setSchedule, initializeSchedule} = useScheduleStore();
 
   useFocusEffect(
     useCallback(() => {
@@ -39,16 +41,15 @@ export function Title() {
     }, [navigation]),
   );
 
-  const [title, setTitle] = useState<string>('');
+  useEffect(() => {
+    initializeSchedule();
+  }, [initializeSchedule]);
+
   const [isValid, setIsValid] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsValid(title.trim().length >= 1);
-  }, [title]);
-
-  const onPress = () => {
-    navigation.navigate('Date');
-  };
+    setIsValid(schedule.name.trim().length >= 1);
+  }, [schedule.name]);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -58,26 +59,32 @@ export function Title() {
       </View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text
+          <FontText
             style={[
               styles.header,
               Platform.OS === 'android' && {fontWeight: '900'},
             ]}>
             {'가치가자와\n함께 떠나요'}
-          </Text>
+          </FontText>
         </View>
-        <Text style={styles.subheader}>어떤 여행을 떠나시나요?</Text>
+        <FontText style={styles.subheader}>어떤 여행을 떠나시나요?</FontText>
         <View style={styles.inputContainer}>
           <BottomBorderedInput
-            value={title}
-            isCharacterExisted={title.length > 0}
-            onChangeText={setTitle}
+            value={schedule.name}
+            isCharacterExisted={schedule.name.length > 0}
+            onChangeText={text => setSchedule('name', text)}
             placeholder="10자 이내 작성"
             returnKeyType="done"
           />
         </View>
         <View style={styles.footer}>
-          <SignButton isValid={isValid} buttonText="다음" onPress={onPress} />
+          <SignButton
+            isValid={isValid}
+            buttonText="다음"
+            onPress={() => {
+              navigation.navigate('Date');
+            }}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -101,7 +108,6 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   header: {
-    fontFamily: 'Pretendard',
     fontWeight: '600',
     fontSize: 26,
     lineHeight: 34,
@@ -110,7 +116,6 @@ const styles = StyleSheet.create({
   subheader: {
     marginTop: 11,
 
-    fontFamily: 'Pretendard',
     fontWeight: '400',
     fontSize: 15,
     lineHeight: 23,
