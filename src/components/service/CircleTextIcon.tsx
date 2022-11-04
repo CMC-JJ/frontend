@@ -6,13 +6,13 @@ interface ServiceIconProps extends ComponentProps<typeof TouchableOpacity> {
   name: string;
   logoImageUrl?: string;
   region?: string;
-  onClick: boolean;
+  isActived?: boolean;
 }
 
 export default function AirportIcon({
   name,
   logoImageUrl,
-  onClick,
+  isActived,
   region,
   style,
   ...rest
@@ -21,9 +21,10 @@ export default function AirportIcon({
     <>
       <TouchableOpacity
         {...rest}
-        style={[styles.circle, onClick && styles.activeIcon, style]}>
+        style={[styles.circle, isActived && styles.activeIcon, style]}>
         {region ? (
-          <FontText style={[styles.iconText, onClick && styles.activeIconText]}>
+          <FontText
+            style={[styles.iconText, isActived && styles.activeIconText]}>
             {region}
           </FontText>
         ) : (
@@ -35,7 +36,7 @@ export default function AirportIcon({
           />
         )}
       </TouchableOpacity>
-      <FontText style={[styles.name, onClick && styles.activeText]}>
+      <FontText style={[styles.name, isActived && styles.activeText]}>
         {name}
       </FontText>
     </>

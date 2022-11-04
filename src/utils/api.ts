@@ -1,3 +1,4 @@
+import {authStore} from '@/store';
 import {Alert} from 'react-native';
 
 const BASE_URL = 'https://dev.jj-gotogether.shop/';
@@ -14,7 +15,6 @@ export const request = async (
   url: string,
   data = {},
   method: HTTPMethod = 'GET',
-  token?: string,
 ) => {
   const options: Options = {
     headers: {
@@ -22,8 +22,9 @@ export const request = async (
     },
     method,
   };
-  if (token) {
-    options.headers['x-access-token'] = `${token}`;
+  const store = authStore.getState();
+  if (store) {
+    options.headers['x-access-token'] = `${store.auth.jwtToken}`;
   }
   if (method === 'GET') {
     url += '?' + new URLSearchParams(data).toString();

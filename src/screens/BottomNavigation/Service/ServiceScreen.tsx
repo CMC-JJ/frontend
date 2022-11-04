@@ -1,18 +1,16 @@
-import React, {
-  ComponentProps,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {ComponentProps, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontText from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useAuthStore} from '@/store';
-import {request} from '@/utils/api';
 import ServiceIcon from '@/components/service/ServiceIcon';
 import {AirDetailProps, ServiceCard} from '@/components/service/ServiceCard';
+import {
+  fetchAirlineLists,
+  fetchAirlinesDetail,
+  fetchAirportLists,
+  fetchAirportsDetail,
+} from '@/utils/fetch';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -23,122 +21,48 @@ export interface AirServiceProps
   onClick: boolean;
 }
 export function ServiceScreen() {
-  const {auth} = useAuthStore();
-  const [airlineLists, setAirlineLists] = useState<AirServiceProps[]>();
-  const [airportLists, setAirportLists] = useState<AirServiceProps[]>();
+  // const {auth} = useAuthStore();
+  const [airlineLists, setAirlineLists] = useState<AirServiceProps[]>([]);
+  const [airportLists, setAirportLists] = useState<AirServiceProps[]>([]);
   const [currentTab, setCurrentTab] = useState<'airport' | 'airline'>(
     'airport',
   );
-  const [currentClicked, setCurrentClicked] = useState<AirDetailProps>();
-  // const airpostList = useCallback(() => {
-  //   async () => {
-  //     try {
-  //       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
-  //       setAirlineLists(res.result.airlines);
-  //     } catch (e) {
-  //       console.log('error', e);
-  //     }
-  //   };
-  // }, [setAirlineLists, auth.jwtToken]);
-  const fetchAirportLists = async () => {
-    try {
-      const res = await request('web/airports', {}, 'GET', auth.jwtToken);
-      airportLists
-        ? ''
-        : setAirportLists(
-            res.result.airports.map((v: any) => ({...v, ...{onClick: false}})),
-          );
-      console.log('port');
-    } catch (e) {
-      console.log('error', e);
-    }
-  };
-  const fetchAirlineLists = useCallback(async () => {
-    try {
-      const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
-      airlineLists
-        ? ''
-        : setAirlineLists(
-            res.result.airlines.map((v: any) => ({...v, ...{onClick: false}})),
-          );
-      console.log('line');
-    } catch (e) {
-      console.log('error', e);
-    }
-  }, [airlineLists, auth.jwtToken]);
-  const fetchAirportDetail = useCallback(async () => {
-    const resDetail = await request(
-      `web/airports/${1}`,
-      {},
-      'GET',
-      auth.jwtToken,
-    );
-    setCurrentClicked(resDetail.result.airport);
-  }, [auth.jwtToken]);
-  const fetchAirlineDetail = useCallback(async () => {
-    const resDetail = await request(
-      `web/airlines/${1}`,
-      {},
-      'GET',
-      auth.jwtToken,
-    );
-    const image = await request('web/airlines', {}, 'GET', auth.jwtToken);
-    setCurrentClicked({
-      ...resDetail.result.airline,
-      ...{image: image.result.airlines[0].logoImageUrl},
-    });
-  }, [auth.jwtToken]);
-
-  const airportButton = useCallback(() => {
-    setCurrentTab('airport');
-    fetchAirportDetail();
-    airportLists?.forEach(v => {
-      if (v.id === 1) {
-        v.onClick = true;
-      } else {
-        v.onClick = false;
-      }
-    });
-  }, [airportLists, fetchAirportDetail]);
-  // const airlineButton = () => {
-  //   setCurrentTab('airline');
-  //   fetchAirlineLists();
-  //   fetchAirlineDetail();
-  //   airlineLists?.forEach(v => {
-  //     if (v.id === 1) {
-  //       v.onClick = true;
-  //     } else {
-  //       v.onClick = false;
-  //     }
-  //   });
-  // };
-  const airlineButton = useCallback(() => {
-    setCurrentTab('airline');
-    fetchAirlineLists();
-    fetchAirlineDetail();
-    airlineLists?.forEach(v => {
-      if (v.id === 1) {
-        v.onClick = true;
-      } else {
-        v.onClick = false;
-      }
-    });
-  }, [airlineLists, fetchAirlineDetail, fetchAirlineLists]);
-  const isCurrentRegisteredTabActive = useMemo(
-    () => currentTab === 'airport',
-    [currentTab],
-  );
+  const [menu, setMenu] = useState<AirServiceProps | null>(null);
+  const [detail, setDetail] = useState<AirDetailProps | null>(null);
 
   useEffect(() => {
-    isCurrentRegisteredTabActive
-      ? airportLists
-        ? ''
-        : (fetchAirportLists(), fetchAirportDetail())
-      : airlineLists
-      ? ''
-      : (fetchAirlineLists(), fetchAirlineDetail());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (menu) {
+      switch (currentTab) {
+        case 'airline':
+          if (airlineLists) {
+            fetchAirlinesDetail(menu).then(_detail => setDetail(_detail));
+          }
+          break;
+        case 'airport':
+          if (airportLists) {
+            fetchAirportsDetail(menu).then(_detail => setDetail(_detail));
+          }
+          break;
+      }
+    }
+  }, [airlineLists, airportLists, currentTab, menu]);
+
+  useEffect(() => {
+    switch (currentTab) {
+      case 'airline':
+        fetchAirlineLists().then(list => {
+          setAirlineLists(list);
+          setMenu(list[0]);
+        });
+        break;
+      case 'airport':
+        fetchAirportLists().then(list => {
+          setAirportLists(list);
+          setMenu(list[0]);
+        });
+        break;
+    }
+  }, [currentTab]);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -152,26 +76,21 @@ export function ServiceScreen() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             // style={[styles.button]}
-            onPress={() => {
-              airportButton();
-            }}>
+            onPress={() => setCurrentTab('airport')}>
             <FontText
               style={[
                 styles.tabText,
-                isCurrentRegisteredTabActive && styles.activeText,
+                currentTab === 'airport' && styles.activeText,
               ]}>
               공항
             </FontText>
           </TouchableOpacity>
           <View style={styles.bar} />
-          <TouchableOpacity
-            onPress={() => {
-              airlineButton();
-            }}>
+          <TouchableOpacity onPress={() => setCurrentTab('airline')}>
             <FontText
               style={[
                 styles.tabText,
-                !isCurrentRegisteredTabActive && styles.activeText,
+                currentTab === 'airline' && styles.activeText,
               ]}>
               항공사
             </FontText>
@@ -184,18 +103,15 @@ export function ServiceScreen() {
         {/* 아이콘&이름 */}
         <View style={styleBody.icon}>
           <ServiceIcon
-            list={isCurrentRegisteredTabActive ? airportLists : airlineLists}
-            setCurrentClicked={setCurrentClicked}
-            isCurrentRegisteredTabActive={isCurrentRegisteredTabActive}
+            list={currentTab === 'airport' ? airportLists : airlineLists}
+            menu={menu}
+            onMenuPress={_menu => setMenu(_menu)}
           />
         </View>
         <View style={styleBody.line} />
         {/* 서비스 상세정보 */}
         <View>
-          <ServiceCard
-            data={currentClicked}
-            isCurrentRegisteredTabActive={isCurrentRegisteredTabActive}
-          />
+          <ServiceCard data={detail} type={currentTab} />
         </View>
       </ScrollView>
     </SafeAreaView>

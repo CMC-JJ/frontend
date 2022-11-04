@@ -1,63 +1,36 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {AirServiceProps} from '@/screens';
-import {clickState} from '@/utils/clickUtils';
 import AirportIcon from '@/components/service/CircleTextIcon';
-import {useAuthStore} from '@/store';
-import {request} from '@/utils/api';
-import {AirDetailProps} from './ServiceCard';
 
 export default function ServiceIcon({
   list,
-  setCurrentClicked,
-  isCurrentRegisteredTabActive,
-}: {
+  menu,
+  onMenuPress,
+}: // setCurrentClicked,
+// isCurrentRegisteredTabActive,
+{
   list: AirServiceProps[] | undefined;
-  setCurrentClicked: React.Dispatch<
-    React.SetStateAction<AirDetailProps | undefined>
-  >;
-  isCurrentRegisteredTabActive: boolean;
+  menu: AirServiceProps | null;
+  onMenuPress?: (menu: AirServiceProps) => void;
+  // setCurrentClicked: React.Dispatch<
+  //   React.SetStateAction<AirDetailProps | undefined>
+  // >;
+  // isCurrentRegisteredTabActive: boolean;
 }) {
-  const [data, setData] = useState<AirServiceProps[]>();
-  const {auth} = useAuthStore();
-  useEffect(() => {
-    setData(list);
-  }, [list]);
+  // const [data, setData] = useState<AirServiceProps[]>();
+  // const {auth} = useAuthStore();
+  // useEffect(() => {
+  //   setData(list);
+  // }, [list]);
   // useEffect(() => {
   //   console.log(data);
   // }, [data]);
-  const airportsDetail = async (v: any) => {
-    try {
-      const res = await request(
-        `web/airports/${v.id}`,
-        {},
-        'GET',
-        auth.jwtToken,
-      );
-      setCurrentClicked(res.result.airport);
-    } catch (e) {
-      console.log('airportlist 오류', e);
-    }
-  };
-  const airlinesDetail = async (v: any) => {
-    try {
-      const res = await request(
-        `web/airlines/${v.id}`,
-        {},
-        'GET',
-        auth.jwtToken,
-      );
-      console.log(res);
-      setCurrentClicked({...res.result.airline, ...{image: v.logoImageUrl}});
-    } catch (e) {
-      console.log('airlinelist 오류', e);
-    }
-  };
   //아이콘 클릭 함수
-  const onToggleAirports = (v: AirServiceProps) => {
-    setData(clickState(v, data));
-    isCurrentRegisteredTabActive ? airportsDetail(v) : airlinesDetail(v);
-  };
+  // const onToggleAirports = (v: AirServiceProps) => {
+  //   setData(clickState(v, data));
+  //   isCurrentRegisteredTabActive ? airportsDetail(v) : airlinesDetail(v);
+  // };
   // useEffect(() => {
   //   console.log('isCurrentRegisteredTabActive', isCurrentRegisteredTabActive);
   // }, [isCurrentRegisteredTabActive]);
@@ -67,16 +40,17 @@ export default function ServiceIcon({
       style={styles.container}
       horizontal={true}
       showsHorizontalScrollIndicator={false}>
-      {data &&
-        data.map((v: any) => (
+      {list &&
+        list.map((v: AirServiceProps) => (
           <View style={styles.airlineList} key={v.id}>
             {/* circle 이미지와 텍스트 set */}
             <AirportIcon
               name={v.name}
               logoImageUrl={v.logoImageUrl}
-              onClick={v.onClick}
-              onPress={() => onToggleAirports(v)}
-              disabled={v.onClick}
+              isActived={menu?.name === v.name}
+              disabled={menu?.name === v.name}
+              onPress={() => onMenuPress?.(v)}
+              // onPress={() => onToggleAirports(v)}
               region={v.region}
             />
           </View>

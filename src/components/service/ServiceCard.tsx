@@ -18,60 +18,6 @@ export interface AirDetailProps {
   }[];
   image?: string;
 }
-
-//   {
-//     id: 1,
-//     name: '임산부, 유아, 어린이',
-//   },
-//   {
-//     id: 2,
-//     name: '교통약자 동반',
-//   },
-//   {
-//     id: 3,
-//     name: '반려동물 동반',
-//   },
-//   {
-//     id: 1,
-//     name: '임산부, 유아, 어린이',
-//   },
-//   {
-//     id: 2,
-//     name: '교통약자 동반',
-//   },
-//   {
-//     id: 3,
-//     name: '반려동물 동반',
-//   },
-//   {
-//     id: 1,
-//     name: '임산부, 유아, 어린이',
-//   },
-//   {
-//     id: 2,
-//     name: '교통약자 동반',
-//   },
-//   {
-//     id: 3,
-//     name: '반려동물 동반',
-//   },
-//   {
-//     id: 2,
-//     name: '교통약자 동반',
-//   },
-//   {
-//     id: 3,
-//     name: '반려동물 동반',
-//   },
-//   {
-//     id: 2,
-//     name: '교통약자 동반',
-//   },
-//   {
-//     id: 3,
-//     name: '반려동물 동반',
-//   },
-// ];
 export interface AirDetailProps {
   airlineId: number;
   airlineName: string;
@@ -84,16 +30,17 @@ export interface AirDetailProps {
     name: string;
   }[];
 }
+
 export function ServiceCard({
   data,
-  isCurrentRegisteredTabActive,
+  type,
 }: {
-  data: AirDetailProps | undefined;
-  isCurrentRegisteredTabActive: boolean;
+  data: AirDetailProps | null;
+  type: 'airline' | 'airport';
 }) {
-  const list = isCurrentRegisteredTabActive
-    ? data?.airportServices
-    : data?.airlineServices;
+  const list =
+    type === 'airport' ? data?.airportServices : data?.airlineServices;
+  console.log('AA', list);
   const serviceList = useMemo(
     () => (
       <View style={infoStyles.info}>
@@ -128,7 +75,7 @@ export function ServiceCard({
           </View>
         )}
         <FontText style={titleStyles.name}>
-          {isCurrentRegisteredTabActive ? data?.airportName : data?.airlineName}
+          {type === 'airport' ? data?.airportName : data?.airlineName}
         </FontText>
         <Icon name="star" size={13} color="#0066FF" style={titleStyles.star} />
         <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
