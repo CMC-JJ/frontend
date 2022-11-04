@@ -13,6 +13,7 @@ export default function AirportIcon({
   name,
   logoImageUrl,
   onClick,
+  region,
   style,
   ...rest
 }: ServiceIconProps) {
@@ -21,12 +22,18 @@ export default function AirportIcon({
       <TouchableOpacity
         {...rest}
         style={[styles.circle, onClick && styles.activeIcon, style]}>
-        <Image
-          source={{
-            uri: logoImageUrl,
-          }}
-          style={styles.image}
-        />
+        {region ? (
+          <FontText style={[styles.iconText, onClick && styles.activeIconText]}>
+            {region}
+          </FontText>
+        ) : (
+          <Image
+            source={{
+              uri: logoImageUrl,
+            }}
+            style={styles.image}
+          />
+        )}
       </TouchableOpacity>
       <FontText style={[styles.name, onClick && styles.activeText]}>
         {name}
@@ -69,4 +76,10 @@ const styles = StyleSheet.create({
     height: 58,
     resizeMode: 'cover',
   },
+  iconText: {
+    fontSize: 19,
+    fontWeight: '700',
+    color: '#BCBCBC',
+  },
+  activeIconText: {fontSize: 19, fontWeight: '700', color: '#0066FF'},
 });

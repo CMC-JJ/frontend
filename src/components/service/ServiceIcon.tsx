@@ -23,6 +23,9 @@ export default function ServiceIcon({
   useEffect(() => {
     setData(list);
   }, [list]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
   const airportsDetail = async (v: any) => {
     try {
       const res = await request(
@@ -74,6 +77,7 @@ export default function ServiceIcon({
               onClick={v.onClick}
               onPress={() => onToggleAirports(v)}
               disabled={v.onClick}
+              region={v.region}
             />
           </View>
         ))}
