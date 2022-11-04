@@ -1,11 +1,11 @@
-import {View, StyleSheet, Image, FlatList} from 'react-native';
-import React, {useEffect} from 'react';
+import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
+import React, {useMemo} from 'react';
 import FontText from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFt from 'react-native-vector-icons/Feather';
 import IconOct from 'react-native-vector-icons/Octicons';
 
-export interface AirlinesDetailProps {
+export interface AirDetailProps {
   airportId: number;
   airportName: string;
   customerServiceNumber: string;
@@ -18,7 +18,61 @@ export interface AirlinesDetailProps {
   }[];
   image?: string;
 }
-export interface AirlinesDetailProps {
+
+//   {
+//     id: 1,
+//     name: '임산부, 유아, 어린이',
+//   },
+//   {
+//     id: 2,
+//     name: '교통약자 동반',
+//   },
+//   {
+//     id: 3,
+//     name: '반려동물 동반',
+//   },
+//   {
+//     id: 1,
+//     name: '임산부, 유아, 어린이',
+//   },
+//   {
+//     id: 2,
+//     name: '교통약자 동반',
+//   },
+//   {
+//     id: 3,
+//     name: '반려동물 동반',
+//   },
+//   {
+//     id: 1,
+//     name: '임산부, 유아, 어린이',
+//   },
+//   {
+//     id: 2,
+//     name: '교통약자 동반',
+//   },
+//   {
+//     id: 3,
+//     name: '반려동물 동반',
+//   },
+//   {
+//     id: 2,
+//     name: '교통약자 동반',
+//   },
+//   {
+//     id: 3,
+//     name: '반려동물 동반',
+//   },
+//   {
+//     id: 2,
+//     name: '교통약자 동반',
+//   },
+//   {
+//     id: 3,
+//     name: '반려동물 동반',
+//   },
+// ];
+export interface AirDetailProps {
   airlineId: number;
   airlineName: string;
   customerServiceNumber: string;
@@ -34,12 +88,31 @@ export function ServiceCard({
   data,
   isCurrentRegisteredTabActive,
 }: {
-  data: AirlinesDetailProps | AirlinesDetailProps | undefined;
+  data: AirDetailProps | undefined;
   isCurrentRegisteredTabActive: boolean;
 }) {
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const list = isCurrentRegisteredTabActive
+    ? data?.airportServices
+    : data?.airlineServices;
+  const serviceList = useMemo(
+    () => (
+      <View style={infoStyles.info}>
+        {list &&
+          list?.map((v: any) => (
+            <View style={infoStyles.textContainer} key={v.id}>
+              <IconOct
+                style={infoStyles.dot}
+                size={20}
+                color="black"
+                name="dot-fill"
+              />
+              <FontText style={infoStyles.text}>{v.name}</FontText>
+            </View>
+          ))}
+      </View>
+    ),
+    [list],
+  );
   return (
     <View style={styles.container}>
       {/* 타이틀 */}
@@ -59,18 +132,21 @@ export function ServiceCard({
         </FontText>
         <Icon name="star" size={13} color="#0066FF" style={titleStyles.star} />
         <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
-        <IconFt
-          name="phone"
-          size={20}
-          color="#0066FF"
-          style={titleStyles.phone}
-        />
-        <IconFt
-          name="external-link"
-          size={22}
-          color="#0066FF"
-          style={titleStyles.link}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL(`tel:${data?.customerServiceNumber}`);
+          }}
+          style={titleStyles.phone}>
+          <IconFt name="phone" size={20} color="#0066FF" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL(`${data?.website}`);
+          }}
+          style={titleStyles.link}>
+          <IconFt name="external-link" size={22} color="#0066FF" />
+        </TouchableOpacity>
       </View>
       {/* 전화번호 */}
       <View
@@ -83,30 +159,10 @@ export function ServiceCard({
           {data?.customerServiceNumber}
         </FontText>
       </View>
-      {/* 서비스 리스트 */}
-      <View>
-        <FlatList
-          data={
-            isCurrentRegisteredTabActive
-              ? data?.airportServices
-              : data?.airlineServices
-          }
-          style={infoStyles.info}
-          ItemSeparatorComponent={() => <View style={infoStyles.separator} />}
-          renderItem={({item}) => (
-            <View style={infoStyles.infoContainer}>
-              <IconOct
-                style={infoStyles.dot}
-                size={20}
-                color="black"
-                name="dot-fill"
-              />
-              <FontText style={infoStyles.text}>{item.name}</FontText>
-            </View>
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
 
+      <View>
+        {/* 서비스 리스트 */}
+        {serviceList}
         <View style={availableAt.container}>
           <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
           <FontText style={availableAt.time}>{data?.availableAt}</FontText>
@@ -123,9 +179,11 @@ const infoStyles = StyleSheet.create({
     height: 10,
   },
   text: {fontWeight: '500', fontSize: 14},
-  infoContainer: {
+
+  textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   dot: {
     marginLeft: 10,
@@ -192,7 +250,8 @@ const titleStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
-    height: 314,
+    minHeight: 314,
+    width: '100%',
     backgroundColor: '#FFFFFF',
     shadowOffset: {width: 1, height: 1},
     shadowOpacity: 0.2,

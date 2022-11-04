@@ -5,7 +5,7 @@ import {clickState} from '@/utils/clickUtils';
 import AirportIcon from '@/components/service/CircleTextIcon';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils/api';
-import {AirlinesDetailProps} from './ServiceCard';
+import {AirDetailProps} from './ServiceCard';
 
 export default function ServiceIcon({
   list,
@@ -14,7 +14,7 @@ export default function ServiceIcon({
 }: {
   list: AirServiceProps[] | undefined;
   setCurrentClicked: React.Dispatch<
-    React.SetStateAction<AirlinesDetailProps | undefined>
+    React.SetStateAction<AirDetailProps | undefined>
   >;
   isCurrentRegisteredTabActive: boolean;
 }) {

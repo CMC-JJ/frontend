@@ -6,10 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils/api';
 import ServiceIcon from '@/components/service/ServiceIcon';
-import {
-  AirlinesDetailProps,
-  ServiceCard,
-} from '@/components/service/ServiceCard';
+import {AirDetailProps, ServiceCard} from '@/components/service/ServiceCard';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -26,7 +23,7 @@ export function ServiceScreen() {
   const [currentTab, setCurrentTab] = useState<'airport' | 'airline'>(
     'airport',
   );
-  const [currentClicked, setCurrentClicked] = useState<AirlinesDetailProps>();
+  const [currentClicked, setCurrentClicked] = useState<AirDetailProps>();
   // const airpostList = useCallback(() => {
   //   async () => {
   //     try {
@@ -40,9 +37,12 @@ export function ServiceScreen() {
   const fetchAirportLists = async () => {
     try {
       const res = await request('web/airports', {}, 'GET', auth.jwtToken);
-      setAirportLists(
-        res.result.airports.map((v: any) => ({...v, ...{onClick: false}})),
-      );
+      airportLists
+        ? ''
+        : setAirportLists(
+            res.result.airports.map((v: any) => ({...v, ...{onClick: false}})),
+          );
+      console.log('port');
     } catch (e) {
       console.log('error', e);
     }
@@ -50,31 +50,85 @@ export function ServiceScreen() {
   const fetchAirlineLists = async () => {
     try {
       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
-      setAirlineLists(
-        res.result.airlines.map((v: any) => ({...v, ...{onClick: false}})),
-      );
+      airlineLists
+        ? ''
+        : setAirlineLists(
+            res.result.airlines.map((v: any) => ({...v, ...{onClick: false}})),
+          );
+      console.log('line');
     } catch (e) {
       console.log('error', e);
     }
   };
+  const fetchAirportDetail = async () => {
+    const resDetail = await request(
+      `web/airports/${1}`,
+      {},
+      'GET',
+      auth.jwtToken,
+    );
+    setCurrentClicked(resDetail.result.airport);
+  };
+  const fetchAirlineDetail = async () => {
+    const resDetail = await request(
+      `web/airlines/${1}`,
+      {},
+      'GET',
+      auth.jwtToken,
+    );
+    const image = await request('web/airlines', {}, 'GET', auth.jwtToken);
+    setCurrentClicked({
+      ...resDetail.result.airline,
+      ...{image: image.result.airlines[0].logoImageUrl},
+    });
+  };
+  // useEffect(() => {
+  //   console.log(currentClicked);
+  // }, [currentClicked]);
+  const airportButton = () => {
+    setCurrentTab('airport');
+    fetchAirportDetail();
+    airportLists?.forEach(v => {
+      if (v.id === 1) {
+        v.onClick = true;
+      } else {
+        v.onClick = false;
+      }
+    });
+  };
+  const airlineButton = () => {
+    setCurrentTab('airline');
+    fetchAirlineLists();
+    fetchAirlineDetail();
+    airlineLists?.forEach(v => {
+      if (v.id === 1) {
+        v.onClick = true;
+      } else {
+        v.onClick = false;
+      }
+    });
+  };
 
   const isCurrentRegisteredTabActive = currentTab === 'airport';
   useEffect(() => {
+    console.log('effect');
+    // fetchAirlineLists();
+    // fetchAirlineDetail();
     isCurrentRegisteredTabActive
       ? airportLists
         ? ''
-        : fetchAirportLists()
+        : (fetchAirportLists(), fetchAirportDetail())
       : airlineLists
       ? ''
-      : fetchAirlineLists();
+      : (fetchAirlineLists(), fetchAirlineDetail());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCurrentRegisteredTabActive, []]);
-  // useEffect(() => {
-  //   console.log('currentClicked', currentClicked);
-  // }, [currentClicked]);
+  }, []);
+
   return (
     <SafeAreaView style={styles.fill}>
-      <ScrollView>
+      <ScrollView
+        style={styles.Scrollview}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.titleContainer}>
           <FontText style={styles.title}>항공서비스</FontText>
           <Icon style={styles.icon} name="search1" size={18} color="gray" />
@@ -83,7 +137,7 @@ export function ServiceScreen() {
           <TouchableOpacity
             // style={[styles.button]}
             onPress={() => {
-              setCurrentTab('airport');
+              airportButton();
             }}>
             <FontText
               style={[
@@ -96,7 +150,7 @@ export function ServiceScreen() {
           <View style={styles.bar} />
           <TouchableOpacity
             onPress={() => {
-              setCurrentTab('airline');
+              airlineButton();
             }}>
             <FontText
               style={[
@@ -145,9 +199,12 @@ const styleBody = StyleSheet.create({
 });
 const styles = StyleSheet.create({
   fill: {
-    padding: 25,
+    padding: 20,
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  Scrollview: {
+    paddingHorizontal: 5,
   },
   titleContainer: {
     justifyContent: 'space-between',
