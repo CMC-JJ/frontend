@@ -1,4 +1,10 @@
-import React, {ComponentProps, useEffect, useState} from 'react';
+import React, {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontText from '@/components/FontText';
@@ -47,7 +53,7 @@ export function ServiceScreen() {
       console.log('error', e);
     }
   };
-  const fetchAirlineLists = async () => {
+  const fetchAirlineLists = useCallback(async () => {
     try {
       const res = await request('web/airlines', {}, 'GET', auth.jwtToken);
       airlineLists
@@ -59,8 +65,8 @@ export function ServiceScreen() {
     } catch (e) {
       console.log('error', e);
     }
-  };
-  const fetchAirportDetail = async () => {
+  }, [airlineLists, auth.jwtToken]);
+  const fetchAirportDetail = useCallback(async () => {
     const resDetail = await request(
       `web/airports/${1}`,
       {},
@@ -68,8 +74,8 @@ export function ServiceScreen() {
       auth.jwtToken,
     );
     setCurrentClicked(resDetail.result.airport);
-  };
-  const fetchAirlineDetail = async () => {
+  }, [auth.jwtToken]);
+  const fetchAirlineDetail = useCallback(async () => {
     const resDetail = await request(
       `web/airlines/${1}`,
       {},
@@ -81,11 +87,9 @@ export function ServiceScreen() {
       ...resDetail.result.airline,
       ...{image: image.result.airlines[0].logoImageUrl},
     });
-  };
-  // useEffect(() => {
-  //   console.log(currentClicked);
-  // }, [currentClicked]);
-  const airportButton = () => {
+  }, [auth.jwtToken]);
+
+  const airportButton = useCallback(() => {
     setCurrentTab('airport');
     fetchAirportDetail();
     airportLists?.forEach(v => {
@@ -95,8 +99,20 @@ export function ServiceScreen() {
         v.onClick = false;
       }
     });
-  };
-  const airlineButton = () => {
+  }, [airportLists, fetchAirportDetail]);
+  // const airlineButton = () => {
+  //   setCurrentTab('airline');
+  //   fetchAirlineLists();
+  //   fetchAirlineDetail();
+  //   airlineLists?.forEach(v => {
+  //     if (v.id === 1) {
+  //       v.onClick = true;
+  //     } else {
+  //       v.onClick = false;
+  //     }
+  //   });
+  // };
+  const airlineButton = useCallback(() => {
     setCurrentTab('airline');
     fetchAirlineLists();
     fetchAirlineDetail();
@@ -107,13 +123,13 @@ export function ServiceScreen() {
         v.onClick = false;
       }
     });
-  };
+  }, [airlineLists, fetchAirlineDetail, fetchAirlineLists]);
+  const isCurrentRegisteredTabActive = useMemo(
+    () => currentTab === 'airport',
+    [currentTab],
+  );
 
-  const isCurrentRegisteredTabActive = currentTab === 'airport';
   useEffect(() => {
-    console.log('effect');
-    // fetchAirlineLists();
-    // fetchAirlineDetail();
     isCurrentRegisteredTabActive
       ? airportLists
         ? ''
