@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
       width: 1,
     },
     elevation: 10,
+    margin: 5,
   },
   name: {marginTop: 13, fontWeight: '500', fontSize: 15, color: '#979797'},
   activeIcon: {

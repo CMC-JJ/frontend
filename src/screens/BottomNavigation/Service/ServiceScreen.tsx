@@ -1,5 +1,11 @@
 import React, {ComponentProps, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontText from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -70,7 +76,14 @@ export function ServiceScreen() {
         style={styles.Scrollview}
         showsVerticalScrollIndicator={false}>
         <View style={styles.titleContainer}>
-          <FontText style={styles.title}>항공서비스</FontText>
+          <FontText
+            style={[
+              styles.title,
+              Platform.OS === 'android' && {fontWeight: '900'},
+            ]}>
+            항공서비스
+          </FontText>
+          {/* <TabHeader text="항공서비스" /> */}
           <Icon style={styles.icon} name="search1" size={18} color="gray" />
         </View>
         <View style={styles.buttonContainer}>
@@ -110,7 +123,7 @@ export function ServiceScreen() {
         </View>
         <View style={styleBody.line} />
         {/* 서비스 상세정보 */}
-        <View>
+        <View style={styleBody.container}>
           <ServiceCard data={detail} type={currentTab} />
         </View>
       </ScrollView>
@@ -127,16 +140,32 @@ const styleBody = StyleSheet.create({
     borderColor: '#DEDEDE',
     marginTop: 15,
     marginBottom: 25,
+    margin: 5,
+  },
+  container: {
+    minHeight: 314,
+    backgroundColor: '#FFFFFF',
+    shadowOffset: {width: 1, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    borderRadius: 12,
+    elevation: 5,
+    margin: 5,
   },
 });
 const styles = StyleSheet.create({
   fill: {
-    padding: 20,
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
   Scrollview: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 25,
+    // margin:
+    // padding: 20,
+    // paddingRight: 10,
+    // paddingleft: 10,
+    // left: -10,
+    // right: -10,
   },
   titleContainer: {
     justifyContent: 'space-between',
@@ -146,7 +175,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   icon: {
     color: 'black',
