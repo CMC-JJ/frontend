@@ -2,7 +2,7 @@ import {ArrowBack, BottomBorderedInput, SignButton} from '@/components';
 import FontText from '@/components/FontText';
 import {useScheduleStore} from '@/store';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -10,46 +10,19 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {ScheduleNavigationProp} from './ScheduleStack';
+import type {ScheduleNavigationProp} from './ScheduleStack';
 
-export function Title() {
+export function ScheduleTitle() {
   const navigation = useNavigation<ScheduleNavigationProp>();
-  const {schedule, setSchedule, initializeSchedule} = useScheduleStore();
+  const {schedule, setSchedule} = useScheduleStore();
 
   useFocusEffect(
     useCallback(() => {
       navigation.getParent()?.setOptions({
         tabBarStyle: {display: 'none'},
       });
-      return () => {
-        navigation.getParent()?.setOptions({
-          tabBarStyle: [
-            {
-              position: 'absolute',
-              borderTopLeftRadius: 12,
-              borderTopRightRadius: 12,
-              backgroundColor: '#ffffff',
-              shadowColor: 'rgba(0, 0, 0, 0.25)',
-              shadowOffset: {width: 0, height: -3},
-              shadowOpacity: 0.5,
-              elevation: 10,
-            },
-            Platform.OS === 'ios' && {height: 96},
-          ],
-        });
-      };
     }, [navigation]),
   );
-
-  useEffect(() => {
-    initializeSchedule();
-  }, [initializeSchedule]);
-
-  const [isValid, setIsValid] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsValid(schedule.name.trim().length >= 1);
-  }, [schedule.name]);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -79,7 +52,7 @@ export function Title() {
         </View>
         <View style={styles.footer}>
           <SignButton
-            isValid={isValid}
+            isValid={schedule.name.trim().length >= 1}
             buttonText="다음"
             onPress={() => {
               navigation.navigate('Date');

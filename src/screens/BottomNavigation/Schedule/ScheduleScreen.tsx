@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -13,7 +14,7 @@ import {TabHeader} from '@/components';
 import {useAuthStore} from '@/store';
 import Icon from 'react-native-vector-icons/Entypo';
 import {useQuery} from 'react-query';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import type {ScheduleNavigationProp} from '@/screens';
 // import {request} from '../utils';
 
@@ -62,6 +63,26 @@ export function ScheduleScreen() {
   //TODO: 일정 리스트를 조회하는 부분에 있어서 데이터 캐싱이 필요함(서버 데이터 관리 -> query 사용..?)
 
   //TODO: 무한 스크롤 구현 필요
+
+  useFocusEffect(
+    useCallback(() => {
+      navigation.getParent()?.setOptions({
+        tabBarStyle: [
+          {
+            position: 'absolute',
+            borderTopLeftRadius: 12,
+            borderTopRightRadius: 12,
+            backgroundColor: '#ffffff',
+            shadowColor: 'rgba(0, 0, 0, 0.25)',
+            shadowOffset: {width: 0, height: -3},
+            shadowOpacity: 0.5,
+            elevation: 10,
+          },
+          Platform.OS === 'ios' && {height: 96},
+        ],
+      });
+    }, [navigation]),
+  );
 
   return (
     <SafeAreaView style={styles.fill}>

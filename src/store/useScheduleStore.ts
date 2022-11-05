@@ -2,8 +2,7 @@ import create from 'zustand';
 
 export type Schedule = {
   name: string;
-  startAt: Date;
-  endAt: Date;
+  startAt: string;
   departureAirportId: number;
   arrivalAirportId: number;
   airlineId: number;
@@ -20,8 +19,7 @@ type ScheduleStore = {
 
 const initialState: Schedule = {
   name: '',
-  startAt: new Date(),
-  endAt: new Date(),
+  startAt: '',
   departureAirportId: 0,
   arrivalAirportId: 0,
   airlineId: 0,
