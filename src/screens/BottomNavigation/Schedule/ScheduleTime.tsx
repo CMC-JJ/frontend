@@ -9,10 +9,18 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import SwitchSelector from 'react-native-switch-selector';
+
+const options = [
+  {label: '오전', value: 'AM'},
+  {label: '오후', value: 'PM'},
+];
 
 export function ScheduleTime() {
   const {schedule} = useScheduleStore();
-  const [time] = useState<string>('');
+  const [time, setTime] = useState<string>('AM');
+
+  console.log(time);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -36,8 +44,21 @@ export function ScheduleTime() {
         </FontText>
         <View style={styles.timeContainer}>
           {/* <View> */}
-          <Icon name="aircraft-take-off" size={20} color="#0066FF" />
-          <FontText style={styles.directionText}>출발</FontText>
+          <View>
+            <Icon name="aircraft-take-off" size={20} color="#0066FF" />
+            <FontText style={styles.directionText}>출발</FontText>
+          </View>
+          <View>
+            <SwitchSelector
+              options={options}
+              initial={0}
+              style={styles.switch}
+              textStyle={styles.switchText}
+              selectedTextStyle={styles.activeSwitchText}
+              buttonColor={'#0066FF'}
+              onPress={val => setTime(val)}
+            />
+          </View>
           {/* </View> */}
         </View>
         <View style={styles.footer}>
@@ -90,6 +111,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
 
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   directionText: {
     marginLeft: 12,
@@ -97,6 +119,43 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 23,
     color: '#0066FF',
+  },
+  switch: {
+    width: 90,
+    height: 36,
+
+    borderRadius: 46,
+    borderColor: 'white',
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    elevation: 8,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+
+    fontWeight: '500',
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#979797',
+  },
+  switchText: {
+    fontWeight: '500',
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#979797',
+  },
+  activeSwitch: {
+    width: 35,
+    height: 30,
+    borderRadius: 14,
+    backgroundColor: '#0066ff',
+
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+  },
+  activeSwitchText: {
+    fontWeight: '700',
+    color: 'white',
   },
   footer: {
     flex: 1,
