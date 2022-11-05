@@ -17,9 +17,7 @@ export function StartScreen() {
         />
 
         <FontText style={styles.header}>
-          {
-            "'같이'의 가치를 실현하다\n한눈에 보고 간편하게 신청하는\n교통약자 서비스"
-          }
+          {'설레는 항공여행\n가치가자와\n쉽고 빠르게 떠나요'}
         </FontText>
         <View style-={styles.button}>
           <SignButton
@@ -54,6 +52,7 @@ export function StartScreen() {
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
+
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -62,6 +61,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 25,
     marginTop: 80,
+    width: '100%',
   },
 
   header: {

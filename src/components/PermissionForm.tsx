@@ -66,16 +66,16 @@ const styles = StyleSheet.create({
   },
   title: {fontSize: 15, marginBottom: 6, color: '#3A3D40', fontWeight: '500'},
   subtitle: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#63666A',
     display: 'flex',
     flexWrap: 'wrap',
     marginBottom: 8,
+    fontWeight: '400',
   },
   detailInfo: {
     fontSize: 15,
     color: '#63666A',
     textDecorationLine: 'underline',
-    flexWrap: 'wrap',
   },
 });
