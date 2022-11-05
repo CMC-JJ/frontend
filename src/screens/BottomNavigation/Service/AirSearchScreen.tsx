@@ -11,13 +11,23 @@ import {ArrowBack} from '@/components';
 import FontText from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {request} from '@/utils';
-
+import AirCard from '@/components/service/AirCard';
+export interface AirCardProps {
+  id: number;
+  name: string;
+  avgReview: string;
+  logoImageUrl?: string;
+  customerServiceNumber: string;
+  website: string;
+}
 export function AirSearchScreen() {
   const [value, onChangeText] = useState<String>();
+  const [data, setData] = useState();
   const fetchSearch = async () => {
     try {
       const res = await request('web/search', {searchQuery: value}, 'GET');
       console.log(res.result.searchResult);
+      setData(res.result.searchResult[0]);
     } catch (e) {
       console.log(e);
     }
@@ -48,7 +58,7 @@ export function AirSearchScreen() {
             <Icon name="search1" size={18} color="gray" />
           </TouchableOpacity>
         </View>
-        <FontText>{value}</FontText>
+        <View style={styles.card}>{data && <AirCard data={data} />}</View>
       </View>
     </SafeAreaView>
   );
@@ -82,14 +92,15 @@ const styles = StyleSheet.create({
     borderRadius: 43,
     width: '100%',
     height: 31,
+    marginBottom: 30,
   },
   input: {
     padding: 0,
     margin: 0,
     paddingLeft: 18,
-    // paddingVertical: 4,
+
     fontSize: 15,
     width: '80%',
-    // fontWeight: '400',
   },
+  card: {},
 });

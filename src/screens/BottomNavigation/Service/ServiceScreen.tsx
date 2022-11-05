@@ -164,12 +164,6 @@ const styles = StyleSheet.create({
   },
   Scrollview: {
     paddingHorizontal: 25,
-    // margin:
-    // padding: 20,
-    // paddingRight: 10,
-    // paddingleft: 10,
-    // left: -10,
-    // right: -10,
   },
   titleContainer: {
     justifyContent: 'space-between',

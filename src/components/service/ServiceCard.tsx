@@ -197,14 +197,6 @@ const titleStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
-    // minHeight: 314,
-    // width: '100%',
-    // backgroundColor: '#FFFFFF',
-    // shadowOffset: {width: 1, height: 1},
-    // shadowOpacity: 0.2,
-    // shadowRadius: 5,
-    // borderRadius: 12,
-    // elevation: 10,
     paddingHorizontal: 20,
     paddingVertical: 34,
   },
