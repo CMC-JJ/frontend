@@ -120,12 +120,9 @@ const styles = StyleSheet.create({
   },
   grayFont: {color: '#63666A', fontWeight: '400'},
   logo: {
-    // resizeMode: 'contain',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    // width: 120,
-    // height: 40,
   },
   textForm: {
     marginBottom: 30,

@@ -5,6 +5,7 @@ import {SignButton} from '@/components';
 import FontText from '@/components/FontText';
 import {RootStackNavigationProp} from '@/screens';
 import {useNavigation} from '@react-navigation/native';
+import {data} from '@/assets/texts/TermsText';
 
 export function StartScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -36,9 +37,28 @@ export function StartScreen() {
         <View style={styles.footer}>
           <FontText style={styles.text}>
             {"'시작하기'를 누르는 것으로 "}
-            <FontText style={styles.textLine}>{'서비스 이용약관'}</FontText>
+
+            <FontText
+              onPress={() =>
+                navigation.navigate('Terms', {
+                  title: data[1].title,
+                  text: data[1].text,
+                })
+              }
+              style={styles.textLine}>
+              {'서비스 이용약관'}
+            </FontText>
             <FontText>{'과\n'}</FontText>
-            <FontText style={styles.textLine}>{'개인정보 취급 방침'}</FontText>
+            <FontText
+              onPress={() =>
+                navigation.navigate('Terms', {
+                  title: data[2].title,
+                  text: data[2].text,
+                })
+              }
+              style={styles.textLine}>
+              {'개인정보 취급 방침'}
+            </FontText>
             <FontText>
               {'에 동의하고\n서비스를 이용하는 것으로 간주합니다.'}
             </FontText>

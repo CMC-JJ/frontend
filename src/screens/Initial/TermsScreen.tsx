@@ -31,9 +31,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
     marginBottom: 28,
+    color: 'black',
   },
   text: {
     overflow: 'scroll',
+    color: '#121212',
+    lineHeight: 20,
   },
   back: {
     marginBottom: 37,
