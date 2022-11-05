@@ -1,11 +1,9 @@
-import {ArrowBack, SignButton} from '@/components';
-import FontText from '@/components/FontText';
+import {ArrowBack, DateDisplay, SignButton, FontText} from '@/components';
 import {useScheduleStore} from '@/store';
-import {dateFormat, formatDateText} from '@/utils';
+import {dateFormat} from '@/utils';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
-  Image,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -18,8 +16,6 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 export function ScheduleDate() {
   const {schedule, setSchedule} = useScheduleStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
-
-  console.log(schedule);
 
   const today = dateFormat(new Date());
   const markedDates = {
@@ -51,15 +47,7 @@ export function ScheduleDate() {
           ]}>
           날짜 선택
         </FontText>
-        <View style={styles.dateDisplay}>
-          <Image
-            source={require('@/assets/images/calendar.png')}
-            style={styles.imageSize}
-          />
-          <FontText style={styles.dateText}>
-            {formatDateText(schedule.startAt) || null}
-          </FontText>
-        </View>
+        <DateDisplay startDate={schedule.startAt} />
       </View>
       <View style={styles.dayNames}>
         <FontText style={styles.dayName}>일</FontText>

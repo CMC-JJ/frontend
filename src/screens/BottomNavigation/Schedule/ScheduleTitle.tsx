@@ -1,5 +1,9 @@
-import {ArrowBack, BottomBorderedInput, SignButton} from '@/components';
-import FontText from '@/components/FontText';
+import {
+  ArrowBack,
+  BottomBorderedInput,
+  SignButton,
+  FontText,
+} from '@/components';
 import {useScheduleStore} from '@/store';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useCallback} from 'react';

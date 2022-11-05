@@ -1,8 +1,7 @@
 import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {SignButton} from '@/components';
-import FontText from '@/components/FontText';
+import {SignButton, FontText} from '@/components';
 import {RootStackNavigationProp} from '@/screens';
 import {useNavigation} from '@react-navigation/native';
 

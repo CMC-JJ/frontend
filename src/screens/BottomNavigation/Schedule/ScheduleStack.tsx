@@ -7,6 +7,7 @@ import {
   ScheduleDate,
   ScheduleScreen,
   ScheduleAirService,
+  ChooseAirline,
 } from '@/screens';
 import type {MainTabNavigationProp} from '@/screens';
 
@@ -15,6 +16,7 @@ export type ScheduleStackParamList = {
   Title: undefined;
   Date: undefined;
   AirService: undefined;
+  ChooseAirline: undefined;
   Convenience: undefined;
   Complete: undefined;
 };
@@ -37,6 +39,7 @@ export function ScheduleStack() {
       <Stack.Screen name="Title" component={ScheduleTitle} />
       <Stack.Screen name="Date" component={ScheduleDate} />
       <Stack.Screen name="AirService" component={ScheduleAirService} />
+      <Stack.Screen name="ChooseAirline" component={ChooseAirline} />
       {/* <Stack.Screen name="AirService" component={AirService} />
         <Stack.Screen name="Convenience" component={Convenience} />
         <Stack.Screen name="Complete" component={Complete} /> */}

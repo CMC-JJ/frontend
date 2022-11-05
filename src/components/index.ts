@@ -1,5 +1,7 @@
+export * from './AirportItem';
 export * from './ArrowBack';
 export * from './BottomBorderedInput';
+export * from './DateDisplay';
 export * from './FormHeader';
 export * from './PermissionForm';
 export * from './PhoneAuth';

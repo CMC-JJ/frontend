@@ -3,9 +3,8 @@ import React from 'react';
 
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ArrowBack} from '@/components';
+import {ArrowBack, FontText} from '@/components';
 import {RootStackParamList} from '@/screens';
-import FontText from '@/components/FontText';
 type FindIdCompleteRouteProp = RouteProp<RootStackParamList, 'Terms'>;
 export function TermsScreen() {
   const {params} = useRoute<FindIdCompleteRouteProp>();

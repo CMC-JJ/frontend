@@ -19,8 +19,7 @@ import {
 } from '@/hooks/CheckPermission';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';
-import FontText from '@/components/FontText';
-import {PermissionForm} from '@/components';
+import {PermissionForm, FontText} from '@/components';
 export function PermissionScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const requestMultiplePermissions = async () => {
