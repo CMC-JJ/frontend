@@ -28,6 +28,7 @@ type AirportData = Airport[];
 type Direction = 'departure' | 'arrival';
 
 // TODO: 성능 최적화
+// TODO: 모달안에서 체크되었을때, 표시되는 부분 만들기
 export function ScheduleAirService() {
   const {schedule, setSchedule} = useScheduleStore();
   const {auth} = useAuthStore();
