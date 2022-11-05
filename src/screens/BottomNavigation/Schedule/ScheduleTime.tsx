@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Switch,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -14,6 +14,8 @@ import Icon from 'react-native-vector-icons/Entypo';
 export function ScheduleTime() {
   const {schedule} = useScheduleStore();
   const [time] = useState<string>('');
+
+  const [isAM, setIsAM] = useState<boolean>(true);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -36,11 +38,30 @@ export function ScheduleTime() {
           등록된 시간에 맞춰 알려드리며, 메인에 고정됩니다.
         </FontText>
         <View style={styles.timeContainer}>
-          {/* <View> */}
           <Icon name="aircraft-take-off" size={20} color="#0066FF" />
           <FontText style={styles.directionText}>출발</FontText>
-          <Switch />
-          {/* </View> */}
+          <View style={styles.switch}>
+            <TouchableOpacity
+              style={isAM && styles.activeSwitch}
+              onPress={() => {
+                setIsAM(true);
+              }}>
+              <FontText
+                style={[styles.switchText, isAM && styles.activeSwitchText]}>
+                오전
+              </FontText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={!isAM && styles.activeSwitch}
+              onPress={() => {
+                setIsAM(false);
+              }}>
+              <FontText
+                style={[styles.switchText, !isAM && styles.activeSwitchText]}>
+                오후
+              </FontText>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.footer}>
           <SignButton
@@ -99,6 +120,39 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 23,
     color: '#0066FF',
+  },
+  switch: {
+    width: 90,
+    height: 36,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    borderRadius: 46,
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+  },
+  switchText: {
+    fontWeight: '500',
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#979797',
+  },
+  activeSwitch: {
+    position: 'relative',
+    width: 43,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#0066ff',
+
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+  },
+  activeSwitchText: {
+    fontWeight: '700',
+    color: 'white',
   },
   footer: {
     flex: 1,
