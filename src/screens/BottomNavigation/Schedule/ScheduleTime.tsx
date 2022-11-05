@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Switch,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -39,7 +38,6 @@ export function ScheduleTime() {
           {/* <View> */}
           <Icon name="aircraft-take-off" size={20} color="#0066FF" />
           <FontText style={styles.directionText}>출발</FontText>
-          <Switch />
           {/* </View> */}
         </View>
         <View style={styles.footer}>
