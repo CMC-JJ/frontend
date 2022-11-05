@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import SkipButton from '@/components/SkiptButton';
 import {
-  // widthPercentageToDP as wp,
+  widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
@@ -13,16 +13,18 @@ const Square = ({selected}: any) => {
   let backgroundColor;
   backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';
   return (
-    <View style={{}}>
-      <View style={[navBarStyle(backgroundColor).navBar]} />
-    </View>
+    <View
+      style={[
+        navBarStyle(backgroundColor).navBar,
+        Platform.OS === 'ios' ? {bottom: hp('80%')} : {bottom: hp('85%')},
+      ]}
+    />
   );
 };
 
 export function OnboardingScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
-    // <SafeAreaView>
     <>
       <Onboarding
         showDone={true}
@@ -38,7 +40,7 @@ export function OnboardingScreen() {
           {
             title: '',
             subtitle: '',
-            backgroundColor: 'rgb(5,73,255)',
+            backgroundColor: '#0066FF',
             image: (
               <ImageText text={'오늘 비행기를 타고\n국내 여행을 떠나시나요?'} />
             ),
@@ -46,7 +48,7 @@ export function OnboardingScreen() {
           {
             title: '',
             subtitle: '',
-            backgroundColor: 'rgba(5,73,255,0.9)',
+            backgroundColor: '#0066FF',
             image: (
               <ImageText
                 text={'친구들을 등록해서\n서로의 위치를 확인할 수 있어요.'}
@@ -56,7 +58,7 @@ export function OnboardingScreen() {
           {
             title: '',
             subtitle: '',
-            backgroundColor: 'rgb(5,73,255)',
+            backgroundColor: '#0066FF',
             image: (
               <ImageText
                 text={
@@ -68,7 +70,7 @@ export function OnboardingScreen() {
           {
             title: '',
             subtitle: '',
-            backgroundColor: 'rgba(5,73,255,0.9)',
+            backgroundColor: '#0066FF',
             image: (
               <ImageText
                 text={
@@ -80,18 +82,16 @@ export function OnboardingScreen() {
         ]}
       />
     </>
-    // </SafeAreaView>
   );
 }
 const navBarStyle = (backgroundColor: string) =>
   StyleSheet.create({
     navBar: {
       alignItems: 'center',
-      width: 90,
+      width: wp('22%'),
       height: 3,
       marginHorizontal: 3,
       backgroundColor: backgroundColor,
-      bottom: hp('80%'),
       borderWidth: 0,
       borderRadius: 5,
     },
