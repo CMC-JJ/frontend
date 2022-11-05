@@ -6,9 +6,9 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
-  checkMultiple,
+  openSettings,
   PERMISSIONS,
   requestMultiple,
 } from 'react-native-permissions';
@@ -28,63 +28,37 @@ export function PermissionScreen() {
       await requestMultiple([
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
         PERMISSIONS.IOS.CONTACTS,
-      ]).then(res => {
-        checkPermissionsIOS(res);
-        navigation.navigate('OnBoarding');
+      ]).then(async res => {
+        (await checkPermissionsIOS(res))
+          ? navigation.navigate('OnBoarding')
+          : openSettings().catch();
       });
     } else if (Platform.OS === 'android') {
       await requestMultiple([
         PERMISSIONS.ANDROID.CALL_PHONE,
         PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-      ]).then(res => {
-        checkPermissionsANDROID(res);
-        navigation.navigate('OnBoarding');
+      ]).then(async res => {
+        const state = checkPermissionsANDROID(res);
+        (await state)
+          ? navigation.navigate('OnBoarding')
+          : openSettings().catch();
       });
     }
   };
-
-  const checkMultiplePermissions = async () => {
-    if (Platform.OS === 'ios') {
-      await checkMultiple([
-        PERMISSIONS.IOS.CONTACTS,
-        PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-      ]).then(res => {
-        checkPermissionsIOS(res);
-        console.log('체크해요 : ', res);
-      });
-    } else if (Platform.OS === 'android') {
-      await checkMultiple([
-        PERMISSIONS.ANDROID.CALL_PHONE,
-        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
-      ]).then(res => {
-        checkPermissionsANDROID(res);
-        console.log('체크해요 : ', res);
-      });
-    }
-  };
-
-  useEffect(() => {
-    //훅으로 뺄 예정
-    checkMultiplePermissions();
-  }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={styles.fill}>
       <View style={styles.logo}>
-        {/* <Image source={require('../assets/images/logo_sub.png')} />
-        <Image
-          style={{resizeMode: 'stretch'}}
-          source={require('../assets/images/test.png')}
-        /> */}
         <Image
           style={styles.logo}
-          source={require('@/assets/images/permissionImage.png')}
+          resizeMode={'cover'}
+          source={require('@/assets/images/permissionLogo.png')}
         />
       </View>
       <View style={styles.container}>
         <View>
           <View style={styles.textForm}>
-            <FontText style={styles.title}>앱 이용 안내</FontText>
+            <FontText style={[styles.title]}>앱 이용 안내</FontText>
             <FontText style={styles.subtitle}>필수적 접근 권한</FontText>
             <FontText style={styles.grayFont}>
               허용 거부 시 가치가자 서비스를 이용할 수 없습니다.
@@ -123,6 +97,10 @@ export function PermissionScreen() {
 }
 
 const styles = StyleSheet.create({
+  fill: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     padding: 30,
     flex: 1,
@@ -142,7 +120,6 @@ const styles = StyleSheet.create({
   },
   grayFont: {color: '#63666A', fontWeight: '400'},
   logo: {
-    resizeMode: 'contain',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

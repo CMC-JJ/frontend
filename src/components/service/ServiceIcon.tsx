@@ -13,28 +13,7 @@ export default function ServiceIcon({
   list: AirServiceProps[] | undefined;
   menu: AirServiceProps | null;
   onMenuPress?: (menu: AirServiceProps) => void;
-  // setCurrentClicked: React.Dispatch<
-  //   React.SetStateAction<AirDetailProps | undefined>
-  // >;
-  // isCurrentRegisteredTabActive: boolean;
 }) {
-  // const [data, setData] = useState<AirServiceProps[]>();
-  // const {auth} = useAuthStore();
-  // useEffect(() => {
-  //   setData(list);
-  // }, [list]);
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-  //아이콘 클릭 함수
-  // const onToggleAirports = (v: AirServiceProps) => {
-  //   setData(clickState(v, data));
-  //   isCurrentRegisteredTabActive ? airportsDetail(v) : airlinesDetail(v);
-  // };
-  // useEffect(() => {
-  //   console.log('isCurrentRegisteredTabActive', isCurrentRegisteredTabActive);
-  // }, [isCurrentRegisteredTabActive]);
-
   return (
     <ScrollView
       style={styles.container}

@@ -21,7 +21,7 @@ export const fetchAirlineLists = async () => {
 export const fetchAirportsDetail = async (v: any) => {
   try {
     const res = await request(`web/airports/${v.id}`, {}, 'GET');
-    console.log(v.id, res);
+    // console.log(v.id, res);
     return res.result.airport;
   } catch (e) {
     console.log('airportlist 오류', e);

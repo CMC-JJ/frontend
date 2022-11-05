@@ -17,6 +17,8 @@ import {
   fetchAirportLists,
   fetchAirportsDetail,
 } from '@/utils/fetch';
+import {RootStackNavigationProp} from '@/screens';
+import {useNavigation} from '@react-navigation/native';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -35,7 +37,7 @@ export function ServiceScreen() {
   );
   const [menu, setMenu] = useState<AirServiceProps | null>(null);
   const [detail, setDetail] = useState<AirDetailProps | null>(null);
-
+  const navigation = useNavigation<RootStackNavigationProp>();
   useEffect(() => {
     if (menu) {
       switch (currentTab) {
@@ -84,7 +86,9 @@ export function ServiceScreen() {
             항공서비스
           </FontText>
           {/* <TabHeader text="항공서비스" /> */}
-          <Icon style={styles.icon} name="search1" size={18} color="gray" />
+          <TouchableOpacity onPress={() => navigation.navigate('AirSearch')}>
+            <Icon style={styles.icon} name="search1" size={18} color="gray" />
+          </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
