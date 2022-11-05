@@ -4,3 +4,4 @@ export * from './ScheduleScreen';
 export * from './ScheduleTitle';
 export * from './ScheduleDate';
 export * from './ScheduleAirService';
+export * from './ScheduleTime';

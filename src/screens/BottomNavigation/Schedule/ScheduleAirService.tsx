@@ -1,11 +1,13 @@
 import {AirportItem, ArrowBack, DateDisplay, SignButton} from '@/components';
 import {FontText} from '@/components';
+import {AIRLINE, AIRPORT} from '@/constants';
 import {useAuthStore, useScheduleStore} from '@/store';
 import {request} from '@/utils';
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
+  Image,
   Modal,
   Platform,
   SafeAreaView,
@@ -17,37 +19,6 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import type {ScheduleNavigationProp} from './ScheduleStack';
 
-const AIRPORT = [
-  '인덱스용 데이터',
-  '김포공항',
-  '김해공항',
-  '제주공항',
-  '대구공항',
-  '여수공항',
-  '포항경주공항',
-  '양양공항',
-  '원주공항',
-  '청주공항',
-  '군산공항',
-  '울산공항',
-  '사천공항',
-  '무안공항',
-];
-
-// const AIRLINE = [
-//   '인덱스용 데이터',
-//   '아시아나항공',
-//   '대한항공',
-//   '제주항공',
-//   '하이에어',
-//   '진에어',
-//   '에어서울',
-//   '에어부산',
-//   '에어프레미아',
-//   '티웨이항공',
-//   '에어로케이',
-// ];
-
 type Airport = {
   id: number;
   name: string;
@@ -56,14 +27,12 @@ type Airport = {
 type AirportData = Airport[];
 type Direction = 'departure' | 'arrival';
 
+// TODO: 성능 최적화
 export function ScheduleAirService() {
   const {schedule, setSchedule} = useScheduleStore();
   const {auth} = useAuthStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
   const [airportData, setAirportData] = useState<AirportData>([]);
-  // const [number, setNumber] = useState<number>(0);
-
-  console.log(schedule);
 
   useEffect(() => {
     (async () => {
@@ -78,17 +47,20 @@ export function ScheduleAirService() {
   const [currentDirection, setCurrentDirection] =
     useState<Direction>('departure');
 
-  const onSelect = (id: number) => {
-    if (currentDirection === 'departure') {
-      setSchedule('departureAirportId', id);
-    } else {
-      setSchedule('arrivalAirportId', id);
-    }
-  };
+  const onSelect = useCallback(
+    (id: number) => {
+      if (currentDirection === 'departure') {
+        setSchedule('departureAirportId', id);
+      } else {
+        setSchedule('arrivalAirportId', id);
+      }
+    },
+    [currentDirection, setSchedule],
+  );
 
-  const onToggle = () => {
+  const onToggle = useCallback(() => {
     setToggleAirportModal(toggleAirPortModal ? false : true);
-  };
+  }, [toggleAirPortModal]);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -107,7 +79,7 @@ export function ScheduleAirService() {
           ]}>
           {'이용하실 공항과 항공사를\n선택해주세요'}
         </FontText>
-        <FontText style={styles.guidMessage}>
+        <FontText style={styles.guideMessage}>
           {'선택하신 곳에서 이용하실 수 있는\n교통약자 서비스를 알려드립니다.'}
         </FontText>
         <View style={styles.airportSelection}>
@@ -152,7 +124,15 @@ export function ScheduleAirService() {
               <FontText style={styles.airlineText}>항공사 선택하기</FontText>
             </>
           ) : (
-            <FontText>hi</FontText>
+            <>
+              <Image
+                source={{uri: AIRLINE[schedule.airlineId].logoImageUrl}}
+                style={styles.logo}
+              />
+              <FontText style={styles.airlineText}>
+                {AIRLINE[schedule.airlineId].name}
+              </FontText>
+            </>
           )}
         </TouchableOpacity>
         {toggleAirPortModal && (
@@ -190,7 +170,7 @@ export function ScheduleAirService() {
             }
             buttonText="다음"
             onPress={() => {
-              // navigation.navigate('AirService');
+              navigation.navigate('Time');
             }}
           />
         </View>
@@ -222,7 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     lineHeight: 34,
   },
-  guidMessage: {
+  guideMessage: {
     marginTop: 12,
 
     fontWeight: '400',
@@ -262,6 +242,10 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     shadowColor: '#000000',
+  },
+  logo: {
+    width: 20,
+    height: 20,
   },
   airlineText: {
     fontWeight: '600',
