@@ -6354,6 +6354,13 @@ react-native-codegen@^0.70.5:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-date-picker@^4.2.6:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-4.2.6.tgz#3fb118c141401dcdebb3472ee1c69a0c1c8ff612"
+  integrity sha512-qnSLefvCInFp1etQ27AsDzpCJgvi0Q0eIYRtIzjBp5WC5hzINIY7WWeQESAA/QUPbwFJU7Vk06ouQc51dC1Qaw==
+  dependencies:
+    prop-types "^15.8.1"
+
 react-native-elements@^3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-3.4.2.tgz#66602be9c5e0e0a2a831913adec80ff6518d1ee2"
@@ -6419,13 +6426,6 @@ react-native-swipe-gestures@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
   integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
-
-react-native-switch-selector@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-switch-selector/-/react-native-switch-selector-2.2.1.tgz#551ff32c018281904b1d5df79f5192c788195d87"
-  integrity sha512-HeUGoPD+rDV9F0CWJnIjZaK1JJS95dnxxVzTzufeLYCtA/iFKxhy+PS8kAyXTwfrTSgFFAmURgcpkAcAMqDg8Q==
-  dependencies:
-    prop-types "^15.7.2"
 
 react-native-vector-icons@^9.2.0:
   version "9.2.0"

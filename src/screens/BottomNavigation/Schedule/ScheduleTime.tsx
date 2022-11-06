@@ -6,21 +6,43 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import SwitchSelector from 'react-native-switch-selector';
-
-const options = [
-  {label: '오전', value: 'AM'},
-  {label: '오후', value: 'PM'},
-];
+import {formatTimeText} from '@/utils';
+import DatePicker from 'react-native-date-picker';
+import {useNavigation} from '@react-navigation/native';
+import type {ScheduleNavigationProp} from './ScheduleStack';
 
 // TODO: switch-selector 개선
+// TODO: 여기도 성능개선 필요
 export function ScheduleTime() {
-  const {schedule} = useScheduleStore();
-  const [time] = useState<string>('');
-  const [setAMPM] = useState<string>('AM');
+  const navigation = useNavigation<ScheduleNavigationProp>();
+  const {schedule, setSchedule} = useScheduleStore();
+  console.log(schedule);
+
+  const [date, setDate] = useState(new Date());
+  const [isAM, setIsAM] = useState<boolean>(
+    date.getHours() > 12 ? false : true,
+  );
+  const [open, setOpen] = useState(false);
+
+  const onPress = () => {
+    const YYMMDD = schedule.startAt;
+    if (schedule.startAt.length >= 16) {
+      setSchedule(
+        'startAt',
+        `${YYMMDD.slice(0, 10)} ${date.getHours()}:${date.getMinutes()}`,
+      );
+    } else {
+      setSchedule(
+        'startAt',
+        `${YYMMDD} ${date.getHours()}:${date.getMinutes()}`,
+      );
+    }
+    navigation.navigate('Convenience');
+  };
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -47,26 +69,57 @@ export function ScheduleTime() {
             <Icon name="aircraft-take-off" size={20} color="#0066FF" />
             <FontText style={styles.directionText}>출발</FontText>
           </View>
-          <View>
-            <SwitchSelector
-              options={options}
-              initial={0}
-              style={styles.switch}
-              textStyle={styles.switchText}
-              selectedTextStyle={styles.activeSwitchText}
-              buttonColor={'#0066FF'}
-              onPress={val => setAMPM(val)}
-            />
+          <View style={styles.switchTimeContainer}>
+            <View style={styles.switch}>
+              <TouchableOpacity
+                style={isAM && styles.activeSwitch}
+                onPress={() => {
+                  setIsAM(true);
+                }}>
+                <FontText
+                  style={[styles.switchText, isAM && styles.activeSwitchText]}>
+                  오전
+                </FontText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={!isAM && styles.activeSwitch}
+                onPress={() => {
+                  setIsAM(false);
+                }}>
+                <FontText
+                  style={[styles.switchText, !isAM && styles.activeSwitchText]}>
+                  오후
+                </FontText>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.timeBox}
+              onPress={() => setOpen(true)}>
+              <FontText style={styles.timeText}>
+                {formatTimeText(date)}
+              </FontText>
+              <DatePicker
+                modal
+                mode="time"
+                date={date}
+                open={open}
+                onConfirm={val => {
+                  setOpen(false);
+                  const hours = val.getHours();
+                  if (hours > 12) {
+                    setIsAM(false);
+                  } else {
+                    setIsAM(true);
+                  }
+                  setDate(val);
+                }}
+                onCancel={() => setOpen(false)}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.footer}>
-          <SignButton
-            isValid={time !== ''}
-            buttonText="다음"
-            onPress={() => {
-              // navigation.navigate('Time');
-            }}
-          />
+          <SignButton isValid={!!date} buttonText="다음" onPress={onPress} />
         </View>
       </View>
     </SafeAreaView>
@@ -127,6 +180,10 @@ const styles = StyleSheet.create({
     width: 90,
     height: 36,
 
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+
     borderRadius: 46,
     borderColor: 'white',
     backgroundColor: 'white',
@@ -135,10 +192,10 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOpacity: 0.25,
 
-    fontWeight: '500',
-    fontSize: 13,
-    lineHeight: 20,
-    color: '#979797',
+    // fontWeight: '500',
+    // fontSize: 13,
+    // lineHeight: 20,
+    // color: '#979797',
   },
   switchText: {
     fontWeight: '500',
@@ -154,11 +211,34 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 2,
   },
   activeSwitchText: {
     fontWeight: '700',
     color: 'white',
+  },
+  switchTimeContainer: {
+    flexDirection: 'row',
+  },
+  timeBox: {
+    width: 90,
+    height: 36,
+
+    marginLeft: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    borderRadius: 46,
+    borderColor: 'white',
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    elevation: 8,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+  },
+  timeText: {
+    fontWeight: '700',
+    fontSize: 20,
+    lineHeight: 30,
   },
   footer: {
     flex: 1,

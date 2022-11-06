@@ -9,6 +9,7 @@ import {
   ScheduleAirService,
   ChooseAirline,
   ScheduleTime,
+  ScheduleConvenience,
 } from '@/screens';
 import type {MainTabNavigationProp} from '@/screens';
 
@@ -43,6 +44,7 @@ export function ScheduleStack() {
       <Stack.Screen name="AirService" component={ScheduleAirService} />
       <Stack.Screen name="ChooseAirline" component={ChooseAirline} />
       <Stack.Screen name="Time" component={ScheduleTime} />
+      <Stack.Screen name="Convenience" component={ScheduleConvenience} />
       {/* <Stack.Screen name="AirService" component={AirService} />
         <Stack.Screen name="Convenience" component={Convenience} />
         <Stack.Screen name="Complete" component={Complete} /> */}
