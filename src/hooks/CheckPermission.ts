@@ -1,4 +1,4 @@
-import {Permission} from '@/store';
+import {usePermission} from '@/store';
 import {Platform} from 'react-native';
 import {checkMultiple, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
@@ -7,7 +7,7 @@ export const checkPermissionsIOS = async (res: any) => {
     res['ios.permission.CONTACTS'] === 'granted' &&
     res['ios.permission.LOCATION_WHEN_IN_USE'] === 'granted'
   ) {
-    Permission.setState({
+    usePermission.setState({
       permissionAllow: {
         allow: true,
       },
@@ -18,7 +18,7 @@ export const checkPermissionsIOS = async (res: any) => {
     return true;
     //다음페이지로 이동
   } else {
-    Permission.setState({
+    usePermission.setState({
       permissionAllow: {
         allow: false,
       },
@@ -36,7 +36,7 @@ export const checkPermissionsANDROID = async (res: any) => {
     res['android.permission.CALL_PHONE'] === RESULTS.GRANTED &&
     res['android.permission.ACCESS_FINE_LOCATION'] === RESULTS.GRANTED
   ) {
-    Permission.setState({
+    usePermission.setState({
       permissionAllow: {
         allow: true,
       },
@@ -46,7 +46,7 @@ export const checkPermissionsANDROID = async (res: any) => {
     });
     return true;
   } else {
-    Permission.setState({
+    usePermission.setState({
       permissionAllow: {
         allow: false,
       },

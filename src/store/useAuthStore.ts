@@ -1,5 +1,4 @@
-import create from 'zustand/vanilla';
-import createHook from 'zustand';
+import create from 'zustand';
 
 export type Auth = {
   phoneNumber: string;
@@ -22,7 +21,7 @@ const initialState: Auth = {
   jwtToken: '',
 };
 
-export const authStore = create<SignUpStore>((set, get) => ({
+export const useAuthStore = create<SignUpStore>((set, get) => ({
   auth: initialState,
   setAuth: authInfo =>
     set(() => ({
@@ -31,5 +30,3 @@ export const authStore = create<SignUpStore>((set, get) => ({
   getState: () => get(),
   initializeAuth: () => set(() => ({auth: initialState})),
 }));
-
-export const useAuthStore = createHook(authStore);

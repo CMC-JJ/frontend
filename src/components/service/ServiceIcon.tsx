@@ -29,7 +29,6 @@ export default function ServiceIcon({
               isActived={menu?.name === v.name}
               disabled={menu?.name === v.name}
               onPress={() => onMenuPress?.(v)}
-              // onPress={() => onToggleAirports(v)}
               region={v.region}
             />
           </View>

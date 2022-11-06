@@ -1,5 +1,4 @@
-import createHook from 'zustand';
-import create from 'zustand/vanilla';
+import create from 'zustand';
 type PermissionAllow = {
   allow: boolean;
 };
@@ -19,7 +18,7 @@ const initialStateAllow: PermissionAllow = {
 const initialStateInfo: PermissionInfo = {
   location: '',
 };
-export const Permission = create<PermissionStore>((set, get) => ({
+export const usePermission = create<PermissionStore>((set, get) => ({
   permissionAllow: initialStateAllow,
   permissionInfo: initialStateInfo,
   setAllow: v =>
@@ -28,4 +27,3 @@ export const Permission = create<PermissionStore>((set, get) => ({
     })),
   getState: () => get(),
 }));
-export const usePermission = createHook(Permission);

@@ -122,9 +122,6 @@ const infoStyles = StyleSheet.create({
   info: {
     marginBottom: 32,
   },
-  separator: {
-    height: 10,
-  },
   text: {fontWeight: '500', fontSize: 14},
 
   textContainer: {
@@ -175,8 +172,8 @@ const titleStyles = StyleSheet.create({
   },
   phone: {
     position: 'absolute',
-    transform: [{rotate: '15deg'}],
     right: 50,
+    transform: [{rotate: '15deg'}],
   },
   link: {position: 'absolute', right: 0},
   phNumContainer: {
