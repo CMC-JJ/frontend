@@ -6,14 +6,19 @@ import FontText from './FontText';
 export default function TextRightIcon({
   text,
   onPress,
+  isBar,
 }: {
   text: String;
   onPress: () => void;
+  isBar?: Boolean;
 }) {
   return (
     <View style={styles.container}>
       <View style={styles.cardForm}>
-        <TouchableOpacity onPress={onPress} style={styles.body}>
+        <TouchableOpacity
+          onPress={onPress}
+          hitSlop={{top: 15, bottom: 15}}
+          style={styles.body}>
           <FontText
             style={[
               styles.text,
@@ -24,7 +29,7 @@ export default function TextRightIcon({
           <Icon name="right" color={'black'} size={20} />
         </TouchableOpacity>
       </View>
-      <ThinBar />
+      {isBar && <ThinBar />}
     </View>
   );
 }

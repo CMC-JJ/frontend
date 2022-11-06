@@ -53,11 +53,10 @@ export function MyPageScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
       <ThickBar />
       {/* 하단 */}
       <View style={listStyles.listContainer}>
-        <TextRightIcon text={'자주 묻는 질문'} onPress={() => {}} />
+        <TextRightIcon text={'자주 묻는 질문'} onPress={() => {}} isBar />
         <TextRightIcon text={'약관 및 동의 관리'} onPress={() => {}} />
       </View>
     </SafeAreaView>
