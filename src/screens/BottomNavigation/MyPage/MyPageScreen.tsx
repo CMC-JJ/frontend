@@ -2,7 +2,9 @@ import {TabHeader} from '@/components';
 import {ThickBar} from '@/components/BarSeparator';
 import FontText from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
+import {RootStackNavigationProp} from '@/screens';
 import {useAuthStore} from '@/store';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -18,6 +20,7 @@ import IconOct from 'react-native-vector-icons/Octicons';
 export function MyPageScreen() {
   const {nickName} = useAuthStore().auth;
   // userName
+  const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <SafeAreaView style={styles.fill}>
       <TabHeader text={'마이페이지'} />
@@ -29,7 +32,14 @@ export function MyPageScreen() {
             style={styles.image}
             source={require('@/assets/images/mypageLogo.png')}
           />
-          <TouchableOpacity style={styles.infoButtonWrap}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('InfoDetail', {
+                nickName: nickName,
+                userName: nickName,
+              });
+            }}
+            style={styles.infoButtonWrap}>
             <View style={styles.infoTitle}>
               <FontText
                 style={[
