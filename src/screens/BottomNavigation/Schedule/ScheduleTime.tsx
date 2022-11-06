@@ -6,16 +6,21 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import SwitchSelector from 'react-native-switch-selector';
 
+const options = [
+  {label: '오전', value: 'AM'},
+  {label: '오후', value: 'PM'},
+];
+
+// TODO: switch-selector 개선
 export function ScheduleTime() {
   const {schedule} = useScheduleStore();
   const [time] = useState<string>('');
-
-  const [isAM, setIsAM] = useState<boolean>(true);
+  const [setAMPM] = useState<string>('AM');
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -38,29 +43,20 @@ export function ScheduleTime() {
           등록된 시간에 맞춰 알려드리며, 메인에 고정됩니다.
         </FontText>
         <View style={styles.timeContainer}>
-          <Icon name="aircraft-take-off" size={20} color="#0066FF" />
-          <FontText style={styles.directionText}>출발</FontText>
-          <View style={styles.switch}>
-            <TouchableOpacity
-              style={isAM && styles.activeSwitch}
-              onPress={() => {
-                setIsAM(true);
-              }}>
-              <FontText
-                style={[styles.switchText, isAM && styles.activeSwitchText]}>
-                오전
-              </FontText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={!isAM && styles.activeSwitch}
-              onPress={() => {
-                setIsAM(false);
-              }}>
-              <FontText
-                style={[styles.switchText, !isAM && styles.activeSwitchText]}>
-                오후
-              </FontText>
-            </TouchableOpacity>
+          <View style={styles.imageText}>
+            <Icon name="aircraft-take-off" size={20} color="#0066FF" />
+            <FontText style={styles.directionText}>출발</FontText>
+          </View>
+          <View>
+            <SwitchSelector
+              options={options}
+              initial={0}
+              style={styles.switch}
+              textStyle={styles.switchText}
+              selectedTextStyle={styles.activeSwitchText}
+              buttonColor={'#0066FF'}
+              onPress={val => setAMPM(val)}
+            />
           </View>
         </View>
         <View style={styles.footer}>
@@ -113,6 +109,12 @@ const styles = StyleSheet.create({
     marginTop: 35,
 
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  imageText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   directionText: {
     marginLeft: 12,
@@ -124,14 +126,19 @@ const styles = StyleSheet.create({
   switch: {
     width: 90,
     height: 36,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+
     borderRadius: 46,
+    borderColor: 'white',
     backgroundColor: 'white',
     shadowOffset: {width: 0, height: 2},
+    elevation: 8,
     shadowColor: '#000000',
     shadowOpacity: 0.25,
+
+    fontWeight: '500',
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#979797',
   },
   switchText: {
     fontWeight: '500',
@@ -140,9 +147,8 @@ const styles = StyleSheet.create({
     color: '#979797',
   },
   activeSwitch: {
-    position: 'relative',
-    width: 43,
-    height: 28,
+    width: 35,
+    height: 30,
     borderRadius: 14,
     backgroundColor: '#0066ff',
 
