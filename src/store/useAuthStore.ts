@@ -4,6 +4,7 @@ export type Auth = {
   phoneNumber: string;
   userId: number;
   nickName: string;
+  userName: string;
   jwtToken: string;
 };
 
@@ -18,6 +19,7 @@ const initialState: Auth = {
   phoneNumber: '',
   userId: 0,
   nickName: '',
+  userName: '',
   jwtToken: '',
 };
 
