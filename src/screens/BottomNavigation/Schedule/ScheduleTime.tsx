@@ -16,11 +16,11 @@ const options = [
   {label: '오후', value: 'PM'},
 ];
 
+// TODO: switch-selector 개선
 export function ScheduleTime() {
   const {schedule} = useScheduleStore();
-  const [time, setTime] = useState<string>('AM');
-
-  console.log(time);
+  const [time] = useState<string>('');
+  const [setAMPM] = useState<string>('AM');
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -43,8 +43,7 @@ export function ScheduleTime() {
           등록된 시간에 맞춰 알려드리며, 메인에 고정됩니다.
         </FontText>
         <View style={styles.timeContainer}>
-          {/* <View> */}
-          <View>
+          <View style={styles.imageText}>
             <Icon name="aircraft-take-off" size={20} color="#0066FF" />
             <FontText style={styles.directionText}>출발</FontText>
           </View>
@@ -56,10 +55,9 @@ export function ScheduleTime() {
               textStyle={styles.switchText}
               selectedTextStyle={styles.activeSwitchText}
               buttonColor={'#0066FF'}
-              onPress={val => setTime(val)}
+              onPress={val => setAMPM(val)}
             />
           </View>
-          {/* </View> */}
         </View>
         <View style={styles.footer}>
           <SignButton
@@ -110,6 +108,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 35,
 
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  imageText: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
