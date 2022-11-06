@@ -59,7 +59,7 @@ export function StartScreen() {
               style={styles.textLine}>
               {'개인정보 취급 방침'}
             </FontText>
-            <FontText>
+            <FontText style={styles.text}>
               {'에 동의하고\n서비스를 이용하는 것으로 간주합니다.'}
             </FontText>
           </FontText>
