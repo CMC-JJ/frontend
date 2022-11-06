@@ -152,6 +152,7 @@ function RootStack() {
       <Stack.Screen
         name="InfoDetail"
         component={InfoDetailScreen}
+        // options={{headerTitle: '내 정보'}}
         options={{headerShown: false}}
       />
       <Stack.Screen
