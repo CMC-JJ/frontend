@@ -159,9 +159,6 @@ export function ServiceScreen() {
                   항공사
                 </FontText>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.allShow}>
-                <FontText style={styles.allShowText}>전체보기</FontText>
-              </TouchableOpacity>
             </View>
 
             {/* 아이콘&이름 */}
