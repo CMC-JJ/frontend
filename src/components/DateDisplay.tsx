@@ -15,7 +15,7 @@ export function DateDisplay({startDate}: DateDisplayProps) {
         style={styles.imageSize}
       />
       <FontText style={styles.dateText}>
-        {formatDateText(startDate) || null}
+        {formatDateText(startDate.slice(0, 10)) || null}
       </FontText>
     </View>
   );

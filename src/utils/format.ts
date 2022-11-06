@@ -36,3 +36,7 @@ export const formatTimeTo12 = (time: string) => {
     minute < 10 ? '0' + minute : minute
   }`;
 };
+
+export const formatTenDigit = (number: number) => {
+  return number < 10 ? '0' + number : number;
+};

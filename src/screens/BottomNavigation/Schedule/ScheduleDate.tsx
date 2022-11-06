@@ -24,7 +24,7 @@ export function ScheduleDate() {
       selectedColor: '#EFEFEF',
       selectedTextColor: 'black',
     },
-    [schedule.startAt]: {
+    [schedule.startAt.slice(0, 10)]: {
       selected: true,
       selectedColor: '#0066FF',
       selectedTextColor: 'white',

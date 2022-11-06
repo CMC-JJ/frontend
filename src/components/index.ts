@@ -10,3 +10,4 @@ export * from './SignInForm';
 export * from './SignUpForm';
 export * from './TabHedaer';
 export * from './FontText';
+export * from './ServiceItem';

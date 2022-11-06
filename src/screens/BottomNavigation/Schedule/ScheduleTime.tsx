@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import {formatTimeText} from '@/utils';
+import {formatTenDigit, formatTimeText} from '@/utils';
 import DatePicker from 'react-native-date-picker';
 import {useNavigation} from '@react-navigation/native';
 import type {ScheduleNavigationProp} from './ScheduleStack';
@@ -20,7 +20,6 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 export function ScheduleTime() {
   const navigation = useNavigation<ScheduleNavigationProp>();
   const {schedule, setSchedule} = useScheduleStore();
-  console.log(schedule);
 
   const [date, setDate] = useState(new Date());
   const [isAM, setIsAM] = useState<boolean>(
@@ -30,17 +29,13 @@ export function ScheduleTime() {
 
   const onPress = () => {
     const YYMMDD = schedule.startAt;
-    if (schedule.startAt.length >= 16) {
-      setSchedule(
-        'startAt',
-        `${YYMMDD.slice(0, 10)} ${date.getHours()}:${date.getMinutes()}`,
-      );
-    } else {
-      setSchedule(
-        'startAt',
-        `${YYMMDD} ${date.getHours()}:${date.getMinutes()}`,
-      );
-    }
+    setSchedule(
+      'startAt',
+      `${YYMMDD.slice(0, 10)} ${formatTenDigit(
+        date.getHours(),
+      )}:${formatTenDigit(date.getMinutes())}`,
+    );
+
     navigation.navigate('Convenience');
   };
 
@@ -191,11 +186,6 @@ const styles = StyleSheet.create({
     elevation: 8,
     shadowColor: '#000000',
     shadowOpacity: 0.25,
-
-    // fontWeight: '500',
-    // fontSize: 13,
-    // lineHeight: 20,
-    // color: '#979797',
   },
   switchText: {
     fontWeight: '500',
