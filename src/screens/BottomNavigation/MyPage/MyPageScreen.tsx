@@ -1,6 +1,7 @@
 import {TabHeader} from '@/components';
 import {ThickBar} from '@/components/BarSeparator';
 import FontText from '@/components/FontText';
+import TextRightIcon from '@/components/TextRightIcon';
 import {useAuthStore} from '@/store';
 import React from 'react';
 import {
@@ -55,7 +56,10 @@ export function MyPageScreen() {
 
       <ThickBar />
       {/* 하단 */}
-      <View style={listStyles.listContainer} />
+      <View style={listStyles.listContainer}>
+        <TextRightIcon text={'자주 묻는 질문'} onPress={() => {}} />
+        <TextRightIcon text={'약관 및 동의 관리'} onPress={() => {}} />
+      </View>
     </SafeAreaView>
   );
 }
@@ -117,6 +121,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     color: 'white',
-    marginVertical: 5,
+    marginTop: 10,
   },
 });
