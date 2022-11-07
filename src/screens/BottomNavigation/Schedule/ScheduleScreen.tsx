@@ -18,6 +18,7 @@ import type {ScheduleNavigationProp} from '@/screens';
 import AIcon from 'react-native-vector-icons/AntDesign';
 
 type currentTabType = 'future' | 'past';
+type currentFilterType = 'latest' | 'oldest' | 'boardingTime';
 
 type queryParamsType = {
   type: currentTabType;
@@ -71,10 +72,13 @@ type QueryType = {
 };
 
 //TODO: 무한 스크롤 구현 필요
+//TODO: 필터링 기능 추가(최신순, 오래된 순, 탑승시간순)
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
   const [currentTab, setCurrentTab] = useState<currentTabType>('future');
+  const [currentFilterTab, setCurrentFilterTab] =
+    useState<currentFilterType>('latest');
 
   const {data, isLoading} = useQuery<QueryType, Error>(currentTab, () =>
     fetchSchedule(currentTab, auth.jwtToken),
@@ -182,7 +186,60 @@ export function ScheduleScreen() {
             secondText="일정을 추가해주세요"
           />
         ) : (
-          <FontText>hi</FontText>
+          <View style={styles.filterContainer}>
+            <TouchableOpacity
+              style={[
+                styles.filterButton,
+                currentFilterTab === 'latest' && styles.activeFilterButton,
+              ]}
+              onPress={() => {
+                setCurrentFilterTab('latest');
+              }}>
+              <FontText
+                style={[
+                  styles.filterButtonText,
+                  currentFilterTab === 'latest' &&
+                    styles.activeFilterButtonText,
+                ]}>
+                최신순
+              </FontText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.filterButton,
+                currentFilterTab === 'oldest' && styles.activeFilterButton,
+              ]}
+              onPress={() => {
+                setCurrentFilterTab('oldest');
+              }}>
+              <FontText
+                style={[
+                  styles.filterButtonText,
+                  currentFilterTab === 'oldest' &&
+                    styles.activeFilterButtonText,
+                ]}>
+                오래된순
+              </FontText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.filterButton,
+                currentFilterTab === 'boardingTime' &&
+                  styles.activeFilterButton,
+              ]}
+              onPress={() => {
+                setCurrentFilterTab('boardingTime');
+              }}>
+              <FontText
+                style={[
+                  styles.filterButtonText,
+                  currentFilterTab === 'boardingTime' &&
+                    styles.activeFilterButtonText,
+                ]}>
+                탑승시간
+              </FontText>
+            </TouchableOpacity>
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -247,5 +304,35 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOpacity: 0.25,
     elevation: 2,
+  },
+  filterContainer: {
+    marginTop: 14,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  filterButton: {
+    marginLeft: 7,
+    paddingHorizontal: 12,
+    paddingVertical: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    borderRadius: 12,
+    borderWidth: 1.3,
+    borderStyle: 'solid',
+    borderColor: '#BCBCBC',
+  },
+  activeFilterButton: {
+    borderColor: '#0066FF',
+  },
+  filterButtonText: {
+    fontWeight: '500',
+    fontSize: 13,
+    lineHeight: 24,
+    color: '#BCBCBC',
+  },
+  activeFilterButtonText: {
+    fontWeight: '700',
+    color: '#0066FF',
   },
 });

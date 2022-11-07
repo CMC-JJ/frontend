@@ -33,20 +33,14 @@ export function Card({
       </View>
       <View style={styles.airSummary}>
         <View style={styles.airports}>
-          <FontText style={styles.airportText}>
-            {/* {AIRPORT[departureAirportId]} */}
-            {departureAirportName}
-          </FontText>
+          <FontText style={styles.airportText}>{departureAirportName}</FontText>
           <Icon
             name="aircraft-take-off"
             size={20}
             color="#0066FF"
             style={styles.aircraft}
           />
-          <FontText style={styles.airportText}>
-            {/* {AIRPORT[arrivalAirportId]} */}
-            {arrivalAirportName}
-          </FontText>
+          <FontText style={styles.airportText}>{arrivalAirportName}</FontText>
         </View>
         <View style={styles.dotContainer}>
           <View style={styles.circle} />
@@ -54,10 +48,7 @@ export function Card({
           <View style={styles.circle} />
         </View>
         <View style={styles.airline}>
-          <FontText style={styles.airlineText}>
-            {/* {AIRLINE[airlineId].name} */}
-            {airlineName}
-          </FontText>
+          <FontText style={styles.airlineText}>{airlineName}</FontText>
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -140,7 +131,7 @@ const styles = StyleSheet.create({
   },
   aircraft: {
     position: 'absolute',
-    left: '45%',
+    left: '47%',
     top: 13,
   },
   dotContainer: {

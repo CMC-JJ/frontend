@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
   },
   aircraft: {
     position: 'absolute',
-    left: '45%',
+    left: '47%',
     top: 13,
   },
   dotContainer: {
