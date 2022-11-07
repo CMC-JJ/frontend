@@ -7,11 +7,13 @@ type CardProps = {
   airlineName: string;
   arrivalAirportName: string;
   departureAirportName: string;
-  leftDay: string;
+  leftDay?: string;
   scheduleName: string;
   startAt: string;
+  isPast?: boolean;
 };
 
+// TODO: 카드 컴포넌트 눌렀을 때, 일정 상세 페이지로 이동!
 export function Card({
   airlineName,
   arrivalAirportName,
@@ -19,19 +21,28 @@ export function Card({
   leftDay,
   scheduleName,
   startAt,
+  isPast = false,
 }: CardProps) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardHeaderContainer}>
         <FontText style={styles.cardHeader}>{scheduleName}</FontText>
-        <View style={styles.dayleft}>
-          <FontText style={styles.day}>{leftDay}</FontText>
+        {isPast ? (
+          <View style={[styles.startAt, styles.pastStartAt]}>
+            <FontText style={styles.startAtText}>{startAt}</FontText>
+          </View>
+        ) : (
+          <View style={styles.dayleft}>
+            <FontText style={styles.day}>{leftDay}</FontText>
+          </View>
+        )}
+      </View>
+      {!isPast && (
+        <View style={styles.startAt}>
+          <FontText style={styles.startAtText}>{startAt}</FontText>
         </View>
-      </View>
-      <View style={styles.startAt}>
-        <FontText style={styles.startAtText}>{startAt}</FontText>
-      </View>
-      <View style={styles.airSummary}>
+      )}
+      <View style={[styles.airSummary]}>
         <View style={styles.airports}>
           <FontText style={styles.airportText}>{departureAirportName}</FontText>
           <Icon
@@ -53,9 +64,17 @@ export function Card({
       </View>
       <View style={styles.buttonContainer}>
         {/* TODO: onPress 이벤트 */}
-        <TouchableOpacity style={styles.editButton} onPress={() => {}}>
-          <FontText style={styles.buttonText}>수정하기</FontText>
-        </TouchableOpacity>
+        {isPast ? (
+          <TouchableOpacity
+            style={[styles.editButton, styles.reviewButton]}
+            onPress={() => {}}>
+            <FontText style={styles.reviewButtonText}>리뷰쓰기</FontText>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.editButton} onPress={() => {}}>
+            <FontText style={styles.buttonText}>수정하기</FontText>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
           <FontText style={styles.buttonText}>삭제</FontText>
         </TouchableOpacity>
@@ -111,6 +130,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  pastStartAt: {
+    marginTop: 0,
+  },
   startAtText: {
     fontWeight: '500',
     fontSize: 12,
@@ -118,7 +140,7 @@ const styles = StyleSheet.create({
   },
   airSummary: {
     marginTop: 20,
-    padding: 18,
+    paddingHorizontal: 18,
   },
   airports: {
     flexDirection: 'row',
@@ -179,6 +201,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFEFEF',
     borderRadius: 12,
   },
+  reviewButton: {
+    backgroundColor: '#0066FF',
+  },
   deleteButton: {
     flex: 0.25,
     height: 40,
@@ -192,5 +217,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 23,
     color: '#7C7C7C',
+  },
+  reviewButtonText: {
+    fontWeight: '600',
+    fontSize: 15,
+    lineHeight: 23,
+    color: '#FFFFFF',
   },
 });

@@ -55,7 +55,7 @@ type Schedule = {
   arrivalAirportName: string;
   departureAirportId: number;
   departureAirportName: string;
-  leftDay: string;
+  leftDay?: string;
   scheduleName: string;
   startAt: string;
 };
@@ -186,60 +186,73 @@ export function ScheduleScreen() {
             secondText="일정을 추가해주세요"
           />
         ) : (
-          <View style={styles.filterContainer}>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                currentFilterTab === 'latest' && styles.activeFilterButton,
-              ]}
-              onPress={() => {
-                setCurrentFilterTab('latest');
-              }}>
-              <FontText
+          <>
+            <View style={styles.filterContainer}>
+              <TouchableOpacity
                 style={[
-                  styles.filterButtonText,
-                  currentFilterTab === 'latest' &&
-                    styles.activeFilterButtonText,
-                ]}>
-                최신순
-              </FontText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                currentFilterTab === 'oldest' && styles.activeFilterButton,
-              ]}
-              onPress={() => {
-                setCurrentFilterTab('oldest');
-              }}>
-              <FontText
+                  styles.filterButton,
+                  currentFilterTab === 'latest' && styles.activeFilterButton,
+                ]}
+                onPress={() => {
+                  setCurrentFilterTab('latest');
+                }}>
+                <FontText
+                  style={[
+                    styles.filterButtonText,
+                    currentFilterTab === 'latest' &&
+                      styles.activeFilterButtonText,
+                  ]}>
+                  최신순
+                </FontText>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[
-                  styles.filterButtonText,
-                  currentFilterTab === 'oldest' &&
-                    styles.activeFilterButtonText,
-                ]}>
-                오래된순
-              </FontText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.filterButton,
-                currentFilterTab === 'boardingTime' &&
-                  styles.activeFilterButton,
-              ]}
-              onPress={() => {
-                setCurrentFilterTab('boardingTime');
-              }}>
-              <FontText
+                  styles.filterButton,
+                  currentFilterTab === 'oldest' && styles.activeFilterButton,
+                ]}
+                onPress={() => {
+                  setCurrentFilterTab('oldest');
+                }}>
+                <FontText
+                  style={[
+                    styles.filterButtonText,
+                    currentFilterTab === 'oldest' &&
+                      styles.activeFilterButtonText,
+                  ]}>
+                  오래된순
+                </FontText>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[
-                  styles.filterButtonText,
+                  styles.filterButton,
                   currentFilterTab === 'boardingTime' &&
-                    styles.activeFilterButtonText,
-                ]}>
-                탑승시간
-              </FontText>
-            </TouchableOpacity>
-          </View>
+                    styles.activeFilterButton,
+                ]}
+                onPress={() => {
+                  setCurrentFilterTab('boardingTime');
+                }}>
+                <FontText
+                  style={[
+                    styles.filterButtonText,
+                    currentFilterTab === 'boardingTime' &&
+                      styles.activeFilterButtonText,
+                  ]}>
+                  탑승 시간순
+                </FontText>
+              </TouchableOpacity>
+            </View>
+            {data?.result.schedules.map(schedule => (
+              <Card
+                key={schedule.scheduleId}
+                airlineName={schedule.airlineName}
+                arrivalAirportName={schedule.arrivalAirportName}
+                departureAirportName={schedule.departureAirportName}
+                scheduleName={schedule.scheduleName}
+                startAt={schedule.startAt}
+                isPast={true}
+              />
+            ))}
+          </>
         )}
       </ScrollView>
     </SafeAreaView>
