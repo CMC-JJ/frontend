@@ -8,9 +8,9 @@ export default function TextRightIcon({
   onPress,
   isBar,
 }: {
-  text: String;
+  text: string;
   onPress: () => void;
-  isBar?: Boolean;
+  isBar?: boolean;
 }) {
   return (
     <View style={styles.container}>
