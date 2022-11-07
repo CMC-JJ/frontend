@@ -17,6 +17,7 @@ import {
   StartScreen,
   TermsScreen,
   AirSearchScreen,
+  ReportScreen,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {usePermission} from '@/store';
@@ -41,10 +42,14 @@ export type RootStackParamList = {
   };
   PhoneAuth: undefined;
   SignUp: undefined;
-  NickName: undefined;
   SignUpComplete: undefined;
+  NickName: undefined;
   MainTab: MainTabNavigationScreenParams;
   AirSearch: undefined;
+  Report: {
+    id: number | undefined;
+    type: string;
+  };
 };
 
 export type RootStackNavigationProp =
@@ -138,6 +143,11 @@ function RootStack() {
       <Stack.Screen
         name="AirSearch"
         component={AirSearchScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Report"
+        component={ReportScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

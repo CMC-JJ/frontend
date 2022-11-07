@@ -2,7 +2,8 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useMemo} from 'react';
 import FontText from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {reportAirlineReview, reportAirportReview} from '@/utils/fetch';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackNavigationProp} from '@/screens';
 
 export interface ReviewProps extends ReviewSame {
   airlineReviewdId?: number;
@@ -26,6 +27,7 @@ export default function ReviewCard({
   data: ReviewProps | undefined;
   currentTab: 'airport' | 'airline';
 }) {
+  const navigation = useNavigation<RootStackNavigationProp>();
   const usedService = useMemo(
     () => (
       <View style={styles.ownReviewContainer}>
@@ -43,12 +45,13 @@ export default function ReviewCard({
     [currentTab, data],
   );
   const onReport = () => {
-    const res =
-      currentTab === 'airport'
-        ? reportAirportReview(data?.airportReviewdId)
-        : reportAirlineReview(data?.airlineReviewdId);
-
-    console.log(res);
+    navigation.navigate('Report', {
+      id:
+        currentTab === 'airport'
+          ? data?.airportReviewdId
+          : data?.airlineReviewdId,
+      type: currentTab,
+    });
   };
 
   return (
@@ -66,6 +69,7 @@ export default function ReviewCard({
         </View>
         {/* 리뷰종류 */}
         {usedService}
+        <FontText style={styles.content}>{data?.content}</FontText>
       </View>
     </View>
   );
@@ -134,5 +138,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 3,
     marginVertical: 5,
+  },
+  content: {
+    marginTop: 9.5,
+    fontSize: 15,
+    fontWeight: '400',
+    color: '#121212',
   },
 });

@@ -79,19 +79,61 @@ export const fetchAirportReview = async (
   }
 };
 
-export const reportAirportReview = async (id: number | undefined) => {
+export const reportAirportReview = async ({
+  id,
+  reviewId,
+  etcReason,
+}: {
+  id: number | undefined;
+  reviewId: number;
+  etcReason?: string;
+}) => {
   try {
-    const res = await request(`web/airports/reviews/${id}/report`, {}, 'POST');
+    const res = await request(
+      'web/airports/reviews/report',
+      {
+        airportReviewId: id,
+        reviewReportReasonId: reviewId,
+        etcReason: etcReason,
+      },
+      'POST',
+    );
     return res;
   } catch (e) {
     console.log('airport 리뷰 신고 실패', e);
   }
 };
-export const reportAirlineReview = async (id: number | undefined) => {
+export const reportAirlineReview = async ({
+  id,
+  reviewId,
+  etcReason,
+}: {
+  id: number | undefined;
+  reviewId: number;
+  etcReason?: string;
+}) => {
   try {
-    const res = await request(`web/airlines/reviews/${id}/report`, {}, 'POST');
+    const res = await request(
+      'web/airlines/reviews/report',
+      {
+        airlineReviewId: id,
+        reviewReportReasonId: reviewId,
+        etcReason: etcReason,
+      },
+      'POST',
+    );
     return res;
   } catch (e) {
     console.log('airline 리뷰 신고 실패', e);
+  }
+};
+
+export const reviewReportList = async () => {
+  try {
+    const res = await request('web/infos/review-report-reasons', {}, 'GET');
+    console.log(res);
+    return res.result.reviewReportReasons;
+  } catch (e) {
+    console.log('리뷰신고리스트 가져오기 실패', e);
   }
 };
