@@ -10,13 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {TabHeader} from '@/components';
+import {Card, EmptySchedule, FontText, TabHeader} from '@/components';
 import {useAuthStore} from '@/store';
-import Icon from 'react-native-vector-icons/Entypo';
 import {useQuery} from 'react-query';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import type {ScheduleNavigationProp} from '@/screens';
-// import {request} from '../utils';
+import AIcon from 'react-native-vector-icons/AntDesign';
 
 type currentTabType = 'future' | 'past';
 
@@ -47,22 +46,43 @@ const fetchSchedule = (type: currentTabType, jwtToken: string) => {
   ).then(res => res.json());
 };
 
+type Schedule = {
+  scheduleId: number;
+  airlineId: number;
+  airlineName: string;
+  arrivalAirportId: number;
+  arrivalAirportName: string;
+  departureAirportId: number;
+  departureAirportName: string;
+  leftDay: string;
+  scheduleName: string;
+  startAt: string;
+};
+
+type ScheduleType = {
+  schedules: Schedule[];
+};
+
+type QueryType = {
+  code: number;
+  isSuccess: boolean;
+  message: string;
+  result: ScheduleType;
+};
+
+//TODO: 무한 스크롤 구현 필요
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
   const [currentTab, setCurrentTab] = useState<currentTabType>('future');
 
-  const {data, isLoading} = useQuery(currentTab, () =>
+  const {data, isLoading} = useQuery<QueryType, Error>(currentTab, () =>
     fetchSchedule(currentTab, auth.jwtToken),
   );
 
-  console.log(data);
+  console.log(data?.result);
 
   const isCurrentFutureTabActive = currentTab === 'future';
-
-  //TODO: 일정 리스트를 조회하는 부분에 있어서 데이터 캐싱이 필요함(서버 데이터 관리 -> query 사용..?)
-
-  //TODO: 무한 스크롤 구현 필요
 
   useFocusEffect(
     useCallback(() => {
@@ -122,39 +142,47 @@ export function ScheduleScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      {/* TODO: 데이터 있고 없고 분리(flat list로 데이터 보여주기) */}
       <ScrollView style={styles.scrollContainer}>
-        {/* 데이터가 없는 경우 이 부분 표시 */}
         {isLoading ? (
           <View style={styles.loading}>
             <ActivityIndicator color="#0066ff" />
           </View>
+        ) : isCurrentFutureTabActive ? (
+          data?.result.schedules.length === 0 ? (
+            <EmptySchedule
+              firstText="즐거운 여행길"
+              secondText="일정과 항공편을 등록해 보세요"
+            />
+          ) : (
+            <>
+              {data?.result.schedules.map(schedule => (
+                <Card
+                  key={schedule.scheduleId}
+                  airlineName={schedule.airlineName}
+                  arrivalAirportName={schedule.arrivalAirportName}
+                  departureAirportName={schedule.departureAirportName}
+                  leftDay={schedule.leftDay}
+                  scheduleName={schedule.scheduleName}
+                  startAt={schedule.startAt}
+                />
+              ))}
+              <TouchableOpacity
+                style={styles.addSchedule}
+                onPress={() => {
+                  navigation.navigate('Title');
+                }}>
+                <AIcon name="pluscircleo" size={20} color="#0066FF" />
+              </TouchableOpacity>
+            </>
+          )
+        ) : data?.result.schedules.length === 0 ? (
+          <EmptySchedule
+            firstText="지난 일정이 없습니다!"
+            secondText="일정을 추가해주세요"
+          />
         ) : (
-          // TODO: 데이터 있고 없고 분리(flat list로 데이터 보여주기)
-          <>
-            <View style={styles.container}>
-              <View style={styles.circle} />
-              <View style={styles.announcementMessage}>
-                <Text style={styles.message}>
-                  {isCurrentFutureTabActive
-                    ? '즐거운 여행길'
-                    : '지난 일정이 없습니다!'}
-                </Text>
-                <Text style={styles.message}>
-                  {isCurrentFutureTabActive
-                    ? '일정과 항공편을 등록해 보세요'
-                    : '일정을 추가해주세요'}
-                </Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={styles.addSchedule}
-              onPress={() => {
-                navigation.navigate('Title');
-              }}>
-              <Text style={styles.addText}>일정 추가하기</Text>
-              <Icon name="chevron-right" color="#0066FF" size={20} />
-            </TouchableOpacity>
-          </>
+          <FontText>hi</FontText>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -200,47 +228,24 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   loading: {
     marginTop: 230,
   },
-  container: {
-    marginTop: 120,
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  circle: {
-    borderRadius: 120,
-    width: 120,
-    height: 120,
-    backgroundColor: '#D9D9D9',
-  },
-  announcementMessage: {
-    marginTop: 33,
-    alignItems: 'center',
-  },
-  message: {
-    fontFamily: 'Pretendard',
-    fontWeight: '400',
-    fontSize: 15,
-    lineHeight: 23,
-
-    color: '#000000',
-  },
   addSchedule: {
-    flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 20,
+    marginBottom: 100,
+    borderRadius: 12,
+    height: 64,
 
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  addText: {
-    marginRight: 2,
-    fontFamily: 'Pretendard',
-    fontWeight: '700',
-    fontSize: 18,
-    lineHeight: 28,
-    color: '#0066FF',
+    alignItems: 'center',
+
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    elevation: 2,
   },
 });

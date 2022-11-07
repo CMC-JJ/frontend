@@ -162,10 +162,10 @@ export function ScheduleConvenience() {
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <View style={styles.back}>
+        {Platform.OS === 'ios' && <ArrowBack size={28} />}
+      </View>
       <ScrollView style={styles.scrollView}>
-        <View style={styles.back}>
-          {Platform.OS === 'ios' && <ArrowBack size={28} />}
-        </View>
         <View style={styles.container}>
           <View style={styles.dateDisplayContainer}>
             <DateDisplay startDate={schedule.startAt} />
@@ -273,7 +273,7 @@ export function ScheduleConvenience() {
             />
           </TouchableOpacity>
           {airlineExpanded && (
-            <View style={styles.serviceItemContainer}>
+            <View style={[styles.serviceItemContainer, styles.marginBottom]}>
               {airlineService.map(item => (
                 <ServiceItem
                   key={item.id.toString()}
@@ -344,6 +344,8 @@ const styles = StyleSheet.create({
     lineHeight: 23,
   },
   aircraft: {
+    position: 'absolute',
+    left: '45%',
     top: 13,
   },
   dotContainer: {
@@ -401,6 +403,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottomColor: '#F2F2F2',
     borderBottomWidth: 1,
+  },
+  marginBottom: {
+    marginBottom: 100,
   },
   footer: {
     flex: 0.1,

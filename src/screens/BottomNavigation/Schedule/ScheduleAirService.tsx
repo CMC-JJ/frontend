@@ -249,8 +249,8 @@ const styles = StyleSheet.create({
     height: 20,
   },
   airlineText: {
-    fontWeight: '600',
     marginLeft: 15,
+    fontWeight: '600',
     fontSize: 15,
     lineHeight: 23,
   },
