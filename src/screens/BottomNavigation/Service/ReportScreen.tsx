@@ -17,7 +17,7 @@ import {
   reportAirlineReview,
   reportAirportReview,
   reviewReportList,
-} from '@/utils/fetch';
+} from '@/utils/fetchService';
 import {ThinBar} from '@/components/BarSeparator';
 
 function RadioButton({

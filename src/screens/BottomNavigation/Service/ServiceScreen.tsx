@@ -18,7 +18,7 @@ import {
   fetchAirportLists,
   fetchAirportReview,
   fetchAirportsDetail,
-} from '@/utils/fetch';
+} from '@/utils/fetchService';
 import {RootStackNavigationProp} from '@/screens';
 import {useNavigation} from '@react-navigation/native';
 import ReviewCard, {ReviewProps} from '@/components/service/ReviewCard';
