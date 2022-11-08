@@ -37,12 +37,20 @@ export function InfoDetailScreen() {
       <View style={styles.userImg}>
         <Image source={require('@/assets/images/userImg.png')} />
         <View style={styles.textContainer}>
-          <FontText style={styles.nickName}>{params.auth.userName}</FontText>
-          <FontText style={styles.userName}>{params.auth.nickName}</FontText>
+          <FontText style={styles.nickName}>{params.auth.nickName}</FontText>
+          <FontText style={styles.userName}>{params.auth.userName}</FontText>
         </View>
       </View>
       <ThickBar />
-      <TextRightIcon text={'내 정보 수정하기'} onPress={() => {}} isBar />
+      <TextRightIcon
+        text={'내 정보 수정하기'}
+        onPress={() => {
+          navigation.navigate('InfoModify', {
+            auth: params.auth,
+          });
+        }}
+        isBar
+      />
       <TextRightIcon text={'비밀번호 변경'} onPress={() => {}} />
       <ThickBar />
       <TextRightIcon

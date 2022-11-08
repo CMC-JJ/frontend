@@ -39,8 +39,6 @@ export function MyPageScreen() {
             onPress={() => {
               navigation.navigate('InfoDetail', {
                 auth: auth,
-                // nickName: nickName,
-                // userName: userName,
               });
             }}
             style={styles.infoButtonWrap}>

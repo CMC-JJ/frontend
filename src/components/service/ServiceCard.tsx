@@ -42,7 +42,6 @@ export function ServiceCard({
 }) {
   const list =
     type === 'airport' ? data?.airportServices : data?.airlineServices;
-  console.log('check');
   const serviceList = useMemo(
     () => (
       <View style={infoStyles.info}>

@@ -1,16 +1,23 @@
 import {Platform, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ArrowBack, SignButton, TabHeader} from '@/components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import FontText from '@/components/FontText';
 import RNPickerSelect from 'react-native-picker-select';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {MypageNavigationProp} from './MyPageStack';
 export default function DeleteScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
+  const navigation = useNavigation<MypageNavigationProp>();
   const [select, setSelect] = useState<string>('');
-  const submit = () => {};
+  const submit = () => {
+    navigation.navigate('DeleteConfirm', {
+      userId: params.auth.userId,
+      deleteId: Number(select),
+    });
+  };
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.back}>
@@ -139,7 +146,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 110,
     flexDirection: 'row',
-    flex: 1,
     paddingHorizontal: 25,
   },
 });

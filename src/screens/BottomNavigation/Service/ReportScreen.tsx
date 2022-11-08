@@ -131,17 +131,17 @@ export function ReportScreen() {
           </FontText>
         </View>
       </View>
-      <View>
-        <RadioButton
-          menu={menu}
-          onMenuPress={_menu => {
-            setMenu(_menu);
-          }}
-          reportList={reportList}
-          setText={_text => setText(_text)}
-          text={text}
-        />
-      </View>
+      {/* <View> */}
+      <RadioButton
+        menu={menu}
+        onMenuPress={_menu => {
+          setMenu(_menu);
+        }}
+        reportList={reportList}
+        setText={_text => setText(_text)}
+        text={text}
+      />
+      {/* </View> */}
       <View style={styles.submit}>
         <SignButton buttonText={'신고하기'} isValid onPress={() => submit()} />
       </View>

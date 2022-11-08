@@ -11,6 +11,8 @@ import {
 import type {MainTabNavigationProp} from '@/screens';
 import {Auth} from '@/store/useAuthStore';
 import DeleteScreen from './DeleteScreen';
+import DeleteConfirmScreen from './DeleteConfirmScreen';
+import InfoModifyScreen from './InfoModifyScreen';
 
 export type MypageStackParamList = {
   Home: undefined;
@@ -20,6 +22,13 @@ export type MypageStackParamList = {
   Question: undefined;
   TermMyPage: undefined;
   Delete: {
+    auth: Auth;
+  };
+  DeleteConfirm: {
+    userId: number;
+    deleteId: number;
+  };
+  InfoModify: {
     auth: Auth;
   };
 };
@@ -52,6 +61,16 @@ export function MyPageStack() {
       <Stack.Screen
         name="Delete"
         component={DeleteScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DeleteConfirm"
+        component={DeleteConfirmScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="InfoModify"
+        component={InfoModifyScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
