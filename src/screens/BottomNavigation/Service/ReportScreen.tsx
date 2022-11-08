@@ -20,11 +20,23 @@ import {
 } from '@/utils/fetch';
 import {ThinBar} from '@/components/BarSeparator';
 
-function RadioButton({menu, onMenuPress, reportList, setText, text}: any) {
+function RadioButton({
+  menu,
+  onMenuPress,
+  reportList,
+  setText,
+  text,
+}: {
+  menu: ReportReason | undefined;
+  onMenuPress: React.Dispatch<React.SetStateAction<ReportReason | undefined>>;
+  reportList: ReportReason[] | undefined;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  text: string;
+}) {
   return (
     <>
       {reportList &&
-        reportList.map((v: any, i: number) => (
+        reportList.map((v: ReportReason, i: number) => (
           <View key={i}>
             <TouchableOpacity
               style={styles.button}
@@ -67,18 +79,25 @@ function RadioButton({menu, onMenuPress, reportList, setText, text}: any) {
   );
 }
 type ReportCompleteRouteProp = RouteProp<RootStackParamList, 'Report'>;
-
+interface ReportReason {
+  id: number;
+  name: string;
+}
 export function ReportScreen() {
   const {params} = useRoute<ReportCompleteRouteProp>();
-  const [menu, setMenu] = useState();
-  const [reportList, setReportList] = useState();
-  const [text, setText] = useState('');
+  const [menu, setMenu] = useState<ReportReason>();
+  const [reportList, setReportList] = useState<ReportReason[]>();
+  const [text, setText] = useState<string>('');
   const navigation = useNavigation<MainTabNavigationProp>();
   useEffect(() => {
     reviewReportList().then(list => {
       setReportList(list);
     });
   }, []);
+  useEffect(() => {
+    console.log('menu', menu);
+    console.log('reportList', reportList);
+  });
   const submit = () => {
     if (menu) {
       (params.type === 'airport'
@@ -115,11 +134,11 @@ export function ReportScreen() {
       <View>
         <RadioButton
           menu={menu}
-          onMenuPress={(_menu: any) => {
+          onMenuPress={_menu => {
             setMenu(_menu);
           }}
           reportList={reportList}
-          setText={(_text: any) => setText(_text)}
+          setText={_text => setText(_text)}
           text={text}
         />
       </View>
