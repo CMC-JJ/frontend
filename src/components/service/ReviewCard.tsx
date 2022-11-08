@@ -6,11 +6,11 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';
 
 export interface ReviewProps extends ReviewSame {
-  airlineReviewdId?: number;
+  airlineReviewId?: number;
   reviewedAirlineServices?: string[];
 }
 export interface ReviewProps extends ReviewSame {
-  airportReviewdId?: number;
+  airportReviewId?: number;
   reviewedAirportServices?: string[];
 }
 export interface ReviewSame {
@@ -45,13 +45,14 @@ export default function ReviewCard({
     [currentTab, data],
   );
   const onReport = () => {
-    navigation.navigate('Report', {
-      id:
-        currentTab === 'airport'
-          ? data?.airportReviewdId
-          : data?.airlineReviewdId,
-      type: currentTab,
-    });
+    data &&
+      navigation.navigate('Report', {
+        id:
+          currentTab === 'airport'
+            ? data?.airportReviewId
+            : data?.airlineReviewId,
+        type: currentTab,
+      });
   };
 
   return (

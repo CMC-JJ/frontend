@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Platform,
   StyleSheet,
@@ -8,23 +9,29 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RouteProp, useRoute} from '@react-navigation/native';
-import {RootStackParamList} from '@/screens';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {MainTabNavigationProp, RootStackParamList} from '@/screens';
 import {ArrowBack, SignButton} from '@/components';
 import FontText from '@/components/FontText';
-import {reviewReportList} from '@/utils/fetch';
+import {
+  reportAirlineReview,
+  reportAirportReview,
+  reviewReportList,
+} from '@/utils/fetch';
 import {ThinBar} from '@/components/BarSeparator';
 
-function RadioButton({menu, onMenuPress, reportList, setText}: any) {
+function RadioButton({menu, onMenuPress, reportList, setText, text}: any) {
   return (
     <>
       {reportList &&
-        reportList.map((v: any) => (
-          <View>
+        reportList.map((v: any, i: number) => (
+          <View key={i}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => onMenuPress?.(v)}
-              key={v.id}>
+              onPress={() => {
+                onMenuPress?.(v);
+                menu && (menu.name === '직접입력' ? setText('') : '');
+              }}>
               {menu?.id === v.id ? (
                 <Image
                   style={styles.icon}
@@ -43,9 +50,12 @@ function RadioButton({menu, onMenuPress, reportList, setText}: any) {
                 <ThinBar />
               ) : (
                 <TextInput
+                  value={text}
                   multiline={true}
-                  onChangeText={text => setText(text)}
-                  editable={reportList.length === v.id ? true : false}
+                  onChangeText={_text => setText(_text)}
+                  editable={
+                    menu && (reportList.length === menu.id ? true : false)
+                  }
                   placeholder="신고 사유를 입력해주세요"
                   style={styles.inputForm}
                 />
@@ -57,22 +67,35 @@ function RadioButton({menu, onMenuPress, reportList, setText}: any) {
   );
 }
 type ReportCompleteRouteProp = RouteProp<RootStackParamList, 'Report'>;
+
 export function ReportScreen() {
   const {params} = useRoute<ReportCompleteRouteProp>();
   const [menu, setMenu] = useState();
   const [reportList, setReportList] = useState();
-  const [text, setText] = useState();
-  useEffect(() => {
-    console.log('menu', menu);
-    params.id;
-    console.log('text', text);
-  }, [menu, params.id, text]);
-
+  const [text, setText] = useState('');
+  const navigation = useNavigation<MainTabNavigationProp>();
   useEffect(() => {
     reviewReportList().then(list => {
       setReportList(list);
     });
   }, []);
+  const submit = () => {
+    if (menu) {
+      (params.type === 'airport'
+        ? reportAirportReview(params.id, menu.id, text)
+        : reportAirlineReview(params.id, menu.id, text)
+      ).then(res =>
+        res
+          ? Alert.alert('\n신고가 접수되었습니다.\n ', '', [
+              {
+                text: '확인',
+                onPress: () => navigation.navigate('Service'),
+              },
+            ])
+          : Alert.alert('\n오류가 발생했습니다.\n다시 시도해주세요.\n'),
+      );
+    }
+  };
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.header}>
@@ -92,22 +115,21 @@ export function ReportScreen() {
       <View>
         <RadioButton
           menu={menu}
-          onMenuPress={(_menu: any) => setMenu(_menu)}
+          onMenuPress={(_menu: any) => {
+            setMenu(_menu);
+          }}
           reportList={reportList}
           setText={(_text: any) => setText(_text)}
+          text={text}
         />
       </View>
       <View style={styles.submit}>
-        <SignButton style={{width: '100%'}} buttonText={'신고하기'} isValid />
+        <SignButton buttonText={'신고하기'} isValid onPress={() => submit()} />
       </View>
     </SafeAreaView>
   );
 }
-// const res =
-//   currentTab === 'airport'
-//     ? reportAirportReview(data?.airportReviewdId)
-//     : reportAirlineReview(data?.airlineReviewdId);
-// console.log(res);
+
 const styles = StyleSheet.create({
   fill: {flex: 1, backgroundColor: 'white'},
   header: {
@@ -144,7 +166,7 @@ const styles = StyleSheet.create({
   inputForm: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    height: 160,
+    height: 130,
     borderRadius: 12,
     shadowOffset: {width: 1, height: 1},
     shadowOpacity: 0.2,

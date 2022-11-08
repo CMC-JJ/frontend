@@ -69,7 +69,6 @@ export const fetchAirportReview = async (
       {page: page},
       'GET',
     );
-    console.log('port', res.result.airportReviews);
     return res.result.airportReviews.map((review: any) => ({
       ...review,
       uid: nanoid(),
@@ -79,15 +78,11 @@ export const fetchAirportReview = async (
   }
 };
 
-export const reportAirportReview = async ({
-  id,
-  reviewId,
-  etcReason,
-}: {
-  id: number | undefined;
-  reviewId: number;
-  etcReason?: string;
-}) => {
+export const reportAirportReview = async (
+  id: number | undefined,
+  reviewId: number,
+  etcReason?: string,
+) => {
   try {
     const res = await request(
       'web/airports/reviews/report',
@@ -98,20 +93,17 @@ export const reportAirportReview = async ({
       },
       'POST',
     );
-    return res;
+
+    return res.isSuccess;
   } catch (e) {
     console.log('airport 리뷰 신고 실패', e);
   }
 };
-export const reportAirlineReview = async ({
-  id,
-  reviewId,
-  etcReason,
-}: {
-  id: number | undefined;
-  reviewId: number;
-  etcReason?: string;
-}) => {
+export const reportAirlineReview = async (
+  id: number | undefined,
+  reviewId: number,
+  etcReason?: string,
+) => {
   try {
     const res = await request(
       'web/airlines/reviews/report',
@@ -122,7 +114,8 @@ export const reportAirlineReview = async ({
       },
       'POST',
     );
-    return res;
+
+    return res.isSuccess;
   } catch (e) {
     console.log('airline 리뷰 신고 실패', e);
   }
@@ -131,7 +124,6 @@ export const reportAirlineReview = async ({
 export const reviewReportList = async () => {
   try {
     const res = await request('web/infos/review-report-reasons', {}, 'GET');
-    console.log(res);
     return res.result.reviewReportReasons;
   } catch (e) {
     console.log('리뷰신고리스트 가져오기 실패', e);
