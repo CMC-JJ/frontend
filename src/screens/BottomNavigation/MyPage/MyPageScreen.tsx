@@ -2,9 +2,9 @@ import {TabHeader} from '@/components';
 import {ThickBar} from '@/components/BarSeparator';
 import FontText from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
-import {RootStackNavigationProp} from '@/screens';
+import {MypageNavigationProp, MypageStackParamList} from '@/screens';
 import {useAuthStore} from '@/store';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -16,11 +16,14 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconOct from 'react-native-vector-icons/Octicons';
-
+export type InfoDetailCompleteRouteProp = RouteProp<
+  MypageStackParamList,
+  'InfoDetail'
+>;
 export function MyPageScreen() {
-  const {nickName} = useAuthStore().auth;
+  const {auth} = useAuthStore();
   // userName
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<MypageNavigationProp>();
   return (
     <SafeAreaView style={styles.fill}>
       <TabHeader text={'마이페이지'} />
@@ -35,8 +38,9 @@ export function MyPageScreen() {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InfoDetail', {
-                nickName: nickName,
-                userName: nickName,
+                auth: auth,
+                // nickName: nickName,
+                // userName: userName,
               });
             }}
             style={styles.infoButtonWrap}>
@@ -46,9 +50,9 @@ export function MyPageScreen() {
                   styles.nickName,
                   Platform.OS === 'android' && {fontWeight: '900'},
                 ]}>
-                {nickName}
+                {auth.nickName}
               </FontText>
-              <FontText style={styles.userName}>{nickName}</FontText>
+              <FontText style={styles.userName}>{auth.userName}</FontText>
             </View>
             <Icon style={styles.icon} name="right" color={'black'} size={20} />
           </TouchableOpacity>

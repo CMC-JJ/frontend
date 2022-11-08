@@ -17,9 +17,10 @@ import {
   StartScreen,
   TermsScreen,
   AirSearchScreen,
-  QuestionScreen,
-  InfoDetailScreen,
-  TermMypageScreen,
+  // QuestionScreen,
+  // InfoDetailScreen,
+  // TermMypageScreen,
+  ReportScreen,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {usePermission} from '@/store';
@@ -44,16 +45,20 @@ export type RootStackParamList = {
   };
   PhoneAuth: undefined;
   SignUp: undefined;
-  NickName: undefined;
   SignUpComplete: undefined;
+  NickName: undefined;
   MainTab: MainTabNavigationScreenParams;
   AirSearch: undefined;
-  InfoDetail: {
-    nickName: string;
-    userName?: string;
+  // InfoDetail: {
+  //   nickName: string;
+  //   userName?: string;
+  // };
+  // Question: undefined;
+  // TermMyPage: undefined;
+  Report: {
+    id: number | undefined;
+    type: string;
   };
-  Question: undefined;
-  TermMyPage: undefined;
 };
 
 export type RootStackNavigationProp =
@@ -149,13 +154,12 @@ function RootStack() {
         component={AirSearchScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="InfoDetail"
         component={InfoDetailScreen}
-        // options={{headerTitle: '내 정보'}}
         options={{headerShown: false}}
-      />
-      <Stack.Screen
+      /> */}
+      {/* <Stack.Screen
         name="Question"
         component={QuestionScreen}
         options={{headerShown: false}}
@@ -163,6 +167,11 @@ function RootStack() {
       <Stack.Screen
         name="TermMyPage"
         component={TermMypageScreen}
+        options={{headerShown: false}}
+      /> */}
+      <Stack.Screen
+        name="Report"
+        component={ReportScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

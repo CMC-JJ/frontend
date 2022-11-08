@@ -6,9 +6,9 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack} from '@/components';
 import {RootStackParamList} from '@/screens';
 import FontText from '@/components/FontText';
-type FindIdCompleteRouteProp = RouteProp<RootStackParamList, 'Terms'>;
+type TermsCompleteRouteProp = RouteProp<RootStackParamList, 'Terms'>;
 export function TermsScreen() {
-  const {params} = useRoute<FindIdCompleteRouteProp>();
+  const {params} = useRoute<TermsCompleteRouteProp>();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.back}>

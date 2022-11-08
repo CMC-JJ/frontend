@@ -7,10 +7,12 @@ export default function TextRightIcon({
   text,
   onPress,
   isBar,
+  isIcon,
 }: {
   text: string;
   onPress: () => void;
   isBar?: boolean;
+  isIcon?: boolean;
 }) {
   return (
     <View style={styles.container}>
@@ -26,13 +28,16 @@ export default function TextRightIcon({
             ]}>
             {text}
           </FontText>
-          <Icon name="right" color={'black'} size={20} />
+          {isIcon && <Icon name="right" color={'black'} size={20} />}
         </TouchableOpacity>
       </View>
       {isBar && <ThinBar />}
     </View>
   );
 }
+TextRightIcon.defaultProps = {
+  isIcon: true,
+};
 
 const styles = StyleSheet.create({
   container: {

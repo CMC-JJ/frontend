@@ -51,7 +51,6 @@ export function ServiceScreen() {
           if (airlineLists) {
             page.current = 1;
             fetchAirlinesDetail(menu).then(_detail => setDetail(_detail));
-            console.log('airline');
             fetchAirlineReview(menu, page.current).then(review =>
               setAirlineReview(review),
             );
@@ -62,7 +61,6 @@ export function ServiceScreen() {
           if (airportLists) {
             page.current = 1;
             fetchAirportsDetail(menu).then(_detail => setDetail(_detail));
-            console.log('airport');
             fetchAirportReview(menu, page.current).then(review =>
               setAirportReview(review),
             );
