@@ -15,6 +15,7 @@ export interface AirDetailProps {
   airportServices: {
     id: number;
     name: string;
+    website: string;
   }[];
   image?: string;
 }
@@ -28,6 +29,7 @@ export interface AirDetailProps {
   airlineServices: {
     id: number;
     name: string;
+    website: string;
   }[];
 }
 
@@ -45,7 +47,7 @@ export function ServiceCard({
     () => (
       <View style={infoStyles.info}>
         {list &&
-          list?.map((v: any) => (
+          list?.map(v => (
             <View style={infoStyles.textContainer} key={v.id}>
               <IconOct
                 style={infoStyles.dot}
@@ -53,7 +55,11 @@ export function ServiceCard({
                 color="black"
                 name="dot-fill"
               />
-              <FontText style={infoStyles.text}>{v.name}</FontText>
+              <FontText
+                style={infoStyles.text}
+                onPress={() => Linking.openURL(`${v.website}`)}>
+                {v.name}
+              </FontText>
             </View>
           ))}
       </View>
