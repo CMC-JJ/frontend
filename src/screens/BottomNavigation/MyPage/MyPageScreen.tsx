@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
-import IconOct from 'react-native-vector-icons/Octicons';
+// import IconOct from 'react-native-vector-icons/Octicons';
 export type InfoDetailCompleteRouteProp = RouteProp<
   MypageStackParamList,
   'InfoDetail'
@@ -58,7 +58,7 @@ export function MyPageScreen() {
           </TouchableOpacity>
         </View>
         {/* infoBox */}
-        <View style={styles.infoBox}>
+        {/* <View style={styles.infoBox}>
           <TouchableOpacity
             style={styles.reviewButton}
             onPress={() =>
@@ -71,9 +71,11 @@ export function MyPageScreen() {
               <FontText style={styles.reviewText}>내가 쓴 후기</FontText>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
-      <ThickBar />
+      <View style={{marginTop: 30}}>
+        <ThickBar />
+      </View>
       {/* 하단 */}
       <View style={listStyles.listContainer}>
         <TextRightIcon
@@ -118,7 +120,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 12,
     marginBottom: 29,
-    // flexDirection: 'row',
   },
   infoTitle: {
     flexDirection: 'column',

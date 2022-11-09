@@ -28,7 +28,7 @@ function RadioButton({
   text,
 }: {
   menu: ReportReason | undefined;
-  onMenuPress: React.Dispatch<React.SetStateAction<ReportReason | undefined>>;
+  onMenuPress: React.Dispatch<React.SetStateAction<ReportReason>>;
   reportList: ReportReason[] | undefined;
   setText: React.Dispatch<React.SetStateAction<string>>;
   text: string;
@@ -66,7 +66,8 @@ function RadioButton({
                   multiline={true}
                   onChangeText={_text => setText(_text)}
                   editable={
-                    menu && (reportList.length === menu.id ? true : false)
+                    menu !== undefined &&
+                    (reportList.length === menu.id ? true : false)
                   }
                   placeholder="신고 사유를 입력해주세요"
                   style={styles.inputForm}
@@ -85,7 +86,7 @@ interface ReportReason {
 }
 export function ReportScreen() {
   const {params} = useRoute<ReportCompleteRouteProp>();
-  const [menu, setMenu] = useState<ReportReason>();
+  const [menu, setMenu] = useState<ReportReason>({id: 0, name: ''});
   const [reportList, setReportList] = useState<ReportReason[]>();
   const [text, setText] = useState<string>('');
   const navigation = useNavigation<MainTabNavigationProp>();
@@ -94,10 +95,7 @@ export function ReportScreen() {
       setReportList(list);
     });
   }, []);
-  useEffect(() => {
-    console.log('menu', menu);
-    console.log('reportList', reportList);
-  });
+
   const submit = () => {
     if (menu) {
       (params.type === 'airport'
