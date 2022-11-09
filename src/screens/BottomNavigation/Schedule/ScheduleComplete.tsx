@@ -16,6 +16,7 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import type {ScheduleNavigationProp} from './ScheduleStack';
 
+// TODO: 공항 서비스 연동 필요!
 export function ScheduleComplete() {
   const navigation = useNavigation<ScheduleNavigationProp>();
   const {schedule, initializeSchedule} = useScheduleStore();
@@ -47,6 +48,10 @@ export function ScheduleComplete() {
     }
   };
 
+  // console.log(schedule.departureAirportServiceIds);
+  // console.log(schedule.arrivalAirportServiceIds);
+  // console.log(schedule.airlineServiceIds);
+
   return (
     <>
       <SafeAreaView style={styles.fill}>
@@ -74,29 +79,31 @@ export function ScheduleComplete() {
                   {schedule.startAt.slice(0, 10)}
                 </FontText>
               </View>
-              <View style={styles.airInfo}>
-                <View style={styles.airInfoTextContainer}>
-                  <FontText style={styles.direction}>출발</FontText>
-                  <FontText style={styles.place}>
-                    {AIRPORT[schedule.departureAirportId]}
-                  </FontText>
-                </View>
-                <View style={styles.airInfoImageContainer}>
-                  <Icon name="aircraft-take-off" size={20} color="#0066ff" />
-                  <View style={styles.dotContainer}>
-                    <View style={styles.circle} />
-                    <View style={styles.dotBorder} />
-                    <View style={styles.circle} />
+              <View style={styles.wrapper}>
+                <View style={styles.airInfo}>
+                  <View style={styles.airInfoTextContainer}>
+                    <FontText style={styles.direction}>출발</FontText>
+                    <FontText style={styles.place}>
+                      {AIRPORT[schedule.departureAirportId]}
+                    </FontText>
                   </View>
-                  <FontText style={styles.airlineName}>
-                    {AIRLINE[schedule.airlineId].name}
-                  </FontText>
-                </View>
-                <View style={styles.airInfoTextContainer}>
-                  <FontText style={styles.direction}>도착</FontText>
-                  <FontText style={styles.place}>
-                    {AIRPORT[schedule.arrivalAirportId]}
-                  </FontText>
+                  <View style={styles.airInfoImageContainer}>
+                    <Icon name="aircraft-take-off" size={20} color="#0066ff" />
+                    <View style={styles.dotContainer}>
+                      <View style={styles.circle} />
+                      <View style={styles.dotBorder} />
+                      <View style={styles.circle} />
+                    </View>
+                    <FontText style={styles.airlineName}>
+                      {AIRLINE[schedule.airlineId].name}
+                    </FontText>
+                  </View>
+                  <View style={styles.airInfoTextContainer}>
+                    <FontText style={styles.direction}>도착</FontText>
+                    <FontText style={styles.place}>
+                      {AIRPORT[schedule.arrivalAirportId]}
+                    </FontText>
+                  </View>
                 </View>
               </View>
               <View style={styles.dotBorderLine} />
@@ -108,15 +115,16 @@ export function ScheduleComplete() {
                       {AIRPORT[schedule.departureAirportId]}
                     </FontText>
                     <FontText style={styles.serviceText}>
-                      공항 장애인 이동 서비스
+                      임산부, 유아, 어린이 동반
                     </FontText>
-                    <FontText style={styles.serviceText}>휠체어 대여</FontText>
-                    {/* id와 매핑한 객체를 선언해서 아이템 보여주기 */}
+                    <FontText style={styles.serviceText}>
+                      장애인, 고령자 동반
+                    </FontText>
                     {/* {schedule.departureAirportServiceIds.map(item => (
-                    <FontText key={item} style={styles.serviceText}>
-                      {item}
-                    </FontText>
-                  ))} */}
+                      <FontText key={item} style={styles.serviceText}>
+                        {item}
+                      </FontText>
+                    ))} */}
                   </View>
                 </View>
                 <View style={styles.serviceContainer}>
@@ -125,16 +133,17 @@ export function ScheduleComplete() {
                     <FontText style={styles.serviceTextHeader}>
                       {AIRPORT[schedule.arrivalAirportId]}
                     </FontText>
+                    {/* {schedule.arrivalAirportServiceIds.map(item => (
+                      <FontText key={item} style={styles.serviceText}>
+                        {item}
+                      </FontText>
+                    ))} */}
                     <FontText style={styles.serviceText}>
-                      공항 장애인 이동 서비스
+                      교통약자 동반
                     </FontText>
-                    <FontText style={styles.serviceText}>휠체어 대여</FontText>
-                    {/* id와 매핑한 객체를 선언해서 아이템 보여주기 */}
-                    {/* {schedule.arrivalAirpoertServiceIds.map(item => (
-                    <FontText key={item} style={styles.serviceText}>
-                      {item}
+                    <FontText style={styles.serviceText}>
+                      반려동물 동반
                     </FontText>
-                  ))} */}
                   </View>
                 </View>
                 {/* TODO: scrollView 깨지는거 확인되면 marginBottom 넣기 */}
@@ -144,16 +153,20 @@ export function ScheduleComplete() {
                     <FontText style={styles.serviceTextHeader}>
                       {AIRLINE[schedule.airlineId].name}
                     </FontText>
-                    <FontText style={styles.serviceText}>
-                      공항 장애인 이동 서비스
-                    </FontText>
-                    <FontText style={styles.serviceText}>휠체어 대여</FontText>
-                    {/* id와 매핑한 객체를 선언해서 아이템 보여주기 */}
                     {/* {schedule.airlineServiceIds.map(item => (
-                    <FontText key={item} style={styles.serviceText}>
-                      {item}
+                      <FontText key={item} style={styles.serviceText}>
+                        {item}
+                      </FontText>
+                    ))} */}
+                    <FontText style={styles.serviceText}>
+                      임산부/유아동반 손님
                     </FontText>
-                  ))} */}
+                    <FontText style={styles.serviceText}>
+                      반려동물 동반 손님
+                    </FontText>
+                    <FontText style={styles.serviceText}>
+                      휠체어 서비스 필요 손님
+                    </FontText>
                   </View>
                 </View>
               </View>
@@ -215,6 +228,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 23,
     color: '#7C7C7C',
+  },
+  wrapper: {
+    marginRight: 10,
   },
   airInfo: {
     marginTop: 40,

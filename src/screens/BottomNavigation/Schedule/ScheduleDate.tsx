@@ -2,7 +2,7 @@ import {ArrowBack, DateDisplay, SignButton, FontText} from '@/components';
 import {useScheduleStore} from '@/store';
 import {dateFormat} from '@/utils';
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -16,6 +16,13 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 export function ScheduleDate() {
   const {schedule, setSchedule} = useScheduleStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 10);
+  }, []);
 
   const today = dateFormat(new Date());
   const markedDates = {
@@ -63,17 +70,20 @@ export function ScheduleDate() {
         {/* 몇초 로딩 보여줄지? 결정 */}
         <View style={styles.calendar}>
           <CalendarList
-            style={styles.calendarList}
+            style={[styles.calendarList, !isLoading && {opacity: 1}]}
             theme={{
               todayBackgroundColor: 'black',
               todayTextColor: 'blue',
             }}
+            pastScrollRange={1}
+            futureScrollRange={24}
             hideDayNames={true}
             onDayPress={day => setSchedule('startAt', day.dateString)}
             markedDates={markedDates}
             monthFormat={'yyyy년 MM월'}
           />
         </View>
+
         <View style={styles.footer}>
           <SignButton
             isValid={!!schedule.startAt}
@@ -165,8 +175,12 @@ const styles = StyleSheet.create({
   calendar: {
     flex: 0.9,
   },
+  loading: {
+    marginTop: 230,
+  },
   calendarList: {
     maxHeight: 470,
+    opacity: 0,
   },
   footer: {
     flex: 0.1,

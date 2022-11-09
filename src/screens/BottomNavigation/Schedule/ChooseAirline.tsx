@@ -22,7 +22,6 @@ type Airline = {
 
 type AirlineData = Airline[];
 
-// TODO: 데이터 제대로 들어왔을때, 어떻게 되는지 확인!
 export function ChooseAirline() {
   const navigation = useNavigation<ScheduleNavigationProp>();
   const {schedule, setSchedule} = useScheduleStore();
@@ -53,24 +52,32 @@ export function ChooseAirline() {
         </FontText>
       </View>
       <View style={styles.airlineContainer}>
-        {airlineData.map(airline => (
-          <TouchableOpacity
-            key={airline.id}
-            style={styles.itemContainer}
-            onPress={() => {
-              navigation.goBack();
-              setSchedule('airlineId', airline.id);
-            }}>
-            <View
-              style={[
-                styles.logoContainer,
-                airline.id === schedule.airlineId &&
-                  styles.selectedLogoContainer,
-              ]}>
-              <Image source={{uri: airline.logoImageUrl}} style={styles.logo} />
-            </View>
-            <FontText style={styles.logoText}>{airline.name}</FontText>
-          </TouchableOpacity>
+        {airlineData.map((airline, i) => (
+          <View key={airline.id} style={styles.airlineWrapper}>
+            <TouchableOpacity
+              style={styles.itemContainer}
+              onPress={() => {
+                navigation.goBack();
+                setSchedule('airlineId', airline.id);
+              }}>
+              <View
+                style={[
+                  styles.logoContainer,
+                  airline.id === schedule.airlineId &&
+                    styles.selectedLogoContainer,
+                  i === 4 && {backgroundColor: '#C1D72E'},
+                  ,
+                ]}>
+                <Image
+                  source={{uri: airline.logoImageUrl}}
+                  style={styles.logo}
+                />
+              </View>
+              <FontText style={styles.logoText} numberOfLines={1}>
+                {airline.name}
+              </FontText>
+            </TouchableOpacity>
+          </View>
         ))}
       </View>
     </SafeAreaView>
@@ -101,6 +108,9 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  airlineWrapper: {
+    width: '33.3333%',
   },
   itemContainer: {
     alignItems: 'center',
@@ -134,5 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 15,
     lineHeight: 23,
+
+    marginLeft: -4,
   },
 });

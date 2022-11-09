@@ -84,8 +84,6 @@ export function ScheduleScreen() {
     fetchSchedule(currentTab, auth.jwtToken),
   );
 
-  console.log(data?.result);
-
   const isCurrentFutureTabActive = currentTab === 'future';
 
   useFocusEffect(
