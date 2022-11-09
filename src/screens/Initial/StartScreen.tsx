@@ -48,7 +48,7 @@ export function StartScreen() {
               style={styles.textLine}>
               {'서비스 이용약관'}
             </FontText>
-            <FontText>{'과\n'}</FontText>
+            <FontText style={styles.text}>{'과\n'}</FontText>
             <FontText
               onPress={() =>
                 navigation.navigate('Terms', {
@@ -57,7 +57,7 @@ export function StartScreen() {
                 })
               }
               style={styles.textLine}>
-              {'개인정보 취급 방침'}
+              {'개인정보 처리 방침'}
             </FontText>
             <FontText style={styles.text}>
               {'에 동의하고\n서비스를 이용하는 것으로 간주합니다.'}
