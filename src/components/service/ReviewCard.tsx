@@ -15,7 +15,7 @@ export interface ReviewProps extends ReviewSame {
 }
 export interface ReviewSame {
   uid: string;
-  nickName: string;
+  nickName?: string;
   score: string;
   content: string;
   createdAt: string;
@@ -30,14 +30,14 @@ export default function ReviewCard({
   const navigation = useNavigation<RootStackNavigationProp>();
   const usedService = useMemo(
     () => (
-      <View style={styles.ownReviewContainer}>
+      <View style={styles.ReviewContainer}>
         {data &&
           (currentTab === 'airport'
             ? data.reviewedAirportServices
             : data.reviewedAirlineServices
           )?.map((elem, i) => (
-            <View key={i} style={styles.ownReviewForm}>
-              <FontText style={styles.ownReview}>{elem}</FontText>
+            <View key={i} style={styles.ReviewForm}>
+              <FontText style={styles.Review}>{elem}</FontText>
             </View>
           ))}
       </View>
@@ -122,15 +122,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-  ownReviewContainer: {flexDirection: 'row', flexWrap: 'wrap'},
-  ownReview: {
+  ReviewContainer: {flexDirection: 'row', flexWrap: 'wrap'},
+  Review: {
     fontSize: 12,
     fontWeight: '700',
     color: 'white',
     paddingVertical: 1.5,
     paddingHorizontal: 9,
   },
-  ownReviewForm: {
+  ReviewForm: {
     minWidth: 60,
     height: 26,
     borderRadius: 29,

@@ -59,7 +59,13 @@ export function MyPageScreen() {
         </View>
         {/* infoBox */}
         <View style={styles.infoBox}>
-          <TouchableOpacity style={styles.reviewButton}>
+          <TouchableOpacity
+            style={styles.reviewButton}
+            onPress={() =>
+              navigation.navigate('OwnReview', {
+                auth: auth,
+              })
+            }>
             <View style={styles.reviewIcon}>
               <IconOct name="pencil" size={25} color={'white'} />
               <FontText style={styles.reviewText}>내가 쓴 후기</FontText>

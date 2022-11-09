@@ -15,7 +15,7 @@ export default function DropDownItem({
 
   const toggleListItem = () => {
     const config = {
-      duraiton: 100,
+      duraiton: 50,
       toValue: isShow ? 0 : 1,
       useNativeDriver: true,
     };

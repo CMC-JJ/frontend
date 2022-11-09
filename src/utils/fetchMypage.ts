@@ -1,5 +1,5 @@
 import {request} from './api';
-
+import {nanoid} from 'nanoid/non-secure';
 export const reviewDeleteList = async () => {
   try {
     const res = await request('web/infos/user-delete-reasons', {}, 'GET');
@@ -68,5 +68,13 @@ export const changePassword = async (userId: number, password: string) => {
     return res.isSuccess;
   } catch (e) {
     console.log('비밀번호 변경 실패', e);
+  }
+};
+export const ownReviewList = async (userId: number) => {
+  try {
+    const res = await request(`web/users/${userId}/reviews`, {}, 'GET');
+    return res.result.userReviews.map((v: any) => ({...v, uid: nanoid()}));
+  } catch (e) {
+    console.log('내 리뷰 가져오기 실패', e);
   }
 };

@@ -23,7 +23,6 @@ export const fetchAirlineLists = async () => {
 export const fetchAirportsDetail = async (data: AirServiceProps) => {
   try {
     const res = await request(`web/airports/${data.id}`, {}, 'GET');
-    // console.log(data.id, res);
     return res.result.airport;
   } catch (e) {
     console.log('airportlist 오류', e);

@@ -17,15 +17,13 @@ import {
   StartScreen,
   TermsScreen,
   AirSearchScreen,
-  // QuestionScreen,
-  // InfoDetailScreen,
-  // TermMypageScreen,
   ReportScreen,
   TermMypageScreen,
   QuestionScreen,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
-import {usePermission} from '@/store';
+import {Auth, usePermission} from '@/store';
+import OwnReviewScreen from './BottomNavigation/MyPage/OwnReviewScreen';
 
 export type RootStackParamList = {
   Permission: undefined;
@@ -57,6 +55,9 @@ export type RootStackParamList = {
     type: string;
   };
   Question: undefined;
+  OwnReview: {
+    auth: Auth;
+  };
 };
 
 export type RootStackNavigationProp =
@@ -160,6 +161,11 @@ function RootStack() {
       <Stack.Screen
         name="Question"
         component={QuestionScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OwnReview"
+        component={OwnReviewScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
