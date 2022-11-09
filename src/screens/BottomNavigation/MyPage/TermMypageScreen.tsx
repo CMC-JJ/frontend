@@ -28,16 +28,30 @@ export function TermMypageScreen() {
       <View style={styles.listContainer}>
         <TextRightIcon
           text={'개인정보 수집 이용 동의'}
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate('Terms', {
+              title: data[3].title,
+              text: data[3].text,
+            });
+          }}
           isBar
         />
-        <TextRightIcon text={'개인정보 처리 방침'} onPress={() => {}} isBar />
+        <TextRightIcon
+          text={'개인정보 처리 방침'}
+          onPress={() => {
+            navigation.navigate('Terms', {
+              title: data[2].title,
+              text: data[2].text,
+            });
+          }}
+          isBar
+        />
         <TextRightIcon
           text={'가치가자 서비스 이용약관'}
           onPress={() => {
             navigation.navigate('Terms', {
-              title: data[1].title,
-              text: data[1].text,
+              title: data[0].title,
+              text: data[0].text,
             });
           }}
         />
