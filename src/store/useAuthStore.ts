@@ -11,11 +11,12 @@ export type Auth = {
 type SignUpStore = {
   auth: Auth;
   setAuth: (auth: Auth) => void;
+  setOnlyNickName: (nickName: string) => void;
   getState: () => SignUpStore;
   initializeAuth: () => void;
 };
 
-const initialState: Auth = {
+export const initialState: Auth = {
   phoneNumber: '',
   userId: 0,
   nickName: '',
@@ -29,6 +30,9 @@ export const useAuthStore = create<SignUpStore>((set, get) => ({
     set(() => ({
       auth: authInfo,
     })),
+  setOnlyNickName: (nickName: string) => {
+    set(prev => ({auth: {...prev.auth, nickName}}));
+  },
   getState: () => get(),
   initializeAuth: () => set(() => ({auth: initialState})),
 }));

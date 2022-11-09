@@ -13,6 +13,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {changeNickName} from '@/utils/fetchMypage';
 import {MypageNavigationProp} from './MyPageStack';
+import {useAuthStore} from '@/store';
 // import {useAuthStore} from '@/store';
 
 export default function InfoModifyScreen() {
@@ -20,7 +21,7 @@ export default function InfoModifyScreen() {
   const [nickName, setNickName] = useState<string>(params.auth.nickName);
   const [isNickNameValid, setIsNickNameValid] = useState<boolean>(false);
   const navigation = useNavigation<MypageNavigationProp>();
-  // const {setAuth} = useAuthStore();
+  const {setOnlyNickName} = useAuthStore();
 
   const regex = useMemo(() => /^[가-힣]+$/, []);
   useEffect(() => {
@@ -76,6 +77,8 @@ export default function InfoModifyScreen() {
             onPress={() => {
               changeNickName(params.auth.userId, nickName).then(res => {
                 console.log(res);
+                res && setOnlyNickName(nickName);
+
                 navigation.navigate('Home');
               });
             }}>
@@ -90,6 +93,13 @@ export default function InfoModifyScreen() {
               </FontText>
             </View>
           </TouchableOpacity>
+        </View>
+        <FontText style={[styles.title, {top: -20}]}>전화번호</FontText>
+        <View style={{top: -20}}>
+          <FontText style={styles.phoneText}>
+            {params.auth.phoneNumber}
+          </FontText>
+          <View style={styles.line} />
         </View>
       </View>
     </SafeAreaView>
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
   },
   form: {
     flex: 1,
-    padding: 25,
+    paddingHorizontal: 25,
     paddingTop: 0,
   },
   validNickName: {
@@ -178,9 +188,24 @@ const styles = StyleSheet.create({
   },
   nickNameForm: {
     flexDirection: 'row',
+
     justifyContent: 'space-between',
   },
   duplicateId: {
     flex: 0.65,
+  },
+  line: {
+    width: '100%',
+    borderColor: 'black',
+    borderBottomWidth: 1,
+    color: 'black',
+  },
+  phoneText: {
+    fontFamily: 'Pretendard',
+    fontWeight: '500',
+    fontSize: 20,
+
+    paddingBottom: 10,
+    paddingLeft: -5,
   },
 });

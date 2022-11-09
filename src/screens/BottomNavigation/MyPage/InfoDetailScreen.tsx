@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Platform,
   StyleSheet,
@@ -14,10 +15,26 @@ import {ThickBar} from '@/components/BarSeparator';
 import TextRightIcon from '@/components/TextRightIcon';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {MypageNavigationProp} from './MyPageStack';
+import {initialState, useAuthStore} from '@/store';
 
 export function InfoDetailScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const navigation = useNavigation<MypageNavigationProp>();
+  const {setAuth} = useAuthStore();
+  const onLogout = () => {
+    Alert.alert('로그아웃 하시겠습니까?', '', [
+      {
+        text: '네',
+        onPress: () => {
+          setAuth(initialState);
+          navigation.navigate('Start');
+        },
+      },
+      {
+        text: '아니요',
+      },
+    ]);
+  };
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.header}>
@@ -51,11 +68,20 @@ export function InfoDetailScreen() {
         }}
         isBar
       />
-      <TextRightIcon text={'비밀번호 변경'} onPress={() => {}} />
+      <TextRightIcon
+        text={'비밀번호 변경'}
+        onPress={() => {
+          navigation.navigate('ModifyPassword', {
+            auth: params.auth,
+          });
+        }}
+      />
       <ThickBar />
       <TextRightIcon
         text={'로그아웃'}
-        onPress={() => {}}
+        onPress={() => {
+          onLogout();
+        }}
         isIcon={false}
         isBar
       />

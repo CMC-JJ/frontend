@@ -42,16 +42,18 @@ export function MyPageScreen() {
               });
             }}
             style={styles.infoButtonWrap}>
-            <View style={styles.infoTitle}>
-              <FontText
-                style={[
-                  styles.nickName,
-                  Platform.OS === 'android' && {fontWeight: '900'},
-                ]}>
-                {auth.nickName}
-              </FontText>
-              <FontText style={styles.userName}>{auth.userName}</FontText>
-            </View>
+            {auth && (
+              <View style={styles.infoTitle}>
+                <FontText
+                  style={[
+                    styles.nickName,
+                    Platform.OS === 'android' && {fontWeight: '900'},
+                  ]}>
+                  {auth.nickName}
+                </FontText>
+                <FontText style={styles.userName}>{auth.userName}</FontText>
+              </View>
+            )}
             <Icon style={styles.icon} name="right" color={'black'} size={20} />
           </TouchableOpacity>
         </View>

@@ -1,20 +1,23 @@
 import {useEffect, useState} from 'react';
 
-export const usePasswordCheck = (password: string, confirmPassword: string) => {
+export const usePasswordChangeCheck = (
+  password: string,
+  confirmPassword: string,
+) => {
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
+  const isValidPassword = passwordRegex.test(password);
 
   useEffect(() => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,20}$/;
-    const isValidPassword = passwordRegex.test(password);
     if (isValidPassword) {
       setIsPasswordValid(true);
     } else {
       setIsPasswordValid(false);
     }
-  }, [password]);
+  }, [isValidPassword, password, confirmPassword]);
 
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] =
-    useState<boolean>(false);
+    useState<boolean>();
 
   useEffect(() => {
     if (password === confirmPassword && confirmPassword.length > 0) {
@@ -22,7 +25,7 @@ export const usePasswordCheck = (password: string, confirmPassword: string) => {
     } else {
       setIsConfirmPasswordValid(false);
     }
-  }, [confirmPassword, password]);
+  }, [confirmPassword, isConfirmPasswordValid, password]);
 
   return {isPasswordValid, isConfirmPasswordValid};
 };

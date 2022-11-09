@@ -75,7 +75,7 @@ export default function DeleteScreen() {
         <View style={styles.line} />
       </View>
 
-      <View style={styles.button}>
+      <View style={[styles.button, Platform.OS === 'android' && {bottom: 80}]}>
         <SignButton
           buttonText="다음"
           isValid={select ? true : false}
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 110,
+    bottom: 120,
+    flex: 1,
     flexDirection: 'row',
     paddingHorizontal: 25,
   },

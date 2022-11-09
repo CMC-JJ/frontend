@@ -74,7 +74,7 @@ export default function DeleteConfirmScreen() {
         </View>
       </View>
 
-      <View style={styles.button}>
+      <View style={[styles.button, Platform.OS === 'android' && {bottom: 80}]}>
         <SignButton buttonText="계정 삭제" isValid onPress={() => onDelete()} />
       </View>
     </SafeAreaView>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 110,
+    bottom: 120,
     flexDirection: 'row',
     paddingHorizontal: 25,
   },

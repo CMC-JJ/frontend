@@ -13,6 +13,8 @@ import {Auth} from '@/store/useAuthStore';
 import DeleteScreen from './DeleteScreen';
 import DeleteConfirmScreen from './DeleteConfirmScreen';
 import InfoModifyScreen from './InfoModifyScreen';
+import {ModifyPassword} from './ModifyPassword';
+import {ModifyConfirmPassword} from './ModifyConfirmPassword';
 
 export type MypageStackParamList = {
   Home: undefined;
@@ -31,15 +33,19 @@ export type MypageStackParamList = {
   InfoModify: {
     auth: Auth;
   };
+  ModifyPassword: {
+    auth: Auth;
+  };
+  ModifyConfirmPassword: {
+    auth: Auth;
+  };
 };
 
 export type MypageNavigationProp = CompositeNavigationProp<
   MainTabNavigationProp,
   NativeStackNavigationProp<MypageStackParamList>
 >;
-
 const Stack = createNativeStackNavigator<MypageStackParamList>();
-
 export function MyPageStack() {
   return (
     <Stack.Navigator>
@@ -71,6 +77,16 @@ export function MyPageStack() {
       <Stack.Screen
         name="InfoModify"
         component={InfoModifyScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ModifyPassword"
+        component={ModifyPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ModifyConfirmPassword"
+        component={ModifyConfirmPassword}
         options={{headerShown: false}}
       />
       <Stack.Screen
