@@ -46,7 +46,6 @@ export function SignInScreen() {
 
   const onSubmit = async () => {
     Keyboard.dismiss();
-
     const result = await request(
       'web/auth/sign-in',
       {
@@ -57,7 +56,6 @@ export function SignInScreen() {
     );
 
     if (result.isSuccess) {
-      console.log('result', result);
       const authForm = {
         phoneNumber: result.result.phoneNumber,
         userId: result.result.userId,

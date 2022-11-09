@@ -2,12 +2,7 @@ import React from 'react';
 import type {CompositeNavigationProp} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {
-  InfoDetailScreen,
-  MyPageScreen,
-  QuestionScreen,
-  TermMypageScreen,
-} from '@/screens';
+import {InfoDetailScreen, MyPageScreen, TermMypageScreen} from '@/screens';
 import type {MainTabNavigationProp} from '@/screens';
 import {Auth} from '@/store/useAuthStore';
 import DeleteScreen from './DeleteScreen';
@@ -59,11 +54,7 @@ export function MyPageStack() {
         component={InfoDetailScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Question"
-        component={QuestionScreen}
-        options={{headerShown: false}}
-      />
+
       <Stack.Screen
         name="Delete"
         component={DeleteScreen}

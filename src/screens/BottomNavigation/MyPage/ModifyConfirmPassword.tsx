@@ -18,6 +18,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {MypageNavigationProp, MypageStackParamList} from './MyPageStack';
 import {usePasswordChangeCheck} from '@/hooks/usePasswordChangeCheck';
 import {changePassword} from '@/utils/fetchMypage';
+import {initialState, useAuthStore} from '@/store/useAuthStore';
 type ConfirmPasswordCompleteRouteProp = RouteProp<
   MypageStackParamList,
   'ModifyConfirmPassword'
@@ -37,7 +38,7 @@ export function ModifyConfirmPassword() {
     setNewPwd({...newPwd, [name]: value});
   };
   const confirmPasswordRef = useRef<TextInput>(null);
-
+  const {setAuth} = useAuthStore();
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.back}>
@@ -102,7 +103,7 @@ export function ModifyConfirmPassword() {
             changePassword(params.auth.userId, newPwd.confirmPassword).then(
               res =>
                 res
-                  ? navigation.navigate('InfoDetail', {auth: params.auth})
+                  ? (navigation.navigate('Start'), setAuth(initialState))
                   : Alert.alert(
                       '기존의 비밀번호와 같은 비밀번호는 사용할 수 없습니다.',
                     ),

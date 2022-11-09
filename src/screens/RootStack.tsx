@@ -21,6 +21,8 @@ import {
   // InfoDetailScreen,
   // TermMypageScreen,
   ReportScreen,
+  TermMypageScreen,
+  QuestionScreen,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {usePermission} from '@/store';
@@ -49,16 +51,12 @@ export type RootStackParamList = {
   NickName: undefined;
   MainTab: MainTabNavigationScreenParams;
   AirSearch: undefined;
-  // InfoDetail: {
-  //   nickName: string;
-  //   userName?: string;
-  // };
-  // Question: undefined;
-  // TermMyPage: undefined;
+  TermMyPage: undefined;
   Report: {
     id: number | undefined;
     type: string;
   };
+  Question: undefined;
 };
 
 export type RootStackNavigationProp =
@@ -154,21 +152,16 @@ function RootStack() {
         component={AirSearchScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="InfoDetail"
-        component={InfoDetailScreen}
-        options={{headerShown: false}}
-      /> */}
-      {/* <Stack.Screen
-        name="Question"
-        component={QuestionScreen}
-        options={{headerShown: false}}
-      />
       <Stack.Screen
         name="TermMyPage"
         component={TermMypageScreen}
         options={{headerShown: false}}
-      /> */}
+      />
+      <Stack.Screen
+        name="Question"
+        component={QuestionScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Report"
         component={ReportScreen}
