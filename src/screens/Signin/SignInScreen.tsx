@@ -46,7 +46,6 @@ export function SignInScreen() {
 
   const onSubmit = async () => {
     Keyboard.dismiss();
-
     const result = await request(
       'web/auth/sign-in',
       {
@@ -61,6 +60,7 @@ export function SignInScreen() {
         phoneNumber: result.result.phoneNumber,
         userId: result.result.userId,
         nickName: result.result.nickName,
+        userName: result.result.userName,
         jwtToken: result.result.jwt,
       };
 

@@ -38,6 +38,7 @@ export function SignUpComplete() {
         phoneNumber: result.result.phoneNumber,
         userId: result.result.createdUserId,
         nickName: result.result.nickName,
+        userName: result.result.userName,
         jwtToken: result.result.jwt,
       };
 

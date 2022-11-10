@@ -5,9 +5,9 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack, FontText} from '@/components';
 import {RootStackParamList} from '@/screens';
-type FindIdCompleteRouteProp = RouteProp<RootStackParamList, 'Terms'>;
+type TermsCompleteRouteProp = RouteProp<RootStackParamList, 'Terms'>;
 export function TermsScreen() {
-  const {params} = useRoute<FindIdCompleteRouteProp>();
+  const {params} = useRoute<TermsCompleteRouteProp>();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.back}>
@@ -30,9 +30,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
     marginBottom: 28,
+    color: 'black',
   },
   text: {
     overflow: 'scroll',
+    color: '#121212',
+    lineHeight: 20,
   },
   back: {
     marginBottom: 37,

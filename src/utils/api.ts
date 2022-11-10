@@ -1,3 +1,4 @@
+import {useAuthStore} from '@/store';
 import {Alert} from 'react-native';
 
 const BASE_URL = 'https://dev.jj-gotogether.shop/';
@@ -22,7 +23,10 @@ export const request = async (
     },
     method,
   };
-
+  const store = useAuthStore.getState();
+  if (store) {
+    options.headers['x-access-token'] = `${store.auth.jwtToken}`;
+  }
   if (method === 'GET') {
     url += '?' + new URLSearchParams(data).toString();
   } else {

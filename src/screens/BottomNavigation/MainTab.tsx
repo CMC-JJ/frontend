@@ -9,9 +9,10 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import {Platform} from 'react-native';
 import {
   HomeScreen,
-  MyPageScreen,
   ServiceScreen,
   ScheduleStack,
+  MypageStackParamList,
+  MyPageStack,
 } from '@/screens';
 import type {RootStackNavigationProp, ScheduleStackParamList} from '@/screens';
 
@@ -19,7 +20,7 @@ type MainTabParamList = {
   Home: undefined;
   Service: undefined;
   Schedule: ScheduleStackParamList;
-  MyPage: undefined;
+  MyPage: MypageStackParamList;
 };
 
 export type MainTabNavigationProp = CompositeNavigationProp<
@@ -94,7 +95,7 @@ export function MainTab() {
       />
       <Tab.Screen
         name="MyPage"
-        component={MyPageScreen}
+        component={MyPageStack}
         options={{
           title: '마이페이지',
           tabBarIcon: ({color, size}) => (
