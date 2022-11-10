@@ -1,6 +1,6 @@
 import {Image, Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import FontText from '../FontText';
+import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFt from 'react-native-vector-icons/Feather';
 import {AirCardProps} from '@/screens';

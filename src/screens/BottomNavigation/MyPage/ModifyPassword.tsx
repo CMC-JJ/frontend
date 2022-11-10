@@ -7,7 +7,7 @@ import {
   SignButton,
   TabHeader,
 } from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {validationPassword} from '@/utils/fetchMypage';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';

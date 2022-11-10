@@ -8,7 +8,7 @@ import {
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack} from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {request} from '@/utils';
 import AirCard from '@/components/service/AirCard';

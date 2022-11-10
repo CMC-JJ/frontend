@@ -17,7 +17,7 @@ export const usePasswordCheck = (password: string, confirmPassword: string) => {
     useState<boolean>(false);
 
   useEffect(() => {
-    if (password === confirmPassword && confirmPassword.length > 0) {
+    if (password === confirmPassword && confirmPassword.trim().length > 0) {
       setIsConfirmPasswordValid(true);
     } else {
       setIsConfirmPasswordValid(false);

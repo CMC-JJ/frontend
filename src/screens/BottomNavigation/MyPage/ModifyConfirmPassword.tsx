@@ -13,7 +13,7 @@ import {
   SignButton,
   TabHeader,
 } from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {MypageNavigationProp, MypageStackParamList} from './MyPageStack';
 import {usePasswordChangeCheck} from '@/hooks/usePasswordChangeCheck';

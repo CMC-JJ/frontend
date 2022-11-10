@@ -1,6 +1,6 @@
 import {TabHeader} from '@/components';
 import {ThickBar} from '@/components/BarSeparator';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
 import {MypageNavigationProp, MypageStackParamList} from '@/screens';
 import {useAuthStore} from '@/store';

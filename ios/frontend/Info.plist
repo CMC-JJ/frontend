@@ -3,16 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>NSContactsUsageDescription</key>
-  <!-- <string>YOUR TEXT</string> -->
+  <string></string>
   <key>NSLocationWhenInUseUsageDescription</key>
-  <!-- <string>YOUR TEXT</string> -->
+  <string></string>
   <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-  <!-- <string>YOUR TEXT</string> -->
+  <string></string>
   <key>NSLocationAlwaysUsageDescription</key>
-  <!-- <string>YOUR TEXT</string>  -->
+  <string></string> 
 
-
-	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -46,8 +44,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.otf</string>
@@ -74,6 +70,7 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>JalnanOTF.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -89,37 +86,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>MaterialIcons.ttf</string>
-	</array>
-
-	<key>UIAppFonts</key>
-<array>
-  <string>Pretendard-Black.otf</string>
-	<string>Pretendard-Bold.otf</string>
-	<string>Pretendard-ExtraBold.otf</string>
-	<string>Pretendard-ExtraLight.otf</string>
-	<string>Pretendard-Light.otf</string>
-	<string>Pretendard-Medium.otf</string>
-	<string>Pretendard-Regular.otf</string>
-	<string>Pretendard-SemiBold.otf</string>
-	<string>Pretendard-Thin.otf</string>
-  <string>AntDesign.ttf</string>
-  <string>Entypo.ttf</string>
-  <string>EvilIcons.ttf</string>
-  <string>Feather.ttf</string>
-  <string>FontAwesome.ttf</string>
-  <string>FontAwesome5_Brands.ttf</string>
-  <string>FontAwesome5_Regular.ttf</string>
-  <string>FontAwesome5_Solid.ttf</string>
-  <string>Foundation.ttf</string>
-  <string>Ionicons.ttf</string>
-  <string>MaterialIcons.ttf</string>
-  <string>MaterialCommunityIcons.ttf</string>
-  <string>SimpleLineIcons.ttf</string>
-  <string>Octicons.ttf</string>
-  <string>Zocial.ttf</string>
-</array>
 </dict>
 </plist>

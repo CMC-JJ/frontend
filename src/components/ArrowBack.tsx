@@ -4,16 +4,17 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 type ArrowBackProps = {
   size: number;
+  color?: string;
 };
 
-export function ArrowBack({size}: ArrowBackProps) {
+export function ArrowBack({size, color = 'black'}: ArrowBackProps) {
   const navigation = useNavigation();
 
   return (
     <Icon
       name="arrowleft"
       size={size}
-      color="black"
+      color={color}
       onPress={() => {
         navigation.goBack();
       }}

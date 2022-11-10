@@ -1,6 +1,6 @@
 import {FlatList, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {ArrowBack} from '@/components';
 import Icon from 'react-native-vector-icons/Entypo';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';

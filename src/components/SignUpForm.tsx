@@ -89,7 +89,7 @@ export function SignUpForm({
           isCharacterExisted={form.password.length > 0}
           placeholder="비밀번호"
           value={form.password}
-          isValid={form.password.length > 0 ? isPasswordValid : true}
+          isValid={form.password.trim().length > 0 ? isPasswordValid : true}
           onChangeText={createChangeTextHandler('password')}
           secureTextEntry
           returnKeyType="next"
@@ -98,7 +98,7 @@ export function SignUpForm({
         {isPasswordValid ? (
           <Text style={styles.validPassword}>사용 가능한 비밀번호 입니다.</Text>
         ) : (
-          form.password.length > 0 && (
+          form.password.trim().length > 0 && (
             <Text style={styles.warning}>영문,숫자 포함 6~20 자리</Text>
           )
         )}
@@ -110,7 +110,9 @@ export function SignUpForm({
           value={form.confirmPassword}
           onChangeText={createChangeTextHandler('confirmPassword')}
           isValid={
-            form.confirmPassword.length > 0 ? isConfirmPasswordValid : true
+            form.confirmPassword.trim().length > 0
+              ? isConfirmPasswordValid
+              : true
           }
           secureTextEntry
           returnKeyType="done"
@@ -119,7 +121,7 @@ export function SignUpForm({
         {isConfirmPasswordValid ? (
           <Text style={styles.validPassword}>동일한 비밀번호입니다.</Text>
         ) : (
-          form.confirmPassword.length > 0 && (
+          form.confirmPassword.trim().length > 0 && (
             <Text style={styles.warning}>비밀번호를 확인해주세요.</Text>
           )
         )}

@@ -75,7 +75,7 @@ export function PhoneAuth({
           setSignUpForm('phoneNumber', forceNumber(text));
         }}
         placeholder="전화번호"
-        keyboardType="phone-pad"
+        keyboardType="number-pad"
         maxLength={PHONE_NUMBER_INPUT_LENGTH}
       />
       <View style={didPressAuthButton && styles.none}>
@@ -101,7 +101,8 @@ export function PhoneAuth({
               setVerifyCode(forceNumber(text));
             }}
             placeholder="인증번호"
-            keyboardType="phone-pad"
+            keyboardType="number-pad"
+            returnKeyType={'done'}
             maxLength={AUTH_NUMBER_LENGTH}
             style={styles.verifyCodeInput}
           />

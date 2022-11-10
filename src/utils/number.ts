@@ -6,7 +6,7 @@ export const convertPhoneNumberFormat = (text: string) =>
     .replace(/\-{1,2}$/g, '');
 
 export const isValidNumberLength = (phoneNumber: string, number: number) =>
-  phoneNumber.length === number;
+  phoneNumber.trim().length === number;
 
 export const convertNumberToMMSS = (seconds: number) => {
   const min = Math.floor(seconds / 60);

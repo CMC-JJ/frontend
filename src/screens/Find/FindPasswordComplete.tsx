@@ -85,7 +85,7 @@ export function FindPasswordComplete() {
             isCharacterExisted={form.password.length > 0}
             placeholder="비밀번호"
             value={form.password}
-            isValid={form.password.length > 0 ? isPasswordValid : true}
+            isValid={form.password.trim().length > 0 ? isPasswordValid : true}
             onChangeText={text => setForm({...form, password: text})}
             secureTextEntry
             returnKeyType="next"
@@ -96,7 +96,7 @@ export function FindPasswordComplete() {
               사용 가능한 비밀번호 입니다.
             </Text>
           ) : (
-            form.password.length > 0 && (
+            form.password.trim().length > 0 && (
               <Text style={styles.warning}>영문,숫자 포함 6~20 자리</Text>
             )
           )}
@@ -108,7 +108,9 @@ export function FindPasswordComplete() {
             value={form.confirmPassword}
             onChangeText={text => setForm({...form, confirmPassword: text})}
             isValid={
-              form.confirmPassword.length > 0 ? isConfirmPasswordValid : true
+              form.confirmPassword.trim().length > 0
+                ? isConfirmPasswordValid
+                : true
             }
             secureTextEntry
             returnKeyType="done"
@@ -117,7 +119,7 @@ export function FindPasswordComplete() {
           {isConfirmPasswordValid ? (
             <Text style={styles.validPassword}>동일한 비밀번호입니다.</Text>
           ) : (
-            form.confirmPassword.length > 0 && (
+            form.confirmPassword.trim().length > 0 && (
               <Text style={styles.warning}>비밀번호를 확인해주세요.</Text>
             )
           )}
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   passwordContainer: {
-    marginBottom: 50,
+    height: 90,
   },
   validPassword: {
     fontFamily: 'Pretendard',

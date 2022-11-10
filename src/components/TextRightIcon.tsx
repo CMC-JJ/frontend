@@ -2,7 +2,7 @@ import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {ThinBar} from './BarSeparator';
 import Icon from 'react-native-vector-icons/AntDesign';
-import FontText from './FontText';
+import {FontText} from './FontText';
 export default function TextRightIcon({
   text,
   onPress,

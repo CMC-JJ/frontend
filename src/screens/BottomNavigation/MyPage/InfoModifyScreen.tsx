@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {ArrowBack, BottomBorderedInput} from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {changeNickName} from '@/utils/fetchMypage';

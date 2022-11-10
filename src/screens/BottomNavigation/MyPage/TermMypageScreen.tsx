@@ -1,7 +1,7 @@
 import {View, SafeAreaView, Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import {ArrowBack} from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';

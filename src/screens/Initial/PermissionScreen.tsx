@@ -19,8 +19,7 @@ import {
 } from '@/hooks/CheckPermission';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';
-import FontText from '@/components/FontText';
-import {PermissionForm} from '@/components';
+import {PermissionForm, FontText} from '@/components';
 export function PermissionScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   const requestMultiplePermissions = async () => {
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     borderRadius: 10,
-    backgroundColor: 'blue',
+    backgroundColor: '#0066FF',
   },
   buttonText: {
     color: 'white',

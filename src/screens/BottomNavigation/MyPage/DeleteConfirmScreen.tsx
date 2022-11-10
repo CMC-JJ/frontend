@@ -3,7 +3,7 @@ import React from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {MypageNavigationProp, MypageStackParamList} from './MyPageStack';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {ArrowBack, SignButton, TabHeader} from '@/components';
 import IconOct from 'react-native-vector-icons/Octicons';
 import {accountDelete} from '@/utils/fetchMypage';

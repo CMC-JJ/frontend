@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FontText from './FontText';
+import {FontText} from './FontText';
 // import {Linking} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';

@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ServiceIcon from '@/components/service/ServiceIcon';
 import {AirDetailProps, ServiceCard} from '@/components/service/ServiceCard';

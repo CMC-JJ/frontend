@@ -26,12 +26,12 @@ export function SignUpNickName() {
   const [isNickNameValid, setIsNickNameValid] = useState<boolean>(false);
 
   useEffect(() => {
-    if (nickName.length < 2) {
+    if (nickName.trim().length < 2) {
       setIsNickNameValid(false);
     } else {
       setIsNickNameValid(true);
     }
-  }, [nickName.length]);
+  }, [nickName, nickName.length]);
 
   const onPress = () => {
     Keyboard.dismiss();
@@ -54,12 +54,12 @@ export function SignUpNickName() {
           placeholder="닉네임(한글 2자 이상)"
           autoCapitalize="none"
           autoCorrect={false}
-          isValid={nickName.length > 0 ? isNickNameValid : true}
+          isValid={nickName.trim().length > 0 ? isNickNameValid : true}
         />
         {isNickNameValid ? (
           <Text style={styles.validNickName}>사용 가능한 닉네임 입니다.</Text>
         ) : (
-          nickName.length > 0 && (
+          nickName.trim().length > 0 && (
             <Text style={styles.warning}>닉네임 최소 2자 입력</Text>
           )
         )}

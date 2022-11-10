@@ -1,6 +1,6 @@
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {ComponentProps} from 'react';
-import FontText from '../FontText';
+import {FontText} from '../FontText';
 
 interface ServiceIconProps extends ComponentProps<typeof TouchableOpacity> {
   name: string;

@@ -12,7 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {MainTabNavigationProp, RootStackParamList} from '@/screens';
 import {ArrowBack, SignButton} from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {
   reportAirlineReview,
   reportAirportReview,

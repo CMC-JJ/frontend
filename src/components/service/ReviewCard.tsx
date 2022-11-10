@@ -1,6 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useMemo} from 'react';
-import FontText from '../FontText';
+import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';

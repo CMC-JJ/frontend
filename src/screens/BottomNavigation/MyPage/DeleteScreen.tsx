@@ -4,7 +4,7 @@ import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ArrowBack, SignButton, TabHeader} from '@/components';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import RNPickerSelect from 'react-native-picker-select';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {MypageNavigationProp} from './MyPageStack';

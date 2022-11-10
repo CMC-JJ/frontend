@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack} from '@/components';
-import FontText from '@/components/FontText';
+import {FontText} from '@/components/FontText';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ThickBar} from '@/components/BarSeparator';
 import TextRightIcon from '@/components/TextRightIcon';
