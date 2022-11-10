@@ -178,7 +178,7 @@ export function ScheduleScreen() {
               </TouchableOpacity>
             </>
           )
-        ) : data?.result.schedules.length === 0 ? (
+        ) : data?.isSuccess === false ? (
           <EmptySchedule
             firstText="지난 일정이 없습니다!"
             secondText="일정을 추가해주세요"
