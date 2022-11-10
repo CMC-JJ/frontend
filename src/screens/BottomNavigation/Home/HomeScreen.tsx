@@ -53,6 +53,8 @@ type Data = {
 
 // type currentTab = 'airport' | 'airline';
 
+// TODO: 공항, 항공사 버튼 클릭에따른 UI 만들기
+// TODO: 지도 연동 및 전화번호 바로가기 연동
 export function HomeScreen() {
   const navigation = useNavigation<MainTabNavigationProp>();
   const {auth} = useAuthStore();
