@@ -75,8 +75,6 @@ export function HomeScreen() {
     fetchSchedule();
   }, [fetchSchedule]);
 
-  console.log(data?.schedule.airlineService);
-
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -189,8 +187,8 @@ export function HomeScreen() {
                         <FontText style={styles.serviceProvider}>
                           {data.schedule.airlineName}
                         </FontText>
-                        {data.schedule.airlineService.map(item => (
-                          <FontText style={styles.serviceItem}>
+                        {data.schedule.airlineService.map((item, i) => (
+                          <FontText key={i} style={styles.serviceItem}>
                             {item.name}
                           </FontText>
                         ))}
