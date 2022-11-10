@@ -48,10 +48,6 @@ export function ScheduleComplete() {
     }
   };
 
-  // console.log(schedule.departureAirportServiceIds);
-  // console.log(schedule.arrivalAirportServiceIds);
-  // console.log(schedule.airlineServiceIds);
-
   return (
     <>
       <SafeAreaView style={styles.fill}>
