@@ -51,10 +51,13 @@ type Data = {
   schedule: Schedule;
 };
 
+// type currentTab = 'airport' | 'airline';
+
 export function HomeScreen() {
   const navigation = useNavigation<MainTabNavigationProp>();
   const {auth} = useAuthStore();
   const [data, setData] = useState<Data>();
+  // const [currentTab, setCurrentTab] = useState<currentTab>('airport');
 
   const fetchSchedule = useCallback(async () => {
     const result = await request(
@@ -69,6 +72,8 @@ export function HomeScreen() {
   useEffect(() => {
     fetchSchedule();
   }, [fetchSchedule]);
+
+  console.log(data?.schedule.airlineService);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -90,14 +95,23 @@ export function HomeScreen() {
             <View style={styles.guideMessage}>
               {data?.schedule ? (
                 <View style={styles.guideTextContainer}>
-                  <FontText style={styles.greetMessage}>
-                    {'안녕하세요 '}
+                  <FontText>
+                    <FontText style={styles.greetMessage}>
+                      {'안녕하세요 '}
+                    </FontText>
+                    <FontText style={[styles.greetMessage, styles.nickName]}>
+                      {auth.nickName}!{'\n'}
+                    </FontText>
+                    <FontText style={styles.guideText}>{'오늘은 '}</FontText>
+                    <FontText style={styles.greetMessage}>
+                      {data.schedule.scheduleName}
+                    </FontText>
+                    <FontText style={styles.greetMessage}>
+                      {'\n'}
+                      {data.schedule.leftDay}
+                    </FontText>
+                    <FontText style={styles.guideText}>입니다</FontText>
                   </FontText>
-                  <FontText style={[styles.greetMessage, styles.nickName]}>
-                    {auth.nickName}!
-                  </FontText>
-                  {/* 오늘은 {data.schedule.scheduleName}{' '}
-                {data.schedule.leftDay}입니다. */}
                 </View>
               ) : (
                 <View style={styles.guideTextContainer}>
@@ -133,21 +147,88 @@ export function HomeScreen() {
               </FontText>
             </View>
             {/* TODO: 데이터 있을때, 없을 때 구분! */}
-            <View style={styles.noScheduleContainer}>
-              <View style={styles.tempCircle} />
-              <View style={styles.noTextContainer}>
-                <FontText style={styles.noText}>현재 등록된 여행이</FontText>
-                <FontText style={styles.noText}>없습니다!</FontText>
+            {data?.schedule ? (
+              <>
+                {/* <View style={styles.scheduleHeaderContainer}>
+                  <TouchableOpacity
+                    style={styles.textContainer}
+                    onPress={() => {}}>
+                    <FontText style={styles.headerText}>항공사</FontText>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.textContainer}
+                    onPress={() => {}}>
+                    <FontText style={styles.headerText}>공항</FontText>
+                  </TouchableOpacity>
+                </View> */}
+                <View style={styles.scheduleContainer}>
+                  <View style={styles.scheduleInfoContainer}>
+                    <View style={styles.infoHeader}>
+                      <FontText style={styles.infoHeaderText}>
+                        {data.schedule.scheduleName}
+                      </FontText>
+                      <View style={styles.leftDayContainer}>
+                        <FontText style={styles.leftDayText}>
+                          {data.schedule.leftDay}
+                        </FontText>
+                      </View>
+                    </View>
+                    <View style={styles.startAt}>
+                      <FontText>{data.schedule.startAt}</FontText>
+                    </View>
+                    {/* 공항일때, 항공일때 나누기! */}
+                    <View style={styles.serviceInfoContainer}>
+                      <View style={styles.dotContainer}>
+                        <View style={styles.circle} />
+                        <View style={styles.dashedLine} />
+                        <View style={styles.circle} />
+                      </View>
+                      <View style={styles.serviceTextContainer}>
+                        <FontText style={styles.serviceProvider}>
+                          {data.schedule.airlineName}
+                        </FontText>
+                        {data.schedule.airlineService.map(item => (
+                          <FontText style={styles.serviceItem}>
+                            {item.name}
+                          </FontText>
+                        ))}
+                      </View>
+                    </View>
+                    <View style={styles.detailContainer}>
+                      {/* 이벤트 설정 */}
+                      <TouchableOpacity
+                        style={styles.detailTouchableContainer}
+                        onPress={() => {}}>
+                        <FontText style={styles.detailText}>
+                          자세히 보기
+                        </FontText>
+                        <Icon
+                          name="chevron-thin-right"
+                          size={10}
+                          style={styles.detailGoIcon}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </>
+            ) : (
+              <View style={styles.noScheduleContainer}>
+                <View style={styles.tempCircle} />
+                <View style={styles.noTextContainer}>
+                  <FontText style={styles.noText}>현재 등록된 여행이</FontText>
+                  <FontText style={styles.noText}>없습니다!</FontText>
+                </View>
+                <TouchableOpacity
+                  style={styles.addSchedule}
+                  onPress={() => {
+                    navigation.navigate('Schedule');
+                  }}>
+                  <FontText style={styles.addText}>여행 등록하기</FontText>
+                  <Icon name="chevron-right" color="#0066FF" size={20} />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={styles.addSchedule}
-                onPress={() => {
-                  navigation.navigate('Schedule');
-                }}>
-                <FontText style={styles.addText}>여행 등록하기</FontText>
-                <Icon name="chevron-right" color="#0066FF" size={20} />
-              </TouchableOpacity>
-            </View>
+            )}
           </View>
           <View style={[styles.serviceHeader, styles.serviceLocation]}>
             <View style={styles.serviceTitle}>
@@ -257,6 +338,144 @@ const styles = StyleSheet.create({
   },
   serviceTitle: {
     flexDirection: 'row',
+  },
+  scheduleContainer: {
+    marginTop: 20,
+    marginHorizontal: 4,
+
+    borderRadius: 12,
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    elevation: 2,
+    zIndex: 10,
+  },
+  scheduleHeaderContainer: {
+    marginTop: 20,
+    marginHorizontal: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    zIndex: 1,
+  },
+  textContainer: {
+    flex: 0.5,
+
+    paddingVertical: 11,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    borderRadius: 6,
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    elevation: 2,
+  },
+  headerText: {
+    fontWeight: '500',
+    fontSize: 15,
+    lineHeight: 23,
+    color: '#BCBCBC',
+  },
+  scheduleInfoContainer: {
+    marginTop: 30,
+    paddingHorizontal: 20,
+    paddingBottom: 15,
+  },
+  infoHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  infoHeaderText: {
+    fontWeight: '600',
+    fontSize: 18,
+    lineHeight: 28,
+  },
+  leftDayContainer: {
+    paddingHorizontal: 11,
+    paddingVertical: 1,
+
+    borderRadius: 12,
+    backgroundColor: '#0066ff',
+  },
+  leftDayText: {
+    fontWeight: '700',
+    fontSize: 12,
+    lineHeight: 24,
+    color: '#ffffff',
+  },
+  startAt: {
+    marginTop: 6,
+    width: 81,
+    height: 26,
+    borderRadius: 29,
+    backgroundColor: '#F8F8F8',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  serviceInfoContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+  },
+  dotContainer: {
+    flex: 0.1,
+    marginLeft: -6,
+    alignItems: 'center',
+  },
+  serviceTextContainer: {
+    flex: 0.9,
+    marginLeft: 10,
+  },
+  circle: {
+    width: 8,
+    height: 8,
+    borderRadius: 8,
+
+    backgroundColor: '#0066FF',
+  },
+  dashedLine: {
+    width: 1,
+    flex: 0.95,
+    borderWidth: 1,
+    borderColor: '#0066FF',
+    borderStyle: 'dashed',
+  },
+  serviceProvider: {
+    marginTop: -10,
+    fontWeight: '600',
+    fontSize: 15,
+    lineHeight: 23,
+    color: '#0066FF',
+  },
+  serviceItem: {
+    marginTop: 8,
+    fontWeight: '500',
+    fontSize: 13,
+    lineHeight: 16,
+  },
+  detailContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  detailTouchableContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  detailText: {
+    fontWeight: '600',
+    fontSize: 13,
+    lineHeight: 20,
+  },
+  detailGoIcon: {
+    marginLeft: 10,
   },
   noScheduleContainer: {
     marginTop: 45,
