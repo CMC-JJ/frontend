@@ -3,13 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>NSContactsUsageDescription</key>
-	<string>YOUR TEXT</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>YOUR TEXT</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>YOUR TEXT</string>
+  <string></string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string></string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string></string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string></string> 
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
