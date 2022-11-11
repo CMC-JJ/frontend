@@ -20,10 +20,10 @@ import {
   ReportScreen,
   TermMypageScreen,
   QuestionScreen,
+  OwnReviewScreen,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {Auth, usePermission} from '@/store';
-// import OwnReviewScreen from './BottomNavigation/MyPage/OwnReviewScreen';
 
 export type RootStackParamList = {
   Permission: undefined;
@@ -163,11 +163,11 @@ function RootStack() {
         component={QuestionScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="OwnReview"
         component={OwnReviewScreen}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="Report"
         component={ReportScreen}

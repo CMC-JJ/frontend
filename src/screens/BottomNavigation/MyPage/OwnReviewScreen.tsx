@@ -34,12 +34,20 @@ const UsedService = React.memo(
         )),
       [reviewedAirlineServices, reviewedAirportServices, type],
     );
-
     return <View style={styleReview.ReviewContainer}>{elemList}</View>;
   },
 );
-
-export default function OwnReviewScreen() {
+const noticeArr = [
+  '후기는 작성 후 48시간 이내에 본문만 수정이 가능하며,\n작성자는 현재 닉네임으로 등록됩니다.',
+  '\n삭제된 후기는 복구할 수 없습니다.',
+  '\n후기 삭제는 후기 작성이로부터 30일 이후에 가능합니다.',
+];
+const ReviewNotice = () => (
+  <View style={styles.notice}>
+    <FontText style={styles.noticeFont}>{noticeArr.map(text => text)}</FontText>
+  </View>
+);
+export function OwnReviewScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const [reviewList, setReviewList] = useState<OwnReview[]>();
   useEffect(() => {
@@ -84,6 +92,9 @@ export default function OwnReviewScreen() {
         </View>
       </View> */}
       {/* 2 */}
+      <View style={styles.noticeContainer}>
+        <ReviewNotice />
+      </View>
       <FlatList
         renderItem={({item}) => (
           <View style={styles.cardContainer}>
@@ -141,6 +152,8 @@ const styleReview = StyleSheet.create({
     borderRadius: 12,
     elevation: 5,
     marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 34,
   },
   content: {
     marginTop: 9.5,
@@ -224,5 +237,19 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 5,
   },
-  cardContainer: {paddingHorizontal: 30},
+  cardContainer: {paddingHorizontal: 30, paddingTop: 5},
+  noticeContainer: {
+    paddingHorizontal: 30,
+    marginBottom: 20,
+    marginTop: 32,
+  },
+  notice: {
+    backgroundColor: '#FAFAFA',
+    borderWidth: 1,
+    borderRadius: 18,
+    borderColor: '#DEDEDE',
+  },
+  noticeFont: {
+    lineHeight: 20,
+  },
 });

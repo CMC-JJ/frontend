@@ -1,6 +1,6 @@
 import {Animated, StyleSheet, TouchableHighlight, View} from 'react-native';
 import React, {useRef, useState} from 'react';
-import FontText from './FontText';
+import {FontText} from './FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function DropDownItem({
