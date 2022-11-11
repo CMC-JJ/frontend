@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {useRoute} from '@react-navigation/native';
 import {ownReviewList} from '@/utils/fetchMypage';
+import IconOct from 'react-native-vector-icons/Octicons';
 interface OwnReview {
   id: number;
   uid: string;
@@ -38,13 +39,17 @@ const UsedService = React.memo(
   },
 );
 const noticeArr = [
-  '후기는 작성 후 48시간 이내에 본문만 수정이 가능하며,\n작성자는 현재 닉네임으로 등록됩니다.',
-  '\n삭제된 후기는 복구할 수 없습니다.',
-  '\n후기 삭제는 후기 작성이로부터 30일 이후에 가능합니다.',
+  '삭제된 후기는 복구할 수 없습니다.',
+  '후기 삭제는 후기 작성이후로부터 30일 이후에 가능합니다.',
 ];
 const ReviewNotice = () => (
   <View style={styles.notice}>
-    <FontText style={styles.noticeFont}>{noticeArr.map(text => text)}</FontText>
+    {noticeArr.map((text: string) => (
+      <View style={styles.dotText}>
+        <IconOct style={styles.dot} size={10} color="#909397" name="dot-fill" />
+        <FontText style={styles.noticeFont}>{text}</FontText>
+      </View>
+    ))}
   </View>
 );
 export function OwnReviewScreen() {
@@ -92,10 +97,13 @@ export function OwnReviewScreen() {
         </View>
       </View> */}
       {/* 2 */}
-      <View style={styles.noticeContainer}>
-        <ReviewNotice />
-      </View>
+
       <FlatList
+        ListHeaderComponent={
+          <View style={styles.noticeContainer}>
+            <ReviewNotice />
+          </View>
+        }
         renderItem={({item}) => (
           <View style={styles.cardContainer}>
             <View style={styleReview.cardForm}>
@@ -248,8 +256,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 18,
     borderColor: '#DEDEDE',
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
   noticeFont: {
     lineHeight: 20,
+    fontSize: 13,
+    fontWeight: '400',
+    color: '#7B7F83',
+  },
+  dotText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  dot: {
+    marginRight: 6,
   },
 });
