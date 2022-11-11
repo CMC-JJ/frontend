@@ -51,7 +51,7 @@ export function ServiceCard({
               <IconOct
                 style={infoStyles.dot}
                 size={20}
-                color="black"
+                color="#0066FF"
                 name="dot-fill"
               />
               <FontText
@@ -113,6 +113,7 @@ export function ServiceCard({
       </View>
 
       <View>
+        <FontText style={styles.linkEx}>제주공항</FontText>
         {/* 서비스 리스트 */}
         {serviceList}
         <View style={availableAt.container}>
@@ -189,7 +190,7 @@ const titleStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 9,
-    marginBottom: 32,
+    // marginBottom: 32,
   },
   phNum: {
     fontSize: 12,
@@ -207,4 +208,5 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  linkEx: {},
 });
