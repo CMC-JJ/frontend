@@ -108,7 +108,7 @@ export function ServiceScreen() {
     <SafeAreaView style={styles.fill}>
       <FlatList
         renderItem={({item}) => (
-          <View style={[styleReview.container, {paddingHorizontal: 25}]}>
+          <View style={[styleReview.container]}>
             <ReviewCard data={item} currentTab={currentTab} />
           </View>
         )}

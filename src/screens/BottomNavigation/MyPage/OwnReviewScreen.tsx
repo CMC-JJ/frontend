@@ -1,11 +1,24 @@
-import {FlatList, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Image,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {FontText} from '@/components/FontText';
 import {ArrowBack} from '@/components';
 import Icon from 'react-native-vector-icons/Entypo';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {useRoute} from '@react-navigation/native';
-import {ownReviewList} from '@/utils/fetchMypage';
+import {
+  ownReviewAirlineDelete,
+  ownReviewAirportDelete,
+  ownReviewList,
+} from '@/utils/fetchMypage';
 import IconOct from 'react-native-vector-icons/Octicons';
 interface OwnReview {
   id: number;
@@ -44,8 +57,8 @@ const noticeArr = [
 ];
 const ReviewNotice = () => (
   <View style={styles.notice}>
-    {noticeArr.map((text: string) => (
-      <View style={styles.dotText}>
+    {noticeArr.map((text: string, i: number) => (
+      <View style={styles.dotText} key={i}>
         <IconOct style={styles.dot} size={10} color="#909397" name="dot-fill" />
         <FontText style={styles.noticeFont}>{text}</FontText>
       </View>
@@ -108,20 +121,53 @@ export function OwnReviewScreen() {
           <View style={styles.cardContainer}>
             <View style={styleReview.cardForm}>
               <View style={styleReview.reviewTitle}>
-                <FontText style={styleReview.name}>
-                  {params.auth.nickName}
-                </FontText>
-                <FontText style={styleReview.date}>{item?.createdAt}</FontText>
-                <Icon
-                  name="star"
-                  size={13}
-                  color="#0066FF"
-                  style={styleReview.star}
-                />
-                <FontText style={styleReview.avgReview}>{item?.score}</FontText>
+                <View style={styleReview.circle}>
+                  {item?.logoImageUrl ? (
+                    <Image
+                      source={{
+                        uri: item?.logoImageUrl,
+                      }}
+                      style={styleReview.image}
+                    />
+                  ) : (
+                    <FontText style={styleReview.regionText}>
+                      {item?.region}
+                    </FontText>
+                  )}
+                </View>
+
+                <FontText style={styleReview.name}>{item.name}</FontText>
+                <View style={styleReview.starAvgContainer}>
+                  <Icon
+                    name="star"
+                    size={15}
+                    color="#0066FF"
+                    style={styleReview.star}
+                  />
+                  <FontText style={styleReview.avgReview}>
+                    {item?.score}
+                  </FontText>
+                </View>
               </View>
+              <FontText style={styleReview.date}>
+                작성일 : {item?.createdAt}
+              </FontText>
               <UsedService {...item} />
               <FontText style={styleReview.content}>{item?.content}</FontText>
+              <TouchableOpacity
+                style={styleReview.button}
+                onPress={() => {
+                  (item.type === 'AIRPORT'
+                    ? ownReviewAirportDelete(item.id)
+                    : ownReviewAirlineDelete(item.id)
+                  ).then(result =>
+                    result.isSuccess === true
+                      ? Alert.alert('리뷰가 삭제되었습니다.')
+                      : Alert.alert(`${result.message}`),
+                  );
+                }}>
+                <FontText style={styleReview.buttonText}>삭제하기</FontText>
+              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -161,7 +207,7 @@ const styleReview = StyleSheet.create({
     elevation: 5,
     marginBottom: 20,
     paddingHorizontal: 20,
-    paddingVertical: 34,
+    paddingVertical: 18,
   },
   content: {
     marginTop: 9.5,
@@ -179,10 +225,65 @@ const styleReview = StyleSheet.create({
     fontSize: 20,
   },
   star: {
-    // marginLeft: 10,
+    marginRight: 5,
   },
-  date: {},
-  avgReview: {},
+  circle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    elevation: 10,
+    marginRight: 10,
+  },
+  image: {
+    width: 35,
+    height: 35,
+  },
+  date: {
+    fontSize: 13,
+    fontWeight: '400',
+    color: '#979797',
+    marginTop: 5,
+    marginBottom: 3.5,
+  },
+  avgReview: {
+    color: '#121212',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  regionText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#0066FF',
+  },
+  starAvgContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
+  },
+  button: {
+    height: 39,
+    backgroundColor: '#0066FF',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    marginTop: 13,
+  },
+  buttonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: 'white',
+  },
 });
 // const styleNoReview = StyleSheet.create({
 //   nullReview: {

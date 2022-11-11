@@ -78,3 +78,33 @@ export const ownReviewList = async (userId: number) => {
     console.log('내 리뷰 가져오기 실패', e);
   }
 };
+
+export const ownReviewAirlineDelete = async (reviewId: number) => {
+  try {
+    const res = await request(
+      'web/airlines/reviews/status',
+      {
+        airlineReviewId: reviewId,
+      },
+      'PATCH',
+    );
+    return res;
+  } catch (e) {
+    console.log('airline리뷰 삭제 실패', e);
+  }
+};
+
+export const ownReviewAirportDelete = async (reviewId: number) => {
+  try {
+    const res = await request(
+      'web/airports/reviews/status',
+      {
+        airportReviewId: reviewId,
+      },
+      'PATCH',
+    );
+    return res;
+  } catch (e) {
+    console.log('airline리뷰 삭제 실패', e);
+  }
+};

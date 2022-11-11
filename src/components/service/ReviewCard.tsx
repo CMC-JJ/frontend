@@ -20,6 +20,7 @@ export interface ReviewSame {
   content: string;
   createdAt: string;
 }
+
 export default function ReviewCard({
   data,
   currentTab,
