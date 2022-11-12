@@ -66,6 +66,8 @@ export function SignUpForm({
           onChangeText={createChangeTextHandler('userName')}
           placeholder="아이디"
           autoCapitalize="none"
+          blurOnSubmit={false}
+          textContentType="oneTimeCode"
           autoCorrect={false}
           style={styles.duplicateId}
         />
@@ -88,10 +90,12 @@ export function SignUpForm({
         <BottomBorderedInput
           isCharacterExisted={form.password.length > 0}
           placeholder="비밀번호"
+          blurOnSubmit={false}
+          textContentType="oneTimeCode"
           value={form.password}
           isValid={form.password.trim().length > 0 ? isPasswordValid : true}
           onChangeText={createChangeTextHandler('password')}
-          secureTextEntry
+          secureTextEntry={true}
           returnKeyType="next"
           onSubmitEditing={() => confirmPasswordRef.current?.focus()}
         />
@@ -107,6 +111,7 @@ export function SignUpForm({
         <BottomBorderedInput
           isCharacterExisted={form.confirmPassword.length > 0}
           placeholder="비밀번호 확인"
+          textContentType="oneTimeCode"
           value={form.confirmPassword}
           onChangeText={createChangeTextHandler('confirmPassword')}
           isValid={
