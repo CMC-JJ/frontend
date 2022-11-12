@@ -1,3 +1,8 @@
+export const checkNickNameFormat = (nickName: string) => {
+  const regex = /^[ㄱ-ㅎ|가-힣]+$/;
+  return regex.test(nickName);
+};
+
 export const dateFormat = (date: Date) =>
   date.getFullYear() +
   '-' +

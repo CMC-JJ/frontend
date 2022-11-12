@@ -30,7 +30,7 @@ export function StartScreen() {
             buttonText="회원가입"
             isValid
             isbackgroundWhite
-            onPress={() => navigation.navigate('SignUp')}
+            onPress={() => navigation.navigate('PhoneAuth')}
           />
         </View>
         <View style={styles.footer}>

@@ -17,6 +17,7 @@ import {
 } from '@/components';
 import {useSignUpStore} from '@/store';
 import type {RootStackNavigationProp} from '@/screens';
+import {checkNickNameFormat} from '@/utils';
 
 export function SignUpNickName() {
   const {setSignUpForm} = useSignUpStore();
@@ -29,7 +30,11 @@ export function SignUpNickName() {
     if (nickName.trim().length < 2) {
       setIsNickNameValid(false);
     } else {
-      setIsNickNameValid(true);
+      if (checkNickNameFormat(nickName)) {
+        setIsNickNameValid(true);
+      } else {
+        setIsNickNameValid(false);
+      }
     }
   }, [nickName, nickName.length]);
 
@@ -60,7 +65,9 @@ export function SignUpNickName() {
           <Text style={styles.validNickName}>사용 가능한 닉네임 입니다.</Text>
         ) : (
           nickName.trim().length > 0 && (
-            <Text style={styles.warning}>닉네임 최소 2자 입력</Text>
+            <Text style={styles.warning}>
+              닉네임은 한글로 2자 이상이어야 합니다.
+            </Text>
           )
         )}
       </View>
