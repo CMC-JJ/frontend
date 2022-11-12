@@ -233,7 +233,7 @@ export function HomeScreen() {
               </View>
             )}
           </View>
-          <View style={[styles.serviceHeader, styles.serviceLocation]}>
+          {/* <View style={[styles.serviceHeader, styles.serviceLocation]}>
             <View style={styles.serviceTitle}>
               <Image
                 source={require('@/assets/images/location.png')}
@@ -261,7 +261,7 @@ export function HomeScreen() {
                 style={styles.currentLocationIcon}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
