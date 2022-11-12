@@ -68,6 +68,7 @@ export function HomeScreen() {
       'GET',
       auth.jwtToken,
     );
+
     setData(result.result);
   }, [auth.jwtToken]);
 
@@ -90,7 +91,9 @@ export function HomeScreen() {
             style={styles.logoText}
           />
         </View>
-        <ScrollView>
+      </View>
+      <ScrollView>
+        <View style={styles.wrapper}>
           <View style={styles.guideContainer}>
             <View style={styles.guideMessage}>
               {data?.schedule ? (
@@ -259,8 +262,8 @@ export function HomeScreen() {
               />
             </TouchableOpacity>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
