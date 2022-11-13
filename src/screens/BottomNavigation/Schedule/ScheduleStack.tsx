@@ -11,7 +11,7 @@ import {
   ScheduleTime,
   ScheduleConvenience,
   ScheduleComplete,
-  ScheduleDetail,
+  ScheduleReview,
 } from '@/screens';
 import type {MainTabNavigationProp} from '@/screens';
 
@@ -24,7 +24,7 @@ export type ScheduleStackParamList = {
   ChooseAirline: undefined;
   Convenience: undefined;
   Complete: undefined;
-  ScheduleDetail: {
+  Review: {
     scheduleId: number;
   };
 };
@@ -51,7 +51,7 @@ export function ScheduleStack() {
       <Stack.Screen name="Time" component={ScheduleTime} />
       <Stack.Screen name="Convenience" component={ScheduleConvenience} />
       <Stack.Screen name="Complete" component={ScheduleComplete} />
-      <Stack.Screen name="ScheduleDetail" component={ScheduleDetail} />
+      <Stack.Screen name="Review" component={ScheduleReview} />
     </Stack.Navigator>
   );
 }

@@ -9,15 +9,12 @@ import {
   View,
 } from 'react-native';
 import {ArrowBack, FontText} from '@/components';
-import {ScheduleStackParamList} from './ScheduleStack';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {request} from '@/utils';
 import Icon from 'react-native-vector-icons/Entypo';
+import {RootStackParamList} from '@/screens';
 
-export type ScheduleDetailProp = RouteProp<
-  ScheduleStackParamList,
-  'ScheduleDetail'
->;
+type ScheduleDetailProp = RouteProp<RootStackParamList, 'ScheduleDetail'>;
 
 type Schedule = {
   scheduleId: number;

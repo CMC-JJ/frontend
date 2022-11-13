@@ -20,6 +20,7 @@ import {
   ReportScreen,
   TermMypageScreen,
   QuestionScreen,
+  ScheduleDetail,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {Auth, usePermission} from '@/store';
@@ -57,6 +58,9 @@ export type RootStackParamList = {
   Question: undefined;
   OwnReview: {
     auth: Auth;
+  };
+  ScheduleDetail: {
+    scheduleId: number;
   };
 };
 
@@ -171,6 +175,11 @@ function RootStack() {
       <Stack.Screen
         name="Report"
         component={ReportScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ScheduleDetail"
+        component={ScheduleDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
