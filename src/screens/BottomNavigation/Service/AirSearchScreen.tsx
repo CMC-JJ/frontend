@@ -30,7 +30,6 @@ export function AirSearchScreen() {
   const fetchSearch = async () => {
     try {
       const res = await request('web/search', {searchQuery: value}, 'GET');
-      console.log(res.result.searchResult);
       setData(res.result.searchResult[0]);
     } catch (e) {
       console.log(e);

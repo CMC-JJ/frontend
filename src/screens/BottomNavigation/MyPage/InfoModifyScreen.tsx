@@ -19,7 +19,6 @@ import {changeNickName} from '@/utils/fetchMypage';
 import {MypageNavigationProp} from './MyPageStack';
 import {useAuthStore} from '@/store';
 import {useHideTabBar} from '@/hooks/useVisibleTabBar';
-// import {useAuthStore} from '@/store';
 
 export function InfoModifyScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
@@ -82,7 +81,6 @@ export function InfoModifyScreen() {
             ]}
             onPress={() => {
               changeNickName(params.auth.userId, nickName).then(res => {
-                console.log(res);
                 res && setOnlyNickName(nickName);
 
                 navigation.navigate('Home');

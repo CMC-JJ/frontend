@@ -10,8 +10,6 @@ export const reviewDeleteList = async () => {
 };
 
 export const accountDelete = async (userId: number, deleteId: number) => {
-  console.log(userId);
-  console.log(deleteId);
   try {
     const res = await request(
       'web/users/status',
@@ -47,7 +45,6 @@ export const validationPassword = async (password: string) => {
       },
       'GET',
     );
-    console.log(res);
     return res.isSuccess;
   } catch (e) {
     console.log('비밀번호 검증 실패', e);
@@ -64,7 +61,6 @@ export const changePassword = async (userId: number, password: string) => {
       },
       'PATCH',
     );
-    console.log(res);
     return res.isSuccess;
   } catch (e) {
     console.log('비밀번호 변경 실패', e);

@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
-import IconOct from 'react-native-vector-icons/Octicons';
 export type InfoDetailCompleteRouteProp = RouteProp<
   MypageStackParamList,
   'InfoDetail'
@@ -63,27 +62,23 @@ export function MyPageScreen() {
             <Icon style={styles.icon} name="right" color={'black'} size={20} />
           </TouchableOpacity>
         </View>
+
         {/* infoBox */}
-        <View style={styles.infoBox}>
-          <TouchableOpacity
-            style={styles.reviewButton}
-            onPress={() =>
-              navigation.navigate('OwnReview', {
-                auth: auth,
-              })
-            }>
-            <View style={styles.reviewIcon}>
-              <IconOct name="pencil" size={25} color={'white'} />
-              <FontText style={styles.reviewText}>내가 쓴 후기</FontText>
-            </View>
-          </TouchableOpacity>
-        </View>
       </View>
       <View style={{marginTop: 30}}>
         <ThickBar />
       </View>
       {/* 하단 */}
       <View style={listStyles.listContainer}>
+        <TextRightIcon
+          text={'내가 쓴 후기'}
+          onPress={() => {
+            navigation.navigate('OwnReview', {
+              auth: auth,
+            });
+          }}
+          isThickBar
+        />
         <TextRightIcon
           text={'자주 묻는 질문'}
           onPress={() => {

@@ -31,6 +31,7 @@ export function OnboardingScreen() {
   return (
     <>
       <Onboarding
+        transitionAnimationDuration={1000}
         showDone={true}
         DotComponent={Square}
         SkipButtonComponent={SkipButton}

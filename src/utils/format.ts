@@ -36,7 +36,6 @@ export const formatTimeTo12 = (time: string) => {
   const result = time.split(':');
   const hour = parseInt(result[0]);
   const minute = parseInt(result[1]);
-  console.log(hour);
 
   return `${hour <= 12 ? hour : hour - 12}:${
     minute < 10 ? '0' + minute : minute
@@ -44,8 +43,6 @@ export const formatTimeTo12 = (time: string) => {
 };
 
 export const formatHourTo12 = (number: number) => {
-  console.log(number);
-
   return number <= 12 ? number : number - 12;
 };
 

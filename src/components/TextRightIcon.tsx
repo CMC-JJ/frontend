@@ -1,6 +1,6 @@
 import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {ThinBar} from './BarSeparator';
+import {ThickBar, ThinBar} from './BarSeparator';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {FontText} from './FontText';
 export default function TextRightIcon({
@@ -8,11 +8,13 @@ export default function TextRightIcon({
   onPress,
   isBar,
   isIcon,
+  isThickBar,
 }: {
   text: string;
   onPress: () => void;
   isBar?: boolean;
   isIcon?: boolean;
+  isThickBar?: boolean;
 }) {
   return (
     <View style={styles.container}>
@@ -32,6 +34,7 @@ export default function TextRightIcon({
         </TouchableOpacity>
       </View>
       {isBar && <ThinBar />}
+      {isThickBar && <ThickBar />}
     </View>
   );
 }
