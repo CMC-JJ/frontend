@@ -1,4 +1,5 @@
 import {FontText} from '@/components';
+import type {MainTabNavigationProp} from '@/screens';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils';
 import {useNavigation} from '@react-navigation/native';
@@ -13,7 +14,6 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import type {MainTabNavigationProp} from '@/screens';
 
 type departureAirportService = {
   airportServiceId: number;
@@ -51,15 +51,15 @@ type Data = {
   schedule: Schedule;
 };
 
-// type currentTab = 'airport' | 'airline';
+type currentTab = 'airport' | 'airline';
 
-// TODO: 공항, 항공사 버튼 클릭에따른 UI 만들기
 // TODO: 지도 연동 및 전화번호 바로가기 연동
+// TODO: navigate param 전달 오류 수정!!!
 export function HomeScreen() {
   const navigation = useNavigation<MainTabNavigationProp>();
   const {auth} = useAuthStore();
   const [data, setData] = useState<Data>();
-  // const [currentTab, setCurrentTab] = useState<currentTab>('airport');
+  const [currentTab, setCurrentTab] = useState<currentTab>('airport');
 
   const fetchSchedule = useCallback(async () => {
     const result = await request(
@@ -149,21 +149,48 @@ export function HomeScreen() {
                 제공받는 여행 서비스
               </FontText>
             </View>
-            {/* TODO: 데이터 있을때, 없을 때 구분! */}
+            {data?.schedule && (
+              <View style={styles.selectServiceContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.selectServiceButton,
+                    currentTab === 'airport' &&
+                      styles.selectServiceButtonActive,
+                  ]}
+                  onPress={() => {
+                    setCurrentTab('airport');
+                  }}>
+                  <FontText
+                    style={[
+                      styles.selectServiceButtonText,
+                      currentTab === 'airport' &&
+                        styles.selectServiceButtonActiveText,
+                    ]}>
+                    항공사
+                  </FontText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.selectServiceButton,
+                    currentTab === 'airline' &&
+                      styles.selectServiceButtonActive,
+                  ]}
+                  onPress={() => {
+                    setCurrentTab('airline');
+                  }}>
+                  <FontText
+                    style={[
+                      styles.selectServiceButtonText,
+                      currentTab === 'airline' &&
+                        styles.selectServiceButtonActiveText,
+                    ]}>
+                    공항
+                  </FontText>
+                </TouchableOpacity>
+              </View>
+            )}
             {data?.schedule ? (
               <>
-                {/* <View style={styles.scheduleHeaderContainer}>
-                  <TouchableOpacity
-                    style={styles.textContainer}
-                    onPress={() => {}}>
-                    <FontText style={styles.headerText}>항공사</FontText>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.textContainer}
-                    onPress={() => {}}>
-                    <FontText style={styles.headerText}>공항</FontText>
-                  </TouchableOpacity>
-                </View> */}
                 <View style={styles.scheduleContainer}>
                   <View style={styles.scheduleInfoContainer}>
                     <View style={styles.infoHeader}>
@@ -179,29 +206,79 @@ export function HomeScreen() {
                     <View style={styles.startAt}>
                       <FontText>{data.schedule.startAt}</FontText>
                     </View>
-                    {/* 공항일때, 항공일때 나누기! */}
                     <View style={styles.serviceInfoContainer}>
                       <View style={styles.dotContainer}>
                         <View style={styles.circle} />
-                        <View style={styles.dashedLine} />
-                        <View style={styles.circle} />
+                        {currentTab === 'airport'
+                          ? (data.schedule.departureAirportService.length !==
+                              0 ||
+                              data.schedule.arrivalAirportService.length !==
+                                0) && (
+                              <>
+                                <View style={styles.dashedLine} />
+                                <View style={styles.circle} />
+                              </>
+                            )
+                          : data.schedule.airlineService.length !== 0 && (
+                              <>
+                                <View style={styles.dashedLine} />
+                                <View style={styles.circle} />
+                              </>
+                            )}
                       </View>
                       <View style={styles.serviceTextContainer}>
-                        <FontText style={styles.serviceProvider}>
-                          {data.schedule.airlineName}
-                        </FontText>
-                        {data.schedule.airlineService.map((item, i) => (
-                          <FontText key={i} style={styles.serviceItem}>
-                            {item.name}
-                          </FontText>
-                        ))}
+                        {currentTab === 'airport' ? (
+                          <>
+                            <FontText style={styles.serviceProvider}>
+                              {data.schedule.departureAirportName}
+                            </FontText>
+                            {data.schedule.departureAirportService.map(
+                              (item, i) => (
+                                <FontText key={i} style={styles.serviceItem}>
+                                  {item.name}
+                                </FontText>
+                              ),
+                            )}
+                            <FontText
+                              style={[
+                                styles.serviceProvider,
+                                styles.secondServiceProvider,
+                              ]}>
+                              {data.schedule.arrivalAirportName}
+                            </FontText>
+                            {data.schedule.arrivalAirportService.map(
+                              (item, i) => (
+                                <FontText key={i} style={styles.serviceItem}>
+                                  {item.name}
+                                </FontText>
+                              ),
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <FontText style={styles.serviceProvider}>
+                              {data.schedule.airlineName}
+                            </FontText>
+                            {data.schedule.airlineService.map((item, i) => (
+                              <FontText key={i} style={styles.serviceItem}>
+                                {item.name}
+                              </FontText>
+                            ))}
+                          </>
+                        )}
                       </View>
                     </View>
                     <View style={styles.detailContainer}>
-                      {/* 이벤트 설정 */}
                       <TouchableOpacity
                         style={styles.detailTouchableContainer}
-                        onPress={() => {}}>
+                        onPress={() => {
+                          navigation.navigate('Schedule', {
+                            screen: 'ScheduleDetail',
+                            params: {
+                              scheduleId: data.schedule.scheduleId,
+                            },
+                          });
+                        }}>
                         <FontText style={styles.detailText}>
                           자세히 보기
                         </FontText>
@@ -280,6 +357,14 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 25,
   },
+  // jalnalFont: {
+  //   fontFamily: 'Jalnan',
+  //   fontWeight: '700',
+  //   fontSize: 18,
+  //   lineHeight: 19,
+
+  //   color: '#0066FF',
+  // },
   logoHeader: {
     marginTop: 30,
     flexDirection: 'row',
@@ -338,6 +423,40 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 19,
     lineHeight: 28,
+  },
+  selectServiceContainer: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  selectServiceButton: {
+    flex: 0.48,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 5,
+
+    backgroundColor: '#FFFFFF',
+    shadowOffset: {width: 0, height: 2},
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+  },
+  selectServiceButtonText: {
+    fontWeight: '500',
+    fontSize: 15,
+    lineHeight: 23,
+    color: '#7C7C7C',
+  },
+  selectServiceButtonActive: {
+    backgroundColor: '#0066FF',
+  },
+  selectServiceButtonActiveText: {
+    fontWeight: '700',
+    fontSize: 15,
+    lineHeight: 23,
+    color: '#FFFFFF',
   },
   serviceTitle: {
     flexDirection: 'row',
@@ -455,6 +574,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 23,
     color: '#0066FF',
+  },
+  secondServiceProvider: {
+    marginTop: 20,
   },
   serviceItem: {
     marginTop: 8,
