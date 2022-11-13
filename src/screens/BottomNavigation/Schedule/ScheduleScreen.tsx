@@ -73,6 +73,7 @@ type QueryType = {
 
 //TODO: 무한 스크롤 구현 필요
 //TODO: 필터링 기능 추가(최신순, 오래된 순, 탑승시간순)
+// TODO: 삭제기능
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
@@ -159,15 +160,22 @@ export function ScheduleScreen() {
           ) : (
             <>
               {data?.result.schedules.map(schedule => (
-                <Card
+                <TouchableOpacity
                   key={schedule.scheduleId}
-                  airlineName={schedule.airlineName}
-                  arrivalAirportName={schedule.arrivalAirportName}
-                  departureAirportName={schedule.departureAirportName}
-                  leftDay={schedule.leftDay}
-                  scheduleName={schedule.scheduleName}
-                  startAt={schedule.startAt}
-                />
+                  onPress={() => {
+                    navigation.navigate('ScheduleDetail', {
+                      scheduleId: schedule.scheduleId,
+                    });
+                  }}>
+                  <Card
+                    airlineName={schedule.airlineName}
+                    arrivalAirportName={schedule.arrivalAirportName}
+                    departureAirportName={schedule.departureAirportName}
+                    leftDay={schedule.leftDay}
+                    scheduleName={schedule.scheduleName}
+                    startAt={schedule.startAt}
+                  />
+                </TouchableOpacity>
               ))}
               <TouchableOpacity
                 style={styles.addSchedule}
@@ -240,15 +248,22 @@ export function ScheduleScreen() {
               </TouchableOpacity>
             </View>
             {data?.result.schedules.map(schedule => (
-              <Card
+              <TouchableOpacity
                 key={schedule.scheduleId}
-                airlineName={schedule.airlineName}
-                arrivalAirportName={schedule.arrivalAirportName}
-                departureAirportName={schedule.departureAirportName}
-                scheduleName={schedule.scheduleName}
-                startAt={schedule.startAt}
-                isPast={true}
-              />
+                onPress={() => {
+                  navigation.navigate('Detail', {
+                    scheduleId: schedule.scheduleId,
+                  });
+                }}>
+                <Card
+                  airlineName={schedule.airlineName}
+                  arrivalAirportName={schedule.arrivalAirportName}
+                  departureAirportName={schedule.departureAirportName}
+                  scheduleName={schedule.scheduleName}
+                  startAt={schedule.startAt}
+                  isPast={true}
+                />
+              </TouchableOpacity>
             ))}
           </>
         )}

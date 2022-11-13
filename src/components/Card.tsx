@@ -13,6 +13,7 @@ type CardProps = {
   isPast?: boolean;
 };
 
+// TODO: 카드 컴포넌트 분리 필요!
 // TODO: 카드 컴포넌트 눌렀을 때, 일정 상세 페이지로 이동!
 export function Card({
   airlineName,

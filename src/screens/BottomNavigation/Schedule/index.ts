@@ -7,3 +7,4 @@ export * from './ScheduleAirService';
 export * from './ScheduleTime';
 export * from './ScheduleConvenience';
 export * from './ScheduleComplete';
+export * from './ScheduleDetail';

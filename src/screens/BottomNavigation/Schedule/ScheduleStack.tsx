@@ -11,11 +11,12 @@ import {
   ScheduleTime,
   ScheduleConvenience,
   ScheduleComplete,
+  ScheduleDetail,
 } from '@/screens';
 import type {MainTabNavigationProp} from '@/screens';
 
 export type ScheduleStackParamList = {
-  Home: undefined;
+  ScheduleScreen: undefined;
   Title: undefined;
   Date: undefined;
   AirService: undefined;
@@ -23,6 +24,9 @@ export type ScheduleStackParamList = {
   ChooseAirline: undefined;
   Convenience: undefined;
   Complete: undefined;
+  ScheduleDetail: {
+    scheduleId: number;
+  };
 };
 
 export type ScheduleNavigationProp = CompositeNavigationProp<
@@ -35,11 +39,11 @@ const Stack = createNativeStackNavigator<ScheduleStackParamList>();
 export function ScheduleStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="ScheduleScreen"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Home" component={ScheduleScreen} />
+      <Stack.Screen name="ScheduleScreen" component={ScheduleScreen} />
       <Stack.Screen name="Title" component={ScheduleTitle} />
       <Stack.Screen name="Date" component={ScheduleDate} />
       <Stack.Screen name="AirService" component={ScheduleAirService} />
@@ -47,6 +51,7 @@ export function ScheduleStack() {
       <Stack.Screen name="Time" component={ScheduleTime} />
       <Stack.Screen name="Convenience" component={ScheduleConvenience} />
       <Stack.Screen name="Complete" component={ScheduleComplete} />
+      <Stack.Screen name="ScheduleDetail" component={ScheduleDetail} />
     </Stack.Navigator>
   );
 }
