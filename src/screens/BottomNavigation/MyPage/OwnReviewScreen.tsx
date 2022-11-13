@@ -20,6 +20,7 @@ import {
   ownReviewList,
 } from '@/utils/fetchMypage';
 import IconOct from 'react-native-vector-icons/Octicons';
+import IconAnt from 'react-native-vector-icons/AntDesign';
 interface OwnReview {
   id: number;
   uid: string;
@@ -147,7 +148,7 @@ export function OwnReviewScreen() {
 
                   <FontText style={styleReview.name}>{item.name}</FontText>
                   <View style={styleReview.starAvgContainer}>
-                    <Icon
+                    <IconAnt
                       name="star"
                       size={15}
                       color="#0066FF"

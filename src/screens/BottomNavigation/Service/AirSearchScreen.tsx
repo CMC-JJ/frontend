@@ -37,7 +37,6 @@ export function AirSearchScreen() {
       <View style={styles.back}>
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
-      {/* <FormHeader text={'공항, 항공사를 검색해주세요'} /> */}
       <FontText
         style={[
           styles.header,

@@ -69,36 +69,45 @@ export function ServiceCard({
     <View style={styles.container}>
       {/* 타이틀 */}
       <View style={titleStyles.title}>
-        {data?.image && (
-          <View style={titleStyles.circle}>
-            <Image
-              source={{
-                uri: data?.image,
-              }}
-              style={styles.image}
-            />
-          </View>
-        )}
-        <FontText style={titleStyles.name}>
-          {type === 'airport' ? data?.airportName : data?.airlineName}
-        </FontText>
-        <Icon name="star" size={13} color="#0066FF" style={titleStyles.star} />
-        <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL(`tel:${data?.customerServiceNumber}`);
-          }}
-          style={titleStyles.phone}>
-          <IconFt name="phone" size={20} color="#0066FF" />
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', alignItems: 'center', zIndex: 5}}>
+          {data?.image && (
+            <View style={titleStyles.circle}>
+              <Image
+                source={{
+                  uri: data?.image,
+                }}
+                style={styles.image}
+              />
+            </View>
+          )}
+          <FontText style={titleStyles.name}>
+            {type === 'airport' ? data?.airportName : data?.airlineName}
+          </FontText>
+          <Icon
+            name="star"
+            size={13}
+            color="#0066FF"
+            style={titleStyles.star}
+          />
+          <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
+        </View>
+        <View style={{flexDirection: 'row', zIndex: 10, alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`tel:${data?.customerServiceNumber}`);
+            }}
+            style={titleStyles.phone}>
+            <IconFt name="phone" size={20} color="#0066FF" />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL(`${data?.website}`);
-          }}
-          style={titleStyles.link}>
-          <IconFt name="external-link" size={22} color="#0066FF" />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`${data?.website}`);
+            }}
+            style={titleStyles.link}>
+            <IconFt name="external-link" size={22} color="#0066FF" />
+          </TouchableOpacity>
+        </View>
       </View>
       {/* 전화번호 */}
       <View
@@ -148,7 +157,11 @@ const availableAt = StyleSheet.create({
   time: {fontSize: 14, fontWeight: '500', color: '#7C7C7C'},
 });
 const titleStyles = StyleSheet.create({
-  title: {flexDirection: 'row', alignItems: 'center'},
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   name: {fontWeight: '700', fontSize: 20},
   circle: {
     width: 33,
@@ -177,11 +190,11 @@ const titleStyles = StyleSheet.create({
     marginLeft: 4,
   },
   phone: {
-    position: 'absolute',
-    right: 50,
     transform: [{rotate: '15deg'}],
   },
-  link: {position: 'absolute', right: 0},
+  link: {
+    marginLeft: 10,
+  },
   phNumContainer: {
     width: 100,
     height: 26,
