@@ -47,7 +47,7 @@ export default function ReviewCard({
   );
   const onReport = () => {
     data &&
-      navigation.navigate('R', {
+      navigation.navigate('Report', {
         id:
           currentTab === 'airport'
             ? data?.airportReviewId

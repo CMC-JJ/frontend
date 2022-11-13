@@ -9,8 +9,17 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {MainTabNavigationProp, RootStackParamList} from '@/screens';
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {
+  MainTabNavigationProp,
+  RootStackParamList,
+  ServiceNavgationProp,
+} from '@/screens';
 import {ArrowBack, SignButton} from '@/components';
 import {FontText} from '@/components/FontText';
 import {
@@ -19,6 +28,7 @@ import {
   reviewReportList,
 } from '@/utils/fetchService';
 import {ThinBar} from '@/components/BarSeparator';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
 
 function RadioButton({
   menu,
@@ -33,6 +43,8 @@ function RadioButton({
   setText: React.Dispatch<React.SetStateAction<string>>;
   text: string;
 }) {
+  const navigation = useNavigation<ServiceNavgationProp>();
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <>
       {reportList &&

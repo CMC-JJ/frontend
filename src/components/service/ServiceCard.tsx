@@ -121,13 +121,15 @@ export function ServiceCard({
         </FontText>
       </View>
 
-      <View>
-        <FontText style={styles.linkEx}>제주공항</FontText>
-        {/* 서비스 리스트 */}
-        {serviceList}
-        <View style={availableAt.container}>
-          <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
-          <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+      {/* 서비스 리스트 */}
+      {serviceList}
+      <View style={availableAt.container}>
+        <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
+        <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+        <View style={styles.noticeContainer}>
+          <FontText style={styles.notice}>
+            서비스 클릭시 안내페이지로 이동
+          </FontText>
         </View>
       </View>
     </View>
@@ -136,6 +138,7 @@ export function ServiceCard({
 const infoStyles = StyleSheet.create({
   info: {
     marginBottom: 32,
+    marginTop: 30,
   },
   text: {fontWeight: '500', fontSize: 14},
 
@@ -154,7 +157,7 @@ const availableAt = StyleSheet.create({
     marginLeft: 51,
   },
   title: {fontSize: 15, fontWeight: '600', marginBottom: 11},
-  time: {fontSize: 14, fontWeight: '500', color: '#7C7C7C'},
+  time: {fontSize: 14, fontWeight: '500', color: '#7C7C7C', marginBottom: 25},
 });
 const titleStyles = StyleSheet.create({
   title: {
@@ -222,4 +225,17 @@ const styles = StyleSheet.create({
     height: 30,
   },
   linkEx: {},
+  notice: {
+    color: '#0066FF',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  noticeContainer: {
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#0066FF',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    width: 190,
+  },
 });

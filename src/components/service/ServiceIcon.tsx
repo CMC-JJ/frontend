@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 25,
+    paddingBottom: 10,
   },
 
   name: {marginTop: 13, fontWeight: '500', fontSize: 15, color: '#979797'},
