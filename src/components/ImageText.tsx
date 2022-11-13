@@ -1,13 +1,24 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
-export default function ImageText({text}: {text: string}) {
+export default function ImageText({
+  text,
+  image,
+}: {
+  text: string;
+  image?: string;
+}) {
   return (
     <View style={styles.form}>
       <View>
         <Text style={styles.title}>{text}</Text>
       </View>
-      <View style={styles.image} />
+      {/* <Image
+          style={styles.logo}
+          resizeMode={'cover'}
+          source={require('@/assets/images/permissionLogo.png')}
+        /> */}
+      {image && <Image source={image} />}
     </View>
   );
 }
