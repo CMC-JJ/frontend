@@ -68,6 +68,7 @@ export function HomeScreen() {
       'GET',
       auth.jwtToken,
     );
+
     setData(result.result);
   }, [auth.jwtToken]);
 
@@ -90,7 +91,9 @@ export function HomeScreen() {
             style={styles.logoText}
           />
         </View>
-        <ScrollView>
+      </View>
+      <ScrollView>
+        <View style={styles.wrapper}>
           <View style={styles.guideContainer}>
             <View style={styles.guideMessage}>
               {data?.schedule ? (
@@ -230,7 +233,7 @@ export function HomeScreen() {
               </View>
             )}
           </View>
-          <View style={[styles.serviceHeader, styles.serviceLocation]}>
+          {/* <View style={[styles.serviceHeader, styles.serviceLocation]}>
             <View style={styles.serviceTitle}>
               <Image
                 source={require('@/assets/images/location.png')}
@@ -258,9 +261,9 @@ export function HomeScreen() {
                 style={styles.currentLocationIcon}
               />
             </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
+          </View> */}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
