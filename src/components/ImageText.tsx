@@ -18,7 +18,7 @@ export default function ImageText({
           resizeMode={'cover'}
           source={require('@/assets/images/permissionLogo.png')}
         /> */}
-      {image && <Image source={image} />}
+      {image && <Image style={styles.image} source={image} />}
     </View>
   );
 }
@@ -30,14 +30,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     marginBottom: 40,
+    top: 20,
   },
   image: {
-    borderStyle: 'solid',
-    borderColor: 'white',
-    borderWidth: 2,
-    padding: '20%',
-    width: 200,
-    height: 250,
+    top: 30,
   },
   form: {
     justifyContent: 'center',
