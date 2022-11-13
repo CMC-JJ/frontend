@@ -34,6 +34,7 @@ interface OwnReview {
   type: string;
 }
 
+//서비스 종류
 const UsedService = React.memo(
   ({type, reviewedAirportServices, reviewedAirlineServices}: OwnReview) => {
     const elemList = useMemo(
@@ -51,6 +52,8 @@ const UsedService = React.memo(
     return <View style={styleReview.ReviewContainer}>{elemList}</View>;
   },
 );
+
+//주의사항
 const noticeArr = [
   '삭제된 후기는 복구할 수 없습니다.',
   '후기 삭제는 후기 작성이후로부터 30일 이후에 가능합니다.',
@@ -65,9 +68,31 @@ const ReviewNotice = () => (
     ))}
   </View>
 );
+
+//리뷰없을 시 작성 페이지 연결
+const NoneReview = () => (
+  <>
+    <View style={styleNoReview.nullReview}>
+      <View style={styleNoReview.container}>
+        <View style={styleNoReview.circle} />
+        <View style={styleNoReview.announcementMessage}>
+          <FontText style={styleNoReview.message}>
+            {'작성하신 리뷰가 없습니다!\n리뷰를 작성해주세요!'}
+          </FontText>
+        </View>
+      </View>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <TouchableOpacity style={styleNoReview.writeReview}>
+          <FontText style={styleNoReview.addText}>리뷰 작성하기</FontText>
+          <Icon name="chevron-right" color="#0066FF" size={20} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  </>
+);
 export function OwnReviewScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
-  const [reviewList, setReviewList] = useState<OwnReview[]>();
+  const [reviewList, setReviewList] = useState<OwnReview[]>([]);
   useEffect(() => {
     ownReviewList(params.auth.userId).then(result => setReviewList(result));
   }, [params.auth.userId]);
@@ -92,88 +117,73 @@ export function OwnReviewScreen() {
         </View>
       </View>
 
-      {/* 1 */}
-      {/* <View style={styleNoReview.nullReview}>
-        <View style={styleNoReview.container}>
-          <View style={styleNoReview.circle} />
-          <View style={styleNoReview.announcementMessage}>
-            <FontText style={styleNoReview.message}>
-              {'작성하신 리뷰가 없습니다!\n리뷰를 작성해주세요!'}
-            </FontText>
-          </View>
-        </View>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <TouchableOpacity style={styleNoReview.writeReview}>
-            <FontText style={styleNoReview.addText}>리뷰 작성하기</FontText>
-            <Icon name="chevron-right" color="#0066FF" size={20} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
-      {/* 2 */}
-
-      <FlatList
-        ListHeaderComponent={
-          <View style={styles.noticeContainer}>
-            <ReviewNotice />
-          </View>
-        }
-        renderItem={({item}) => (
-          <View style={styles.cardContainer}>
-            <View style={styleReview.cardForm}>
-              <View style={styleReview.reviewTitle}>
-                <View style={styleReview.circle}>
-                  {item?.logoImageUrl ? (
-                    <Image
-                      source={{
-                        uri: item?.logoImageUrl,
-                      }}
-                      style={styleReview.image}
-                    />
-                  ) : (
-                    <FontText style={styleReview.regionText}>
-                      {item?.region}
-                    </FontText>
-                  )}
-                </View>
-
-                <FontText style={styleReview.name}>{item.name}</FontText>
-                <View style={styleReview.starAvgContainer}>
-                  <Icon
-                    name="star"
-                    size={15}
-                    color="#0066FF"
-                    style={styleReview.star}
-                  />
-                  <FontText style={styleReview.avgReview}>
-                    {item?.score}
-                  </FontText>
-                </View>
-              </View>
-              <FontText style={styleReview.date}>
-                작성일 : {item?.createdAt}
-              </FontText>
-              <UsedService {...item} />
-              <FontText style={styleReview.content}>{item?.content}</FontText>
-              <TouchableOpacity
-                style={styleReview.button}
-                onPress={() => {
-                  (item.type === 'AIRPORT'
-                    ? ownReviewAirportDelete(item.id)
-                    : ownReviewAirlineDelete(item.id)
-                  ).then(result =>
-                    result.isSuccess === true
-                      ? Alert.alert('리뷰가 삭제되었습니다.')
-                      : Alert.alert(`${result.message}`),
-                  );
-                }}>
-                <FontText style={styleReview.buttonText}>삭제하기</FontText>
-              </TouchableOpacity>
+      {!reviewList ? (
+        <NoneReview />
+      ) : (
+        <FlatList
+          ListHeaderComponent={
+            <View style={styles.noticeContainer}>
+              <ReviewNotice />
             </View>
-          </View>
-        )}
-        keyExtractor={item => item.uid}
-        data={reviewList}
-      />
+          }
+          renderItem={({item}) => (
+            <View style={styles.cardContainer}>
+              <View style={styleReview.cardForm}>
+                <View style={styleReview.reviewTitle}>
+                  <View style={styleReview.circle}>
+                    {item?.logoImageUrl ? (
+                      <Image
+                        source={{
+                          uri: item?.logoImageUrl,
+                        }}
+                        style={styleReview.image}
+                      />
+                    ) : (
+                      <FontText style={styleReview.regionText}>
+                        {item?.region}
+                      </FontText>
+                    )}
+                  </View>
+
+                  <FontText style={styleReview.name}>{item.name}</FontText>
+                  <View style={styleReview.starAvgContainer}>
+                    <Icon
+                      name="star"
+                      size={15}
+                      color="#0066FF"
+                      style={styleReview.star}
+                    />
+                    <FontText style={styleReview.avgReview}>
+                      {item?.score}
+                    </FontText>
+                  </View>
+                </View>
+                <FontText style={styleReview.date}>
+                  작성일 : {item?.createdAt}
+                </FontText>
+                <UsedService {...item} />
+                <FontText style={styleReview.content}>{item?.content}</FontText>
+                <TouchableOpacity
+                  style={styleReview.button}
+                  onPress={() => {
+                    (item.type === 'AIRPORT'
+                      ? ownReviewAirportDelete(item.id)
+                      : ownReviewAirlineDelete(item.id)
+                    ).then(result =>
+                      result.isSuccess === true
+                        ? Alert.alert('리뷰가 삭제되었습니다.')
+                        : Alert.alert(`${result.message}`),
+                    );
+                  }}>
+                  <FontText style={styleReview.buttonText}>삭제하기</FontText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+          keyExtractor={item => item.uid}
+          data={reviewList}
+        />
+      )}
     </SafeAreaView>
   );
 }
@@ -285,45 +295,45 @@ const styleReview = StyleSheet.create({
     color: 'white',
   },
 });
-// const styleNoReview = StyleSheet.create({
-//   nullReview: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     bottom: 10,
-//   },
-//   container: {justifyContent: 'center', alignItems: 'center'},
-//   circle: {
-//     borderRadius: 120,
-//     width: 120,
-//     height: 120,
-//     backgroundColor: '#D9D9D9',
-//   },
-//   announcementMessage: {
-//     marginTop: 33,
-//     alignItems: 'center',
-//   },
-//   message: {
-//     fontWeight: '400',
-//     fontSize: 15,
-//     lineHeight: 23,
-//     textAlign: 'center',
-//   },
-//   writeReview: {
-//     flexDirection: 'row',
-//     marginTop: 10,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   addText: {
-//     fontWeight: '700',
-//     fontSize: 18,
-//     lineHeight: 28,
-//     color: '#0066FF',
-//     marginRight: 5,
-//     paddingLeft: 5,
-//   },
-// });
+const styleNoReview = StyleSheet.create({
+  nullReview: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 10,
+  },
+  container: {justifyContent: 'center', alignItems: 'center'},
+  circle: {
+    borderRadius: 120,
+    width: 120,
+    height: 120,
+    backgroundColor: '#D9D9D9',
+  },
+  announcementMessage: {
+    marginTop: 33,
+    alignItems: 'center',
+  },
+  message: {
+    fontWeight: '400',
+    fontSize: 15,
+    lineHeight: 23,
+    textAlign: 'center',
+  },
+  writeReview: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addText: {
+    fontWeight: '700',
+    fontSize: 18,
+    lineHeight: 28,
+    color: '#0066FF',
+    marginRight: 5,
+    paddingLeft: 5,
+  },
+});
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
