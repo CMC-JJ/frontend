@@ -11,7 +11,7 @@ export type DeleteConfirmCompleteRouteProp = RouteProp<
   MypageStackParamList,
   'DeleteConfirm'
 >;
-export default function DeleteConfirmScreen() {
+export function DeleteConfirmScreen() {
   const list = [
     '회원님의 모든 정보는 삭제됩니다.',
     '서비스 이용 후기 등 일부 정보는 계속 남아있을 수 있습니다.',
@@ -133,8 +133,9 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 120,
+    bottom: 34,
     flexDirection: 'row',
     paddingHorizontal: 25,
+    flex: 1,
   },
 });

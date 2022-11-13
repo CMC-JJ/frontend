@@ -7,18 +7,17 @@ import OctIcon from 'react-native-vector-icons/Octicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import {Platform} from 'react-native';
-import {
-  HomeScreen,
-  ServiceScreen,
-  ScheduleStack,
+import {HomeScreen, ScheduleStack, MyPageStack, ServiceStack} from '@/screens';
+import type {
+  RootStackNavigationProp,
+  ScheduleStackParamList,
   MypageStackParamList,
-  MyPageStack,
+  ServiceStackParamList,
 } from '@/screens';
-import type {RootStackNavigationProp, ScheduleStackParamList} from '@/screens';
 
 type MainTabParamList = {
   Home: undefined;
-  Service: undefined;
+  Service: ServiceStackParamList;
   Schedule: ScheduleStackParamList;
   MyPage: MypageStackParamList;
 };
@@ -70,7 +69,7 @@ export function MainTab() {
       />
       <Tab.Screen
         name="Service"
-        component={ServiceScreen}
+        component={ServiceStack}
         options={{
           title: '항공서비스',
           tabBarIcon: ({color, size}) => (

@@ -2,9 +2,14 @@ import {TabHeader} from '@/components';
 import {ThickBar} from '@/components/BarSeparator';
 import {FontText} from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
+import {useShowTabBar} from '@/hooks/useVisibleTabBar';
 import {MypageNavigationProp, MypageStackParamList} from '@/screens';
 import {useAuthStore} from '@/store';
-import {RouteProp, useNavigation} from '@react-navigation/native';
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -24,6 +29,7 @@ export function MyPageScreen() {
   const {auth} = useAuthStore();
   // userName
   const navigation = useNavigation<MypageNavigationProp>();
+  useFocusEffect(useShowTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <TabHeader text={'마이페이지'} />

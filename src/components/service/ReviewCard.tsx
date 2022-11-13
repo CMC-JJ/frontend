@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
-import {RootStackNavigationProp} from '@/screens';
+import {ServiceNavgationProp} from '@/screens';
 
 export interface ReviewProps extends ReviewSame {
   airlineReviewId?: number;
@@ -28,7 +28,7 @@ export default function ReviewCard({
   data: ReviewProps | undefined;
   currentTab: 'airport' | 'airline';
 }) {
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<ServiceNavgationProp>();
   const usedService = useMemo(
     () => (
       <View style={styles.ReviewContainer}>
@@ -47,7 +47,7 @@ export default function ReviewCard({
   );
   const onReport = () => {
     data &&
-      navigation.navigate('Report', {
+      navigation.navigate('R', {
         id:
           currentTab === 'airport'
             ? data?.airportReviewId

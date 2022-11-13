@@ -163,8 +163,9 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 120,
+    bottom: 34,
     flexDirection: 'row',
     paddingHorizontal: 25,
+    flex: 1,
   },
 });

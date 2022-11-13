@@ -9,14 +9,19 @@ import {
 import React, {useEffect, useMemo, useState} from 'react';
 import {ArrowBack, BottomBorderedInput} from '@/components';
 import {FontText} from '@/components/FontText';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {changeNickName} from '@/utils/fetchMypage';
 import {MypageNavigationProp} from './MyPageStack';
 import {useAuthStore} from '@/store';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
 // import {useAuthStore} from '@/store';
 
-export default function InfoModifyScreen() {
+export function InfoModifyScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const [nickName, setNickName] = useState<string>(params.auth.nickName);
   const [isNickNameValid, setIsNickNameValid] = useState<boolean>(false);
@@ -32,6 +37,7 @@ export default function InfoModifyScreen() {
     }
   }, [nickName, regex]);
 
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.header}>

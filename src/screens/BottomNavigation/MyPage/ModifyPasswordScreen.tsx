@@ -9,15 +9,21 @@ import {
 } from '@/components';
 import {FontText} from '@/components/FontText';
 import {validationPassword} from '@/utils/fetchMypage';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {MypageNavigationProp} from './MyPageStack';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
 
-export function ModifyPassword() {
+export function ModifyPasswordScreen() {
   const [password, setPassword] = useState('');
   const navigation = useNavigation<MypageNavigationProp>();
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const passwordRef = useRef<TextInput>(null);
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.back}>
@@ -85,8 +91,9 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 120,
+    bottom: 34,
     flexDirection: 'row',
     paddingHorizontal: 25,
+    flex: 1,
   },
 });

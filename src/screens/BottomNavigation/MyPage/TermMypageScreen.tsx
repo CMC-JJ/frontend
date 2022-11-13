@@ -3,12 +3,14 @@ import React from 'react';
 import {ArrowBack} from '@/components';
 import {FontText} from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackNavigationProp} from '@/screens';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {MypageNavigationProp} from '@/screens';
 import {data} from '@/assets/texts/TermsText';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
 
 export function TermMypageScreen() {
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<MypageNavigationProp>();
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.header}>

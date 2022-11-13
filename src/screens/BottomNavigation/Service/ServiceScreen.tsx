@@ -19,9 +19,10 @@ import {
   fetchAirportReview,
   fetchAirportsDetail,
 } from '@/utils/fetchService';
-import {RootStackNavigationProp} from '@/screens';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import ReviewCard, {ReviewProps} from '@/components/service/ReviewCard';
+import {useShowTabBar} from '@/hooks/useVisibleTabBar';
+import {ServiceNavgationProp} from '@/screens';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -32,7 +33,6 @@ export interface AirServiceProps
   onClick: boolean;
 }
 export function ServiceScreen() {
-  // const {auth} = useAuthStore();
   const [airlineLists, setAirlineLists] = useState<AirServiceProps[]>([]);
   const [airportLists, setAirportLists] = useState<AirServiceProps[]>([]);
   const [airlineReview, setAirlineReview] = useState<ReviewProps[]>([]);
@@ -42,8 +42,9 @@ export function ServiceScreen() {
   );
   const [menu, setMenu] = useState<AirServiceProps | null>(null);
   const [detail, setDetail] = useState<AirDetailProps | null>(null);
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<ServiceNavgationProp>();
   const page = useRef(1);
+  useFocusEffect(useShowTabBar(navigation));
   useEffect(() => {
     if (menu) {
       switch (currentTab) {
@@ -127,8 +128,7 @@ export function ServiceScreen() {
                 ]}>
                 항공서비스
               </FontText>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('AirSearch')}>
+              <TouchableOpacity onPress={() => navigation.navigate('')}>
                 <Icon
                   style={styles.icon}
                   name="search1"

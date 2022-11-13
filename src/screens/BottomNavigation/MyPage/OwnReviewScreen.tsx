@@ -13,7 +13,11 @@ import {FontText} from '@/components/FontText';
 import {ArrowBack} from '@/components';
 import Icon from 'react-native-vector-icons/Entypo';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
-import {useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {
   ownReviewAirlineDelete,
   ownReviewAirportDelete,
@@ -21,6 +25,8 @@ import {
 } from '@/utils/fetchMypage';
 import IconOct from 'react-native-vector-icons/Octicons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {MypageNavigationProp} from './MyPageStack';
 interface OwnReview {
   id: number;
   uid: string;
@@ -94,13 +100,11 @@ const NoneReview = () => (
 export function OwnReviewScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const [reviewList, setReviewList] = useState<OwnReview[]>([]);
+  const navigation = useNavigation<MypageNavigationProp>();
   useEffect(() => {
     ownReviewList(params.auth.userId).then(result => setReviewList(result));
   }, [params.auth.userId]);
-  useEffect(() => {
-    console.log(reviewList);
-  }, [reviewList]);
-
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.header}>
@@ -118,7 +122,7 @@ export function OwnReviewScreen() {
         </View>
       </View>
 
-      {!reviewList ? (
+      {reviewList.length === 0 ? (
         <NoneReview />
       ) : (
         <FlatList

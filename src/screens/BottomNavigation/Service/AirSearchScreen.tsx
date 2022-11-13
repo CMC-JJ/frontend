@@ -12,6 +12,9 @@ import {FontText} from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {request} from '@/utils';
 import AirCard from '@/components/service/AirCard';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {ServiceNavgationProp} from './ServiceStack';
 export interface AirCardProps {
   id: number;
   name: string;
@@ -23,6 +26,7 @@ export interface AirCardProps {
 export function AirSearchScreen() {
   const [value, onChangeText] = useState<String>();
   const [data, setData] = useState();
+  const navigation = useNavigation<ServiceNavgationProp>();
   const fetchSearch = async () => {
     try {
       const res = await request('web/search', {searchQuery: value}, 'GET');
@@ -32,6 +36,7 @@ export function AirSearchScreen() {
       console.log(e);
     }
   };
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.back}>

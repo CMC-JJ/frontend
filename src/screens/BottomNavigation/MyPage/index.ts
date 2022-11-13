@@ -4,3 +4,8 @@ export * from './QuestionScreen';
 export * from './TermMypageScreen';
 export * from './MyPageStack';
 export * from './OwnReviewScreen';
+export * from './DeleteScreen';
+export * from './InfoModifyScreen';
+export * from './DeleteConfirmScreen';
+export * from './ModifyPasswordScreen';
+export * from './ModifyConfirmPassword';
