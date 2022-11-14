@@ -22,12 +22,12 @@ import {
 } from 'react-native';
 import type {ScheduleNavigationProp, ScheduleStackParamList} from '@/screens';
 
-type AirportServices = {
+export type AirportServices = {
   airportServiceId: number;
   name: string;
 };
 
-type AirlineService = {
+export type AirlineService = {
   airlineServiceId: number;
   name: string;
 };
@@ -95,8 +95,6 @@ export function ScheduleReview() {
     }, [navigation]),
   );
 
-  console.log(data);
-
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -115,10 +113,17 @@ export function ScheduleReview() {
         </View>
         {data && (
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('Write', {
+                name: data.departureAirport.airportName,
+                scheduleId: scheduleId.scheduleId,
+                airId: data.departureAirport.airportId,
+                services: data.departureAirport.airportServices,
+                region: data.departureAirport.region,
+              });
+            }}
             disabled={data.departureAirport.reviewStatus === '작성완료'}>
             <ScheduleReviewCard
-              id={data.departureAirport.airportId}
               name={data.departureAirport.airportName}
               service={data.departureAirport.airportServices}
               reviewStatus={data.departureAirport.reviewStatus}
@@ -128,10 +133,17 @@ export function ScheduleReview() {
         )}
         {data && (
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('Write', {
+                name: data.arrivalAirport.airportName,
+                scheduleId: scheduleId.scheduleId,
+                airId: data.arrivalAirport.airportId,
+                services: data.arrivalAirport.airportServices,
+                region: data.arrivalAirport.region,
+              });
+            }}
             disabled={data.departureAirport.reviewStatus === '작성완료'}>
             <ScheduleReviewCard
-              id={data.arrivalAirport.airportId}
               name={data.arrivalAirport.airportName}
               service={data.arrivalAirport.airportServices}
               reviewStatus={data.arrivalAirport.reviewStatus}
@@ -141,10 +153,17 @@ export function ScheduleReview() {
         )}
         {data && (
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('Write', {
+                name: data.airline.airlineName,
+                scheduleId: scheduleId.scheduleId,
+                airId: data.airline.airlineId,
+                services: data.airline.airlineServices,
+                logoImageUrl: data.airline.logoImageUrl,
+              });
+            }}
             disabled={data.departureAirport.reviewStatus === '작성완료'}>
             <ScheduleReviewCard
-              id={data.airline.airlineId}
               name={data.airline.airlineName}
               service={data.airline.airlineServices}
               reviewStatus={data.airline.reviewStatus}
@@ -153,7 +172,6 @@ export function ScheduleReview() {
           </TouchableOpacity>
         )}
       </View>
-      {/* 작성완료가 하나라도 있어야 isValid 되어야함 */}
       <View style={styles.footer}>
         <SignButton isValid={isValid} buttonText="확인" onPress={() => {}} />
       </View>

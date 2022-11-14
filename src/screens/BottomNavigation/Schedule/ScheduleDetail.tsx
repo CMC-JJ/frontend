@@ -64,6 +64,8 @@ export function ScheduleDetail() {
     })();
   }, [scheduleId]);
 
+  console.log(data?.schedule.leftDay);
+
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -92,11 +94,13 @@ export function ScheduleDetail() {
                 <FontText style={styles.cardHeader}>
                   {data.schedule.scheduleName}
                 </FontText>
-                <View style={styles.dayleft}>
-                  <FontText style={styles.day}>
-                    {data.schedule.leftDay}
-                  </FontText>
-                </View>
+                {data?.schedule.leftDay && (
+                  <View style={styles.dayleft}>
+                    <FontText style={styles.day}>
+                      {data.schedule.leftDay}
+                    </FontText>
+                  </View>
+                )}
               </View>
               <View style={styles.startAt}>
                 <FontText style={styles.startAtText}>

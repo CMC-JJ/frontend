@@ -14,7 +14,6 @@ type AirlineService = {
 };
 
 type ScheduleReviewCardProps = {
-  id: number;
   name: string;
   service: AirportServices[] | AirlineService[];
   logoImageUrl?: string;
@@ -23,7 +22,6 @@ type ScheduleReviewCardProps = {
 };
 
 export function ScheduleReviewCard({
-  // id,
   name,
   service,
   logoImageUrl,
@@ -33,56 +31,34 @@ export function ScheduleReviewCard({
   const isAirport = region !== undefined;
   const isComplete = reviewStatus === '작성완료';
 
-  console.log(logoImageUrl);
-
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardHeaderContainer}>
-        {isAirport ? (
-          <>
-            <View style={styles.cardLogoContainer}>
-              <View style={styles.logoWrapper}>
+        <>
+          <View style={styles.cardLogoContainer}>
+            <View style={styles.logoWrapper}>
+              {isAirport ? (
                 <FontText style={styles.logoText}>{region}</FontText>
-              </View>
-              <FontText style={styles.cardHeader}>{name}</FontText>
-            </View>
-            <View
-              style={[
-                styles.reviewStatus,
-                isComplete && styles.reviewStatusComplete,
-              ]}>
-              <FontText
-                style={[
-                  styles.reviewStatusText,
-                  isComplete && styles.reviewStatusTextComplete,
-                ]}>
-                {reviewStatus}
-              </FontText>
-            </View>
-          </>
-        ) : (
-          <>
-            <View style={styles.cardLogoContainer}>
-              <View style={styles.logoWrapper}>
+              ) : (
                 <Image style={styles.logo} source={{uri: logoImageUrl}} />
-              </View>
-              <FontText style={styles.cardHeader}>{name}</FontText>
+              )}
             </View>
-            <View
+            <FontText style={styles.cardHeader}>{name}</FontText>
+          </View>
+          <View
+            style={[
+              styles.reviewStatus,
+              isComplete && styles.reviewStatusComplete,
+            ]}>
+            <FontText
               style={[
-                styles.reviewStatus,
-                isComplete && styles.reviewStatusComplete,
+                styles.reviewStatusText,
+                isComplete && styles.reviewStatusTextComplete,
               ]}>
-              <FontText
-                style={[
-                  styles.reviewStatusText,
-                  isComplete && styles.reviewStatusTextComplete,
-                ]}>
-                {reviewStatus}
-              </FontText>
-            </View>
-          </>
-        )}
+              {reviewStatus}
+            </FontText>
+          </View>
+        </>
       </View>
       <View style={styles.serviceContainer}>
         {service.map(item => (
@@ -107,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 5,
     paddingHorizontal: 20,
-    borderRadius: 12,
+    borderRadius: 20,
 
     backgroundColor: 'white',
     shadowOffset: {width: 0, height: 2},
