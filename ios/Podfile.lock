@@ -76,12 +76,6 @@ PODS:
   - hermes-engine (0.70.5)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
-  - Permission-Contacts (3.6.1):
-    - RNPermissions
-  - Permission-LocationAlways (3.6.1):
-    - RNPermissions
-  - Permission-LocationWhenInUse (3.6.1):
-    - RNPermissions
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -388,8 +382,6 @@ PODS:
     - React-Core
   - RNCPicker (1.8.1):
     - React-Core
-  - RNPermissions (3.6.1):
-    - React-Core
   - RNScreens (3.18.0):
     - React-Core
     - React-RCTImage
@@ -430,9 +422,6 @@ DEPENDENCIES:
   - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
-  - Permission-Contacts (from `../node_modules/react-native-permissions/ios/Contacts`)
-  - Permission-LocationAlways (from `../node_modules/react-native-permissions/ios/LocationAlways`)
-  - Permission-LocationWhenInUse (from `../node_modules/react-native-permissions/ios/LocationWhenInUse`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -467,7 +456,6 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
-  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -503,12 +491,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
-  Permission-Contacts:
-    :path: "../node_modules/react-native-permissions/ios/Contacts"
-  Permission-LocationAlways:
-    :path: "../node_modules/react-native-permissions/ios/LocationAlways"
-  Permission-LocationWhenInUse:
-    :path: "../node_modules/react-native-permissions/ios/LocationWhenInUse"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -573,8 +555,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/checkbox"
   RNCPicker:
     :path: "../node_modules/@react-native-community/picker"
-  RNPermissions:
-    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
@@ -602,9 +582,6 @@ SPEC CHECKSUMS:
   hermes-engine: 7fe5fc6ef707b7fdcb161b63898ec500e285653d
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  Permission-Contacts: 2484d274171688b1ca80978b949ac771259b51f0
-  Permission-LocationAlways: 8d99b025c9f73c696e0cdb367e42525f2e9a26f2
-  Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 21229f84411088e5d8538f21212de49e46cc83e2
   RCTTypeSafety: 62eed57a32924b09edaaf170a548d1fc96223086
@@ -637,13 +614,12 @@ SPEC CHECKSUMS:
   ReactCommon: c9246996e73bf75a2c6c3ff15f1e16707cdc2da9
   RNCCheckbox: ed1b4ca295475b41e7251ebae046360a703b6eb5
   RNCPicker: 914b557e20b3b8317b084aca9ff4b4edb95f61e4
-  RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: bca43e5ac4cc0228f6ba4935bb0abe40f55265a1
+PODFILE CHECKSUM: ef355baa09a33a3cd46d8731fe0dc58e819bdc3a
 
 COCOAPODS: 1.11.3

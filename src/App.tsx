@@ -3,14 +3,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootStack from './screens/RootStack';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import {checkMultiplePermissions} from './hooks/CheckPermission';
 import SplashScreen from 'react-native-splash-screen';
 const queryClient = new QueryClient();
 
 function App() {
-  useEffect(() => {
-    checkMultiplePermissions();
-  }, []);
+  // useEffect(() => {
+  //   checkMultiplePermissions();
+  // }, []);
 
   useEffect(() => {
     try {
@@ -33,4 +32,3 @@ function App() {
   );
 }
 export default App;
-// const styles = StyleSheet.create({});

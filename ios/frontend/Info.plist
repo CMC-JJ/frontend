@@ -24,14 +24,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSContactsUsageDescription</key>
+	<!-- <key>NSContactsUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs Location access for providing useful feature</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs Location access for providing useful feature</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs Location access for providing useful feature</string>
+	<string>$(PRODUCT_NAME) needs Location access for providing useful feature</string> -->
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.otf</string>
