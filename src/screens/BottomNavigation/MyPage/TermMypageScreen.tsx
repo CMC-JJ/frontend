@@ -18,13 +18,7 @@ export function TermMypageScreen() {
           {Platform.OS === 'ios' && <ArrowBack size={28} />}
         </View>
         <View>
-          <FontText
-            style={[
-              styles.headerTitle,
-              Platform.OS === 'android' && {fontWeight: '700'},
-            ]}>
-            약관 및 동의관리
-          </FontText>
+          <FontText style={styles.headerTitle}>약관 및 동의관리</FontText>
         </View>
       </View>
       <View style={styles.listContainer}>

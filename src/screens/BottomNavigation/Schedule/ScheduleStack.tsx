@@ -11,9 +11,14 @@ import {
   ScheduleTime,
   ScheduleConvenience,
   ScheduleComplete,
-  ScheduleDetail,
+  ScheduleReview,
+  ScheduleReviewWrite,
 } from '@/screens';
-import type {MainTabNavigationProp} from '@/screens';
+import type {
+  MainTabNavigationProp,
+  AirportServices,
+  AirlineService,
+} from '@/screens';
 
 export type ScheduleStackParamList = {
   ScheduleScreen: undefined;
@@ -24,8 +29,16 @@ export type ScheduleStackParamList = {
   ChooseAirline: undefined;
   Convenience: undefined;
   Complete: undefined;
-  ScheduleDetail: {
+  Review: {
     scheduleId: number;
+  };
+  Write: {
+    name: string;
+    airId: number;
+    scheduleId: number;
+    services: AirportServices[] | AirlineService[];
+    logoImageUrl?: string;
+    region?: string;
   };
 };
 
@@ -51,7 +64,8 @@ export function ScheduleStack() {
       <Stack.Screen name="Time" component={ScheduleTime} />
       <Stack.Screen name="Convenience" component={ScheduleConvenience} />
       <Stack.Screen name="Complete" component={ScheduleComplete} />
-      <Stack.Screen name="ScheduleDetail" component={ScheduleDetail} />
+      <Stack.Screen name="Review" component={ScheduleReview} />
+      <Stack.Screen name="Write" component={ScheduleReviewWrite} />
     </Stack.Navigator>
   );
 }

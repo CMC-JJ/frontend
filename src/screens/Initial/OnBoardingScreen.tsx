@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform, StatusBar} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import SkipButton from '@/components/SkiptButton';
 import {
@@ -30,6 +30,7 @@ export function OnboardingScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <>
+      <StatusBar barStyle="dark-content" backgroundColor="#0066FF" />
       <Onboarding
         transitionAnimationDuration={1000}
         showDone={true}

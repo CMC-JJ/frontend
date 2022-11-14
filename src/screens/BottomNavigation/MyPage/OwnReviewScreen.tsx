@@ -112,13 +112,7 @@ export function OwnReviewScreen() {
           {Platform.OS === 'ios' && <ArrowBack size={28} />}
         </View>
         <View>
-          <FontText
-            style={[
-              styles.headerTitle,
-              Platform.OS === 'android' && {fontWeight: '700'},
-            ]}>
-            내가 쓴 리뷰
-          </FontText>
+          <FontText style={styles.headerTitle}>내가 쓴 리뷰</FontText>
         </View>
       </View>
 

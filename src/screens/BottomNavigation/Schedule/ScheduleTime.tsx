@@ -49,11 +49,7 @@ export function ScheduleTime() {
         <View style={styles.dateDisplayContainer}>
           <DateDisplay startDate={schedule.startAt} />
         </View>
-        <FontText
-          style={[
-            styles.headerText,
-            Platform.OS === 'android' && {fontWeight: '900'},
-          ]}>
+        <FontText style={styles.headerText}>
           {'비행기 출발\n시간을 등록해주세요'}
         </FontText>
         <FontText style={styles.guideMessage}>

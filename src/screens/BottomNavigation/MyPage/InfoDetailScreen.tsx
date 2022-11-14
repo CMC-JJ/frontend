@@ -48,13 +48,7 @@ export function InfoDetailScreen() {
           {Platform.OS === 'ios' && <ArrowBack size={28} />}
         </View>
         <View>
-          <FontText
-            style={[
-              styles.headerTitle,
-              Platform.OS === 'android' && {fontWeight: '700'},
-            ]}>
-            내 정보
-          </FontText>
+          <FontText style={styles.headerTitle}>내 정보</FontText>
         </View>
       </View>
       <View style={styles.userImg}>

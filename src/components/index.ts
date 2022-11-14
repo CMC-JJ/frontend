@@ -13,3 +13,4 @@ export * from './FontText';
 export * from './ServiceItem';
 export * from './EmptySchedule';
 export * from './Card';
+export * from './ScheduleReviewCard';

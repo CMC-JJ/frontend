@@ -36,13 +36,7 @@ export function ScheduleTitle() {
       </View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <FontText
-            style={[
-              styles.header,
-              Platform.OS === 'android' && {fontWeight: '900'},
-            ]}>
-            {'가치가자와\n함께 떠나요'}
-          </FontText>
+          <FontText style={styles.header}>{'가치가자와\n함께 떠나요'}</FontText>
         </View>
         <FontText style={styles.subheader}>어떤 여행을 떠나시나요?</FontText>
         <View style={styles.inputContainer}>

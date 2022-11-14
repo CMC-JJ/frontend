@@ -68,7 +68,6 @@ export function HomeScreen() {
       'GET',
       auth.jwtToken,
     );
-
     setData(result.result);
   }, [auth.jwtToken]);
 
@@ -93,7 +92,7 @@ export function HomeScreen() {
         </View>
       </View>
       <ScrollView>
-        <View style={styles.wrapper}>
+        <View style={[styles.wrapper, styles.marginBottomForScroll]}>
           <View style={styles.guideContainer}>
             <View style={styles.guideMessage}>
               {data?.schedule ? (
@@ -272,11 +271,8 @@ export function HomeScreen() {
                       <TouchableOpacity
                         style={styles.detailTouchableContainer}
                         onPress={() => {
-                          navigation.navigate('Schedule', {
-                            screen: 'ScheduleDetail',
-                            params: {
-                              scheduleId: data.schedule.scheduleId,
-                            },
+                          navigation.navigate('ScheduleDetail', {
+                            scheduleId: data.schedule.scheduleId,
                           });
                         }}>
                         <FontText style={styles.detailText}>
@@ -294,7 +290,11 @@ export function HomeScreen() {
               </>
             ) : (
               <View style={styles.noScheduleContainer}>
-                <View style={styles.tempCircle} />
+                <Image
+                  style={styles.addScheduleLogo}
+                  resizeMode="contain"
+                  source={require('@/assets/images/addSchedule.png')}
+                />
                 <View style={styles.noTextContainer}>
                   <FontText style={styles.noText}>현재 등록된 여행이</FontText>
                   <FontText style={styles.noText}>없습니다!</FontText>
@@ -310,35 +310,6 @@ export function HomeScreen() {
               </View>
             )}
           </View>
-          {/* <View style={[styles.serviceHeader, styles.serviceLocation]}>
-            <View style={styles.serviceTitle}>
-              <Image
-                source={require('@/assets/images/location.png')}
-                style={styles.calendar}
-              />
-              <FontText style={styles.serviceHeaderText}>
-                친구 위치보기
-              </FontText>
-            </View>
-            <View style={styles.selectOption}>
-              <FontText style={styles.selectText}>선택해주세요</FontText>
-              <Icon
-                style={styles.downIcon}
-                name="chevron-thin-down"
-                color="#0066FF"
-                size={15}
-              />
-            </View>
-          </View>
-          <View style={styles.mapContainer}>
-            <FontText style={styles.mapText}>내위치</FontText>
-            <TouchableOpacity style={styles.currentLocation}>
-              <Image
-                source={require('@/assets/images/currentLocation.png')}
-                style={styles.currentLocationIcon}
-              />
-            </TouchableOpacity>
-          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -357,14 +328,13 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 25,
   },
-  // jalnalFont: {
-  //   fontFamily: 'Jalnan',
-  //   fontWeight: '700',
-  //   fontSize: 18,
-  //   lineHeight: 19,
-
-  //   color: '#0066FF',
-  // },
+  marginBottomForScroll: {
+    marginBottom: 100,
+  },
+  addScheduleLogo: {
+    width: 95,
+    height: 82,
+  },
   logoHeader: {
     marginTop: 30,
     flexDirection: 'row',
@@ -441,6 +411,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     shadowOffset: {width: 0, height: 2},
     shadowColor: '#000000',
+    elevation: 2,
     shadowOpacity: 0.25,
   },
   selectServiceButtonText: {
@@ -577,6 +548,7 @@ const styles = StyleSheet.create({
   },
   secondServiceProvider: {
     marginTop: 20,
+    fontWeight: '600',
   },
   serviceItem: {
     marginTop: 8,

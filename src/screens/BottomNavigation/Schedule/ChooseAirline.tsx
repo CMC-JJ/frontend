@@ -43,13 +43,7 @@ export function ChooseAirline() {
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <View style={styles.headerContainer}>
-        <FontText
-          style={[
-            styles.header,
-            Platform.OS === 'android' && {fontWeight: '900'},
-          ]}>
-          {'항공사를 선택해주세요'}
-        </FontText>
+        <FontText style={styles.header}>{'항공사를 선택해주세요'}</FontText>
       </View>
       <View style={styles.airlineContainer}>
         {airlineData.map((airline, i) => (

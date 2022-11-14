@@ -10,8 +10,24 @@ type CardProps = {
   leftDay?: string;
   scheduleName: string;
   startAt: string;
+  scheduleId: number;
   isPast?: boolean;
+  onPressDeleteButton: (scheduleId: number) => void;
+  onPressReviewOrEditButton: (scheduleId: number) => void;
 };
+
+// TODO: useMutation으로 관리!
+// const deleteSchedule = (scheduleId: number, jwtToken: string) => {
+//   return fetch('https://dev.jj-gotogether.shop/web/schedules/status', {
+//     method: 'PATCH',
+//     body: JSON.stringify({
+//       scheduleId,
+//     }),
+//     headers: {
+//       'x-access-token': `${jwtToken}`,
+//     },
+//   }).then(res => res.json());
+// };
 
 // TODO: 카드 컴포넌트 분리 필요!
 // TODO: 카드 컴포넌트 눌렀을 때, 일정 상세 페이지로 이동!
@@ -22,8 +38,27 @@ export function Card({
   leftDay,
   scheduleName,
   startAt,
+  scheduleId,
+  onPressDeleteButton,
+  onPressReviewOrEditButton,
   isPast = false,
 }: CardProps) {
+  // const onPressDeleteButton = async () => {
+  //   const result = await request(
+  //     'web/schedules/status',
+  //     {
+  //       scheduleId: scheduleId,
+  //     },
+  //     'PATCH',
+  //   );
+
+  //   if (result.isSuccess) {
+  //     Alert.alert('일정이 삭제되었습니다.');
+  //   } else {
+  //     Alert.alert(result.message);
+  //   }
+  // };
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardHeaderContainer}>
@@ -68,7 +103,9 @@ export function Card({
         {isPast ? (
           <TouchableOpacity
             style={[styles.editButton, styles.reviewButton]}
-            onPress={() => {}}>
+            onPress={() => {
+              onPressReviewOrEditButton(scheduleId);
+            }}>
             <FontText style={styles.reviewButtonText}>리뷰쓰기</FontText>
           </TouchableOpacity>
         ) : (
@@ -76,7 +113,11 @@ export function Card({
             <FontText style={styles.buttonText}>수정하기</FontText>
           </TouchableOpacity>
         )}
-        <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => {
+            onPressDeleteButton(scheduleId);
+          }}>
           <FontText style={styles.buttonText}>삭제</FontText>
         </TouchableOpacity>
       </View>

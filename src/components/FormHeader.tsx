@@ -1,5 +1,6 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {FontText} from './FontText';
 
 type FormHeaderProps = {
   text: string;
@@ -8,13 +9,7 @@ type FormHeaderProps = {
 export function FormHeader({text}: FormHeaderProps) {
   return (
     <View style={styles.container}>
-      <Text
-        style={[
-          styles.header,
-          Platform.OS === 'android' && {fontWeight: '900'},
-        ]}>
-        {text}
-      </Text>
+      <FontText style={styles.header}>{text}</FontText>
     </View>
   );
 }

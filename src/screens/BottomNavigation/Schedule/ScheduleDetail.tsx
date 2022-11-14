@@ -9,15 +9,12 @@ import {
   View,
 } from 'react-native';
 import {ArrowBack, FontText} from '@/components';
-import {ScheduleStackParamList} from './ScheduleStack';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {request} from '@/utils';
 import Icon from 'react-native-vector-icons/Entypo';
+import {RootStackParamList} from '@/screens';
 
-export type ScheduleDetailProp = RouteProp<
-  ScheduleStackParamList,
-  'ScheduleDetail'
->;
+type ScheduleDetailProp = RouteProp<RootStackParamList, 'ScheduleDetail'>;
 
 type Schedule = {
   scheduleId: number;
@@ -67,6 +64,8 @@ export function ScheduleDetail() {
     })();
   }, [scheduleId]);
 
+  console.log(data?.schedule.leftDay);
+
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -75,13 +74,7 @@ export function ScheduleDetail() {
       </View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <FontText
-            style={[
-              styles.header,
-              Platform.OS === 'android' && {fontWeight: '900'},
-            ]}>
-            {'여행 상세정보'}
-          </FontText>
+          <FontText style={styles.header}>{'여행 상세정보'}</FontText>
           {/* TODO: 수정하기 넣기! */}
           <TouchableOpacity style={styles.editButton} onPress={() => {}}>
             <FontText style={styles.editButtonText}>수정하기</FontText>
@@ -95,11 +88,13 @@ export function ScheduleDetail() {
                 <FontText style={styles.cardHeader}>
                   {data.schedule.scheduleName}
                 </FontText>
-                <View style={styles.dayleft}>
-                  <FontText style={styles.day}>
-                    {data.schedule.leftDay}
-                  </FontText>
-                </View>
+                {data?.schedule.leftDay && (
+                  <View style={styles.dayleft}>
+                    <FontText style={styles.day}>
+                      {data.schedule.leftDay}
+                    </FontText>
+                  </View>
+                )}
               </View>
               <View style={styles.startAt}>
                 <FontText style={styles.startAtText}>
