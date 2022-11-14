@@ -27,6 +27,8 @@ import IconOct from 'react-native-vector-icons/Octicons';
 import IconAnt from 'react-native-vector-icons/AntDesign';
 import {useHideTabBar} from '@/hooks/useVisibleTabBar';
 import {MypageNavigationProp} from './MyPageStack';
+import {ScheduleNavigationProp} from '@/screens';
+
 interface OwnReview {
   id: number;
   uid: string;
@@ -77,30 +79,35 @@ const ReviewNotice = () => (
 );
 
 //리뷰없을 시 작성 페이지 연결
-const NoneReview = () => (
-  <>
-    <View style={styleNoReview.nullReview}>
-      <View style={styleNoReview.container}>
-        <View style={styleNoReview.circle} />
-        <View style={styleNoReview.announcementMessage}>
-          <FontText style={styleNoReview.message}>
-            {'작성하신 리뷰가 없습니다!\n리뷰를 작성해주세요!'}
-          </FontText>
+const NoneReview = ({navigation}: {navigation: ScheduleNavigationProp}) => {
+  return (
+    <>
+      <View style={styleNoReview.nullReview}>
+        <View style={styleNoReview.container}>
+          <View style={styleNoReview.circle} />
+          <View style={styleNoReview.announcementMessage}>
+            <FontText style={styleNoReview.message}>
+              {'작성하신 리뷰가 없습니다!\n리뷰를 작성해주세요!'}
+            </FontText>
+          </View>
+        </View>
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity
+            style={styleNoReview.writeReview}
+            onPress={() => navigation.navigate('Schedule')}>
+            <FontText style={styleNoReview.addText}>리뷰 작성하기</FontText>
+            <Icon name="chevron-right" color="#0066FF" size={20} />
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <TouchableOpacity style={styleNoReview.writeReview}>
-          <FontText style={styleNoReview.addText}>리뷰 작성하기</FontText>
-          <Icon name="chevron-right" color="#0066FF" size={20} />
-        </TouchableOpacity>
-      </View>
-    </View>
-  </>
-);
+    </>
+  );
+};
 export function OwnReviewScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const [reviewList, setReviewList] = useState<OwnReview[]>([]);
   const navigation = useNavigation<MypageNavigationProp>();
+  const navigationSchedule = useNavigation<ScheduleNavigationProp>();
   useEffect(() => {
     ownReviewList(params.auth.userId).then(result => setReviewList(result));
   }, [params.auth.userId]);
@@ -116,8 +123,8 @@ export function OwnReviewScreen() {
         </View>
       </View>
 
-      {reviewList.length === 0 ? (
-        <NoneReview />
+      {reviewList.length !== 0 ? (
+        <NoneReview navigation={navigationSchedule} />
       ) : (
         <FlatList
           ListHeaderComponent={
