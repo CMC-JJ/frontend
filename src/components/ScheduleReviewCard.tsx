@@ -73,7 +73,10 @@ export function ScheduleReviewCard({
           </View>
         ))}
       </View>
-      <Icon name="right" style={styles.rightIcon} />
+      <Icon
+        name="right"
+        style={[styles.rightIcon, service.length === 0 && {bottom: 10}]}
+      />
     </View>
   );
 }
@@ -110,9 +113,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
     shadowColor: '#0066FF',
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+    elevation: 10,
   },
   logo: {
     width: 33,
@@ -169,7 +177,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
 
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 20,
     borderColor: '#7C7C7C',
   },
   serviceItemText: {

@@ -58,11 +58,7 @@ export function ScheduleComplete() {
         </View>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <FontText
-              style={[
-                styles.header,
-                Platform.OS === 'android' && {fontWeight: '900'},
-              ]}>
+            <FontText style={styles.header}>
               {'여행이 등록되었습니다!\n즐거운 여행 되세요 :)'}
             </FontText>
           </View>

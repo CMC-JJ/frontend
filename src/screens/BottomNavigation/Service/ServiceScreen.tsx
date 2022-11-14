@@ -1,11 +1,5 @@
 import React, {ComponentProps, useEffect, useRef, useState} from 'react';
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FontText} from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -120,13 +114,7 @@ export function ServiceScreen() {
         ListHeaderComponent={
           <View style={styles.Scrollview}>
             <View style={styles.titleContainer}>
-              <FontText
-                style={[
-                  styles.title,
-                  Platform.OS === 'android' && {fontWeight: '900'},
-                ]}>
-                항공서비스
-              </FontText>
+              <FontText style={styles.title}>항공서비스</FontText>
               <TouchableOpacity
                 onPress={() => navigation.navigate('AirSearch')}>
                 <Icon
@@ -175,13 +163,7 @@ export function ServiceScreen() {
             <View style={styleBody.lineReview} />
             {/* 리뷰 정보 */}
             <View style={styleReview.titleContainer}>
-              <FontText
-                style={[
-                  styleReview.title,
-                  Platform.OS === 'android' && {fontWeight: '900'},
-                ]}>
-                항공사 리뷰
-              </FontText>
+              <FontText style={styleReview.title}>항공사 리뷰</FontText>
             </View>
           </View>
         }

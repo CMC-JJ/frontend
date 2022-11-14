@@ -38,13 +38,7 @@ export function AirSearchScreen() {
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       {/* <FormHeader text={'공항, 항공사를 검색해주세요'} /> */}
-      <FontText
-        style={[
-          styles.header,
-          Platform.OS === 'android' && {fontWeight: '900'},
-        ]}>
-        공항, 항공사를 검색해주세요
-      </FontText>
+      <FontText style={styles.header}>공항, 항공사를 검색해주세요</FontText>
       <View style={styles.container}>
         <View style={styles.inputForm}>
           <TextInput

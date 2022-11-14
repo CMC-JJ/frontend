@@ -74,13 +74,7 @@ export function ScheduleDetail() {
       </View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <FontText
-            style={[
-              styles.header,
-              Platform.OS === 'android' && {fontWeight: '900'},
-            ]}>
-            {'여행 상세정보'}
-          </FontText>
+          <FontText style={styles.header}>{'여행 상세정보'}</FontText>
           {/* TODO: 수정하기 넣기! */}
           <TouchableOpacity style={styles.editButton} onPress={() => {}}>
             <FontText style={styles.editButtonText}>수정하기</FontText>

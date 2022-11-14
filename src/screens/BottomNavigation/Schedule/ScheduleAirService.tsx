@@ -73,11 +73,7 @@ export function ScheduleAirService() {
         <View style={styles.dateDisplayContainer}>
           <DateDisplay startDate={schedule.startAt} />
         </View>
-        <FontText
-          style={[
-            styles.headerText,
-            Platform.OS === 'android' && {fontWeight: '900'},
-          ]}>
+        <FontText style={styles.headerText}>
           {'이용하실 공항과 항공사를\n선택해주세요'}
         </FontText>
         <FontText style={styles.guideMessage}>

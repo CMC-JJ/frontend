@@ -15,6 +15,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {
   Platform,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   TouchableOpacity,
@@ -103,77 +104,83 @@ export function ScheduleReview() {
       </View>
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <FontText
-            style={[
-              styles.header,
-              Platform.OS === 'android' && {fontWeight: '900'},
-            ]}>
+          <FontText style={styles.header}>
             {'리뷰 작성을 원하는\n서비스를 선택해주세요'}
           </FontText>
         </View>
-        {data && (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Write', {
-                name: data.departureAirport.airportName,
-                scheduleId: scheduleId.scheduleId,
-                airId: data.departureAirport.airportId,
-                services: data.departureAirport.airportServices,
-                region: data.departureAirport.region,
-              });
-            }}
-            disabled={data.departureAirport.reviewStatus === '작성완료'}>
-            <ScheduleReviewCard
-              name={data.departureAirport.airportName}
-              service={data.departureAirport.airportServices}
-              reviewStatus={data.departureAirport.reviewStatus}
-              region={data.departureAirport.region}
-            />
-          </TouchableOpacity>
-        )}
-        {data && (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Write', {
-                name: data.arrivalAirport.airportName,
-                scheduleId: scheduleId.scheduleId,
-                airId: data.arrivalAirport.airportId,
-                services: data.arrivalAirport.airportServices,
-                region: data.arrivalAirport.region,
-              });
-            }}
-            disabled={data.departureAirport.reviewStatus === '작성완료'}>
-            <ScheduleReviewCard
-              name={data.arrivalAirport.airportName}
-              service={data.arrivalAirport.airportServices}
-              reviewStatus={data.arrivalAirport.reviewStatus}
-              region={data.arrivalAirport.region}
-            />
-          </TouchableOpacity>
-        )}
-        {data && (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Write', {
-                name: data.airline.airlineName,
-                scheduleId: scheduleId.scheduleId,
-                airId: data.airline.airlineId,
-                services: data.airline.airlineServices,
-                logoImageUrl: data.airline.logoImageUrl,
-              });
-            }}
-            disabled={data.departureAirport.reviewStatus === '작성완료'}>
-            <ScheduleReviewCard
-              name={data.airline.airlineName}
-              service={data.airline.airlineServices}
-              reviewStatus={data.airline.reviewStatus}
-              logoImageUrl={data.airline.logoImageUrl}
-            />
-          </TouchableOpacity>
-        )}
+        <ScrollView>
+          <View style={styles.marginBottomForScroll}>
+            {data && (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Write', {
+                    name: data.departureAirport.airportName,
+                    scheduleId: scheduleId.scheduleId,
+                    airId: data.departureAirport.airportId,
+                    services: data.departureAirport.airportServices,
+                    region: data.departureAirport.region,
+                  });
+                }}
+                disabled={data.departureAirport.reviewStatus === '작성완료'}>
+                <ScheduleReviewCard
+                  name={data.departureAirport.airportName}
+                  service={data.departureAirport.airportServices}
+                  reviewStatus={data.departureAirport.reviewStatus}
+                  region={data.departureAirport.region}
+                />
+              </TouchableOpacity>
+            )}
+            {data && (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Write', {
+                    name: data.arrivalAirport.airportName,
+                    scheduleId: scheduleId.scheduleId,
+                    airId: data.arrivalAirport.airportId,
+                    services: data.arrivalAirport.airportServices,
+                    region: data.arrivalAirport.region,
+                  });
+                }}
+                disabled={data.arrivalAirport.reviewStatus === '작성완료'}>
+                <ScheduleReviewCard
+                  name={data.arrivalAirport.airportName}
+                  service={data.arrivalAirport.airportServices}
+                  reviewStatus={data.arrivalAirport.reviewStatus}
+                  region={data.arrivalAirport.region}
+                />
+              </TouchableOpacity>
+            )}
+            {data && (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Write', {
+                    name: data.airline.airlineName,
+                    scheduleId: scheduleId.scheduleId,
+                    airId: data.airline.airlineId,
+                    services: data.airline.airlineServices,
+                    logoImageUrl: data.airline.logoImageUrl,
+                  });
+                }}
+                disabled={data.airline.reviewStatus === '작성완료'}>
+                <ScheduleReviewCard
+                  name={data.airline.airlineName}
+                  service={data.airline.airlineServices}
+                  reviewStatus={data.airline.reviewStatus}
+                  logoImageUrl={data.airline.logoImageUrl}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
       </View>
       <View style={styles.footer}>
-        <SignButton isValid={isValid} buttonText="확인" onPress={() => {}} />
+        <SignButton
+          isValid={isValid}
+          buttonText="확인"
+          onPress={() => {
+            navigation.navigate('ScheduleScreen');
+          }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -202,6 +209,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 34,
     color: 'black',
+  },
+  marginBottomForScroll: {
+    marginBottom: 100,
   },
   footer: {
     flex: 0.1,

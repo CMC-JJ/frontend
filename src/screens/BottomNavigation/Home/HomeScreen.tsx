@@ -92,7 +92,7 @@ export function HomeScreen() {
         </View>
       </View>
       <ScrollView>
-        <View style={styles.wrapper}>
+        <View style={[styles.wrapper, styles.marginBottomForScroll]}>
           <View style={styles.guideContainer}>
             <View style={styles.guideMessage}>
               {data?.schedule ? (
@@ -310,35 +310,6 @@ export function HomeScreen() {
               </View>
             )}
           </View>
-          {/* <View style={[styles.serviceHeader, styles.serviceLocation]}>
-            <View style={styles.serviceTitle}>
-              <Image
-                source={require('@/assets/images/location.png')}
-                style={styles.calendar}
-              />
-              <FontText style={styles.serviceHeaderText}>
-                친구 위치보기
-              </FontText>
-            </View>
-            <View style={styles.selectOption}>
-              <FontText style={styles.selectText}>선택해주세요</FontText>
-              <Icon
-                style={styles.downIcon}
-                name="chevron-thin-down"
-                color="#0066FF"
-                size={15}
-              />
-            </View>
-          </View>
-          <View style={styles.mapContainer}>
-            <FontText style={styles.mapText}>내위치</FontText>
-            <TouchableOpacity style={styles.currentLocation}>
-              <Image
-                source={require('@/assets/images/currentLocation.png')}
-                style={styles.currentLocationIcon}
-              />
-            </TouchableOpacity>
-          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -356,6 +327,9 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     paddingHorizontal: 25,
+  },
+  marginBottomForScroll: {
+    marginBottom: 100,
   },
   addScheduleLogo: {
     width: 95,
@@ -437,6 +411,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     shadowOffset: {width: 0, height: 2},
     shadowColor: '#000000',
+    elevation: 2,
     shadowOpacity: 0.25,
   },
   selectServiceButtonText: {
@@ -573,6 +548,7 @@ const styles = StyleSheet.create({
   },
   secondServiceProvider: {
     marginTop: 20,
+    fontWeight: '600',
   },
   serviceItem: {
     marginTop: 8,

@@ -120,11 +120,7 @@ export function ReportScreen() {
           {Platform.OS === 'ios' && <ArrowBack size={28} />}
         </View>
         <View>
-          <FontText
-            style={[
-              styles.headerTitle,
-              Platform.OS === 'android' && {fontWeight: '700'},
-            ]}>
+          <FontText style={styles.headerTitle}>
             작성자 및 리뷰내용 신고
           </FontText>
         </View>

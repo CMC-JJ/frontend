@@ -1,4 +1,4 @@
-import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {ThinBar} from './BarSeparator';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -21,13 +21,7 @@ export default function TextRightIcon({
           onPress={onPress}
           hitSlop={{top: 15, bottom: 15}}
           style={styles.body}>
-          <FontText
-            style={[
-              styles.text,
-              Platform.OS === 'android' && {fontWeight: '700'},
-            ]}>
-            {text}
-          </FontText>
+          <FontText style={styles.text}>{text}</FontText>
           {isIcon && <Icon name="right" color={'black'} size={20} />}
         </TouchableOpacity>
       </View>

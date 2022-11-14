@@ -6,13 +6,7 @@ import {MypageNavigationProp, MypageStackParamList} from '@/screens';
 import {useAuthStore} from '@/store';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  Image,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 // import IconOct from 'react-native-vector-icons/Octicons';
@@ -44,13 +38,7 @@ export function MyPageScreen() {
             style={styles.infoButtonWrap}>
             {auth && (
               <View style={styles.infoTitle}>
-                <FontText
-                  style={[
-                    styles.nickName,
-                    Platform.OS === 'android' && {fontWeight: '900'},
-                  ]}>
-                  {auth.nickName}
-                </FontText>
+                <FontText style={styles.nickName}>{auth.nickName}</FontText>
                 <FontText style={styles.userName}>{auth.userName}</FontText>
               </View>
             )}

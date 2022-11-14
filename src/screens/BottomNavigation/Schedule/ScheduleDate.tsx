@@ -47,13 +47,7 @@ export function ScheduleDate() {
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <View style={styles.headerContainer}>
-        <FontText
-          style={[
-            styles.header,
-            Platform.OS === 'android' && {fontWeight: '900'},
-          ]}>
-          날짜 선택
-        </FontText>
+        <FontText style={styles.header}>날짜 선택</FontText>
         <DateDisplay startDate={schedule.startAt} />
       </View>
       <View style={styles.dayNames}>
