@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
   },
   addSchedule: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 6,
 
     alignItems: 'center',
     justifyContent: 'center',

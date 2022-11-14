@@ -12,6 +12,7 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {request} from '@/utils';
 import Icon from 'react-native-vector-icons/Entypo';
 import {RootStackParamList} from '@/screens';
+import AirCard from '@/components/service/AirCard';
 
 type ScheduleDetailProp = RouteProp<RootStackParamList, 'ScheduleDetail'>;
 
@@ -47,7 +48,6 @@ type Data = {
   schedule: Schedule;
 };
 
-// TODO: 케일한테 AirCard 받으면 넣기!
 export function ScheduleDetail() {
   const {params: scheduleId} = useRoute<ScheduleDetailProp>();
   const [data, setData] = useState<Data>();
@@ -63,7 +63,30 @@ export function ScheduleDetail() {
     })();
   }, [scheduleId]);
 
-  console.log(data?.schedule.leftDay);
+  const departureAirCardData = {
+    id: (data as Data)?.schedule.departureAirportId,
+    name: (data as Data)?.schedule.departureAirportName,
+    avgReview: (data as Data)?.schedule.departureAirportAvgReview,
+    customerServiceNumber: (data as Data)?.schedule
+      .departureAirportCustomerServiceNumber,
+    website: (data as Data)?.schedule.departureAirportWebsite,
+  };
+  const arrivalAirCardData = {
+    id: (data as Data)?.schedule.arrivalAirportId,
+    name: (data as Data)?.schedule.arrivalAirportName,
+    avgReview: (data as Data)?.schedule.arrivalAirportAvgReview,
+    customerServiceNumber: (data as Data)?.schedule
+      .arrivalAirportCustomerServiceNumber,
+    website: (data as Data)?.schedule.arrivalAirportWebsite,
+  };
+  const airlineAirCardData = {
+    id: (data as Data)?.schedule.airlineId,
+    name: (data as Data)?.schedule.airlineName,
+    avgReview: (data as Data)?.schedule.airlineAvgReview,
+    customerServiceNumber: (data as Data)?.schedule
+      .airlineCustomerServiceNumber,
+    website: (data as Data)?.schedule.airlineWebsite,
+  };
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -82,92 +105,102 @@ export function ScheduleDetail() {
         {/* 이 부분 카드 컴포넌트로 재활용 필요! */}
         <ScrollView>
           {data?.schedule && (
-            <View style={styles.cardContainer}>
-              <View style={styles.cardHeaderContainer}>
-                <FontText style={styles.cardHeader}>
-                  {data.schedule.scheduleName}
-                </FontText>
-                {data?.schedule.leftDay && (
-                  <View style={styles.dayleft}>
-                    <FontText style={styles.day}>
-                      {data.schedule.leftDay}
+            <>
+              <View style={styles.cardContainer}>
+                <View style={styles.cardHeaderContainer}>
+                  <FontText style={styles.cardHeader}>
+                    {data.schedule.scheduleName}
+                  </FontText>
+                  {data?.schedule.leftDay && (
+                    <View style={styles.dayleft}>
+                      <FontText style={styles.day}>
+                        {data.schedule.leftDay}
+                      </FontText>
+                    </View>
+                  )}
+                </View>
+                <View style={styles.startAt}>
+                  <FontText style={styles.startAtText}>
+                    {data.schedule.startAt}
+                  </FontText>
+                </View>
+                <View style={styles.airSummary}>
+                  <View style={styles.airports}>
+                    <FontText style={styles.airportText}>
+                      {data.schedule.departureAirportName}
+                    </FontText>
+                    <Icon
+                      name="aircraft-take-off"
+                      size={20}
+                      color="#0066FF"
+                      style={styles.aircraft}
+                    />
+                    <FontText style={styles.airportText}>
+                      {data.schedule.arrivalAirportName}
                     </FontText>
                   </View>
-                )}
-              </View>
-              <View style={styles.startAt}>
-                <FontText style={styles.startAtText}>
-                  {data.schedule.startAt}
-                </FontText>
-              </View>
-              <View style={styles.airSummary}>
-                <View style={styles.airports}>
-                  <FontText style={styles.airportText}>
-                    {data.schedule.departureAirportName}
-                  </FontText>
-                  <Icon
-                    name="aircraft-take-off"
-                    size={20}
-                    color="#0066FF"
-                    style={styles.aircraft}
-                  />
-                  <FontText style={styles.airportText}>
-                    {data.schedule.arrivalAirportName}
-                  </FontText>
+                  <View style={styles.dotContainer}>
+                    <View style={styles.circle} />
+                    <View style={styles.dotBorder} />
+                    <View style={styles.circle} />
+                  </View>
+                  <View style={styles.airline}>
+                    <FontText style={styles.airlineText}>
+                      {data.schedule.airlineName}
+                    </FontText>
+                  </View>
                 </View>
-                <View style={styles.dotContainer}>
-                  <View style={styles.circle} />
-                  <View style={styles.dotBorder} />
-                  <View style={styles.circle} />
-                </View>
-                <View style={styles.airline}>
-                  <FontText style={styles.airlineText}>
-                    {data.schedule.airlineName}
-                  </FontText>
-                </View>
-              </View>
-              <View style={styles.serviceContainerWrapper}>
-                <View style={styles.serviceContainer}>
-                  <View style={styles.circle2} />
-                  <FontText style={styles.serviceHeaderText}>
-                    {data.schedule.departureAirportName}
-                  </FontText>
-                  {data.schedule.departureAirportService.map(
-                    (service: string, index: number) => (
-                      <FontText key={index} style={styles.serviceItemText}>
-                        {service}
-                      </FontText>
-                    ),
-                  )}
-                </View>
-                <View style={styles.serviceContainer}>
-                  <View style={styles.circle2} />
-                  <FontText style={styles.serviceHeaderText}>
-                    {data.schedule.arrivalAirportName}
-                  </FontText>
-                  {data.schedule.arrivalAirportService.map(
-                    (service: string, index: number) => (
-                      <FontText key={index} style={styles.serviceItemText}>
-                        {service}
-                      </FontText>
-                    ),
-                  )}
-                </View>
-                <View style={styles.serviceContainer}>
-                  <View style={styles.circle2} />
-                  <FontText style={styles.serviceHeaderText}>
-                    {data.schedule.airlineName}
-                  </FontText>
-                  {data.schedule.airlineService.map(
-                    (service: string, index: number) => (
-                      <FontText key={index} style={styles.serviceItemText}>
-                        {service}
-                      </FontText>
-                    ),
-                  )}
+                <View style={styles.serviceContainerWrapper}>
+                  <View style={styles.serviceContainer}>
+                    <View style={styles.circle2} />
+                    <FontText style={styles.serviceHeaderText}>
+                      {data.schedule.departureAirportName}
+                    </FontText>
+                    {data.schedule.departureAirportService.map(
+                      (service: string, index: number) => (
+                        <FontText key={index} style={styles.serviceItemText}>
+                          {service}
+                        </FontText>
+                      ),
+                    )}
+                  </View>
+                  <View style={styles.serviceContainer}>
+                    <View style={styles.circle2} />
+                    <FontText style={styles.serviceHeaderText}>
+                      {data.schedule.arrivalAirportName}
+                    </FontText>
+                    {data.schedule.arrivalAirportService.map(
+                      (service: string, index: number) => (
+                        <FontText key={index} style={styles.serviceItemText}>
+                          {service}
+                        </FontText>
+                      ),
+                    )}
+                  </View>
+                  <View style={styles.serviceContainer}>
+                    <View style={styles.circle2} />
+                    <FontText style={styles.serviceHeaderText}>
+                      {data.schedule.airlineName}
+                    </FontText>
+                    {data.schedule.airlineService.map(
+                      (service: string, index: number) => (
+                        <FontText key={index} style={styles.serviceItemText}>
+                          {service}
+                        </FontText>
+                      ),
+                    )}
+                  </View>
                 </View>
               </View>
-            </View>
+              {/* TODO: 로고 나오게 바꾸기 */}
+              <View style={styles.aircardContainer}>
+                <AirCard data={departureAirCardData} />
+                <View style={{marginTop: 20}} />
+                <AirCard data={arrivalAirCardData} />
+                <View style={{marginTop: 20}} />
+                <AirCard data={airlineAirCardData} />
+              </View>
+            </>
           )}
         </ScrollView>
       </View>
@@ -215,7 +248,6 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     marginTop: 20,
-    marginBottom: 100,
     marginHorizontal: 5,
     paddingHorizontal: 20,
     borderRadius: 12,
@@ -224,7 +256,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowColor: '#000000',
     shadowOpacity: 0.25,
-    elevation: 4,
+    elevation: 5,
   },
   cardHeaderContainer: {
     marginTop: 20,
@@ -344,5 +376,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 13,
     lineHeight: 16,
+  },
+  aircardContainer: {
+    marginTop: 20,
+    marginBottom: 100,
+    paddingHorizontal: 2,
   },
 });

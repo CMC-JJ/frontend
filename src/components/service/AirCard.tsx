@@ -61,12 +61,14 @@ export default function AirCard({data}: {data: AirCardProps | undefined}) {
 
 const styles = StyleSheet.create({
   formContainer: {
-    backgroundColor: '#FFFFFF',
-    shadowOffset: {width: 1, height: 1},
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    borderRadius: 12,
+    backgroundColor: 'white',
+    shadowOffset: {width: 0, height: 2},
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
     elevation: 5,
+
+    borderRadius: 12,
+
     height: 115,
   },
   textContainer: {

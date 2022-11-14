@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   filterContainer: {
-    marginTop: 14,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    borderRadius: 12,
+    borderRadius: 45,
     borderWidth: 1.3,
     borderStyle: 'solid',
     borderColor: '#BCBCBC',
