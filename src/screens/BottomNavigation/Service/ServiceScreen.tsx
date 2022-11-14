@@ -13,9 +13,11 @@ import {
   fetchAirportReview,
   fetchAirportsDetail,
 } from '@/utils/fetchService';
-import {RootStackNavigationProp} from '@/screens';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import ReviewCard, {ReviewProps} from '@/components/service/ReviewCard';
+import {useShowTabBar} from '@/hooks/useVisibleTabBar';
+import {ServiceNavgationProp} from '@/screens';
+import {ThinBar} from '@/components/BarSeparator';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -26,7 +28,6 @@ export interface AirServiceProps
   onClick: boolean;
 }
 export function ServiceScreen() {
-  // const {auth} = useAuthStore();
   const [airlineLists, setAirlineLists] = useState<AirServiceProps[]>([]);
   const [airportLists, setAirportLists] = useState<AirServiceProps[]>([]);
   const [airlineReview, setAirlineReview] = useState<ReviewProps[]>([]);
@@ -36,8 +37,9 @@ export function ServiceScreen() {
   );
   const [menu, setMenu] = useState<AirServiceProps | null>(null);
   const [detail, setDetail] = useState<AirDetailProps | null>(null);
-  const navigation = useNavigation<RootStackNavigationProp>();
+  const navigation = useNavigation<ServiceNavgationProp>();
   const page = useRef(1);
+  useFocusEffect(useShowTabBar(navigation));
   useEffect(() => {
     if (menu) {
       switch (currentTab) {
@@ -98,11 +100,58 @@ export function ServiceScreen() {
       }
     }
   };
+  useFocusEffect(useShowTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
+      <View style={{paddingHorizontal: 30}}>
+        <View style={styles.titleContainer}>
+          <FontText
+            style={[
+              styles.title,
+              Platform.OS === 'android' && {fontWeight: '900'},
+            ]}>
+            항공서비스
+          </FontText>
+          <TouchableOpacity onPress={() => navigation.navigate('AirSearch')}>
+            <Icon style={styles.icon} name="search1" size={18} color="gray" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={() => setCurrentTab('airport')}>
+            <FontText
+              style={[
+                styles.tabText,
+                currentTab === 'airport' && styles.activeText,
+              ]}>
+              공항
+            </FontText>
+          </TouchableOpacity>
+          <View style={styles.bar} />
+          <TouchableOpacity onPress={() => setCurrentTab('airline')}>
+            <FontText
+              style={[
+                styles.tabText,
+                currentTab === 'airline' && styles.activeText,
+              ]}>
+              항공사
+            </FontText>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* 아이콘&이름 */}
+      <View style={styleBody.icon}>
+        <ServiceIcon
+          list={currentTab === 'airport' ? airportLists : airlineLists}
+          menu={menu}
+          onMenuPress={_menu => setMenu(_menu)}
+        />
+        <View style={{marginTop: 15, marginBottom: 20, marginHorizontal: 5}}>
+          <ThinBar />
+        </View>
+      </View>
       <FlatList
         renderItem={({item}) => (
-          <View style={[styleReview.container, {paddingHorizontal: 25}]}>
+          <View style={[styleReview.container]}>
             <ReviewCard data={item} currentTab={currentTab} />
           </View>
         )}
@@ -113,48 +162,6 @@ export function ServiceScreen() {
         onEndReached={() => fetchReviewScroll()}
         ListHeaderComponent={
           <View style={styles.Scrollview}>
-            <View style={styles.titleContainer}>
-              <FontText style={styles.title}>항공서비스</FontText>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('AirSearch')}>
-                <Icon
-                  style={styles.icon}
-                  name="search1"
-                  size={18}
-                  color="gray"
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => setCurrentTab('airport')}>
-                <FontText
-                  style={[
-                    styles.tabText,
-                    currentTab === 'airport' && styles.activeText,
-                  ]}>
-                  공항
-                </FontText>
-              </TouchableOpacity>
-              <View style={styles.bar} />
-              <TouchableOpacity onPress={() => setCurrentTab('airline')}>
-                <FontText
-                  style={[
-                    styles.tabText,
-                    currentTab === 'airline' && styles.activeText,
-                  ]}>
-                  항공사
-                </FontText>
-              </TouchableOpacity>
-            </View>
-
-            {/* 아이콘&이름 */}
-            <View style={styleBody.icon}>
-              <ServiceIcon
-                list={currentTab === 'airport' ? airportLists : airlineLists}
-                menu={menu}
-                onMenuPress={_menu => setMenu(_menu)}
-              />
-            </View>
             <View style={styleBody.line} />
             {/* 서비스 상세정보 */}
             <View style={styleBody.container}>
@@ -187,14 +194,9 @@ const styleReview = StyleSheet.create({
 const styleBody = StyleSheet.create({
   icon: {
     marginTop: 26,
+    paddingHorizontal: 25,
   },
-  line: {
-    borderWidth: 0.5,
-    borderColor: '#DEDEDE',
-    marginTop: 15,
-    marginBottom: 25,
-    marginHorizontal: 5,
-  },
+  line: {},
   lineReview: {
     borderWidth: 0.5,
     borderColor: '#DEDEDE',

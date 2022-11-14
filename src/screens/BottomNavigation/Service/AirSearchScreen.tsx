@@ -12,6 +12,9 @@ import {FontText} from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {request} from '@/utils';
 import AirCard from '@/components/service/AirCard';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {ServiceNavgationProp} from './ServiceStack';
 export interface AirCardProps {
   id: number;
   name: string;
@@ -23,22 +26,28 @@ export interface AirCardProps {
 export function AirSearchScreen() {
   const [value, onChangeText] = useState<String>();
   const [data, setData] = useState();
+  const navigation = useNavigation<ServiceNavgationProp>();
   const fetchSearch = async () => {
     try {
       const res = await request('web/search', {searchQuery: value}, 'GET');
-      console.log(res.result.searchResult);
       setData(res.result.searchResult[0]);
     } catch (e) {
       console.log(e);
     }
   };
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.back}>
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
-      {/* <FormHeader text={'공항, 항공사를 검색해주세요'} /> */}
-      <FontText style={styles.header}>공항, 항공사를 검색해주세요</FontText>
+      <FontText
+        style={[
+          styles.header,
+          Platform.OS === 'android' && {fontWeight: '900'},
+        ]}>
+        공항, 항공사를 검색해주세요
+      </FontText>
       <View style={styles.container}>
         <View style={styles.inputForm}>
           <TextInput
@@ -48,7 +57,7 @@ export function AirSearchScreen() {
             placeholder={'검색어를 입력해주세요'}
             onSubmitEditing={() => console.log('first')}
           />
-          <TouchableOpacity onPress={fetchSearch}>
+          <TouchableOpacity onPress={fetchSearch} style={{paddingRight: 10}}>
             <Icon name="search1" size={18} color="gray" />
           </TouchableOpacity>
         </View>

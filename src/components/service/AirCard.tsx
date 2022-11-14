@@ -10,34 +10,39 @@ export default function AirCard({data}: {data: AirCardProps | undefined}) {
     <View style={styles.formContainer}>
       <View style={styles.textContainer}>
         <View style={styles.title}>
-          {data?.logoImageUrl && (
-            <View style={styles.circle}>
-              <Image
-                source={{
-                  uri: data?.logoImageUrl,
-                }}
-                style={styles.image}
-              />
-            </View>
-          )}
-          <FontText style={styles.name}>{data?.name}</FontText>
-          <Icon name="star" size={13} color="#0066FF" style={styles.star} />
-          <FontText style={styles.avgReview}>{data?.avgReview}</FontText>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL(`tel:${data?.customerServiceNumber}`);
-            }}
-            style={styles.phone}>
-            <IconFt name="phone" size={20} color="#0066FF" />
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row', alignItems: 'center', zIndex: 5}}>
+            {data?.logoImageUrl && (
+              <View style={styles.circle}>
+                <Image
+                  source={{
+                    uri: data?.logoImageUrl,
+                  }}
+                  style={styles.image}
+                />
+              </View>
+            )}
+            <FontText style={styles.name}>{data?.name}</FontText>
+            <Icon name="star" size={13} color="#0066FF" style={styles.star} />
+            <FontText style={styles.avgReview}>{data?.avgReview}</FontText>
+          </View>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', zIndex: 10}}>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`tel:${data?.customerServiceNumber}`);
+              }}
+              style={styles.phone}>
+              <IconFt name="phone" size={20} color="#0066FF" />
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL(`${data?.website}`);
-            }}
-            style={styles.link}>
-            <IconFt name="external-link" size={22} color="#0066FF" />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL(`${data?.website}`);
+              }}
+              style={styles.link}>
+              <IconFt name="external-link" size={22} color="#0066FF" />
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={
@@ -72,7 +77,11 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  title: {flexDirection: 'row', alignItems: 'center'},
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   name: {fontWeight: '700', fontSize: 20},
   circle: {
     width: 33,
@@ -101,11 +110,11 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   phone: {
-    position: 'absolute',
     transform: [{rotate: '15deg'}],
-    right: 40,
   },
-  link: {position: 'absolute', right: 0},
+  link: {
+    marginLeft: 10,
+  },
   phNumContainer: {
     width: 100,
     height: 26,

@@ -51,7 +51,7 @@ export function ServiceCard({
               <IconOct
                 style={infoStyles.dot}
                 size={20}
-                color="black"
+                color="#0066FF"
                 name="dot-fill"
               />
               <FontText
@@ -69,36 +69,45 @@ export function ServiceCard({
     <View style={styles.container}>
       {/* 타이틀 */}
       <View style={titleStyles.title}>
-        {data?.image && (
-          <View style={titleStyles.circle}>
-            <Image
-              source={{
-                uri: data?.image,
-              }}
-              style={styles.image}
-            />
-          </View>
-        )}
-        <FontText style={titleStyles.name}>
-          {type === 'airport' ? data?.airportName : data?.airlineName}
-        </FontText>
-        <Icon name="star" size={13} color="#0066FF" style={titleStyles.star} />
-        <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL(`tel:${data?.customerServiceNumber}`);
-          }}
-          style={titleStyles.phone}>
-          <IconFt name="phone" size={20} color="#0066FF" />
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', alignItems: 'center', zIndex: 5}}>
+          {data?.image && (
+            <View style={titleStyles.circle}>
+              <Image
+                source={{
+                  uri: data?.image,
+                }}
+                style={styles.image}
+              />
+            </View>
+          )}
+          <FontText style={titleStyles.name}>
+            {type === 'airport' ? data?.airportName : data?.airlineName}
+          </FontText>
+          <Icon
+            name="star"
+            size={13}
+            color="#0066FF"
+            style={titleStyles.star}
+          />
+          <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
+        </View>
+        <View style={{flexDirection: 'row', zIndex: 10, alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`tel:${data?.customerServiceNumber}`);
+            }}
+            style={titleStyles.phone}>
+            <IconFt name="phone" size={20} color="#0066FF" />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            Linking.openURL(`${data?.website}`);
-          }}
-          style={titleStyles.link}>
-          <IconFt name="external-link" size={22} color="#0066FF" />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`${data?.website}`);
+            }}
+            style={titleStyles.link}>
+            <IconFt name="external-link" size={22} color="#0066FF" />
+          </TouchableOpacity>
+        </View>
       </View>
       {/* 전화번호 */}
       <View
@@ -112,12 +121,15 @@ export function ServiceCard({
         </FontText>
       </View>
 
-      <View>
-        {/* 서비스 리스트 */}
-        {serviceList}
-        <View style={availableAt.container}>
-          <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
-          <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+      {/* 서비스 리스트 */}
+      {serviceList}
+      <View style={availableAt.container}>
+        <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
+        <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+        <View style={styles.noticeContainer}>
+          <FontText style={styles.notice}>
+            서비스 클릭시 안내페이지로 이동
+          </FontText>
         </View>
       </View>
     </View>
@@ -126,6 +138,7 @@ export function ServiceCard({
 const infoStyles = StyleSheet.create({
   info: {
     marginBottom: 32,
+    marginTop: 30,
   },
   text: {fontWeight: '500', fontSize: 14},
 
@@ -144,10 +157,14 @@ const availableAt = StyleSheet.create({
     marginLeft: 51,
   },
   title: {fontSize: 15, fontWeight: '600', marginBottom: 11},
-  time: {fontSize: 14, fontWeight: '500', color: '#7C7C7C'},
+  time: {fontSize: 14, fontWeight: '500', color: '#7C7C7C', marginBottom: 25},
 });
 const titleStyles = StyleSheet.create({
-  title: {flexDirection: 'row', alignItems: 'center'},
+  title: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   name: {fontWeight: '700', fontSize: 20},
   circle: {
     width: 33,
@@ -176,11 +193,11 @@ const titleStyles = StyleSheet.create({
     marginLeft: 4,
   },
   phone: {
-    position: 'absolute',
-    right: 50,
     transform: [{rotate: '15deg'}],
   },
-  link: {position: 'absolute', right: 0},
+  link: {
+    marginLeft: 10,
+  },
   phNumContainer: {
     width: 100,
     height: 26,
@@ -189,7 +206,7 @@ const titleStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 9,
-    marginBottom: 32,
+    // marginBottom: 32,
   },
   phNum: {
     fontSize: 12,
@@ -206,5 +223,19 @@ const styles = StyleSheet.create({
   image: {
     width: 30,
     height: 30,
+  },
+  linkEx: {},
+  notice: {
+    color: '#0066FF',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  noticeContainer: {
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#0066FF',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    width: 190,
   },
 });

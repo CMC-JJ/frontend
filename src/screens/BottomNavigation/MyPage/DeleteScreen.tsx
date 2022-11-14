@@ -1,14 +1,19 @@
 import {Platform, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {ArrowBack, SignButton, TabHeader} from '@/components';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FontText} from '@/components/FontText';
 import RNPickerSelect from 'react-native-picker-select';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {MypageNavigationProp} from './MyPageStack';
-export default function DeleteScreen() {
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+export function DeleteScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const navigation = useNavigation<MypageNavigationProp>();
   const [select, setSelect] = useState<string>('');
@@ -18,6 +23,7 @@ export default function DeleteScreen() {
       deleteId: Number(select),
     });
   };
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.back}>
@@ -144,9 +150,9 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 120,
-    flex: 1,
+    bottom: 34,
     flexDirection: 'row',
     paddingHorizontal: 25,
+    flex: 1,
   },
 });
