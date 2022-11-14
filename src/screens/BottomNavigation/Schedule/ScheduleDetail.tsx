@@ -5,7 +5,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {ArrowBack, FontText} from '@/components';
@@ -75,10 +74,10 @@ export function ScheduleDetail() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <FontText style={styles.header}>{'여행 상세정보'}</FontText>
-          {/* TODO: 수정하기 넣기! */}
-          <TouchableOpacity style={styles.editButton} onPress={() => {}}>
+          {/* TODO: 나중에 앱 업데이트시 수정하기 버튼 기능 넣기 */}
+          {/* <TouchableOpacity style={styles.editButton} onPress={() => {}}>
             <FontText style={styles.editButtonText}>수정하기</FontText>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         {/* 이 부분 카드 컴포넌트로 재활용 필요! */}
         <ScrollView>
