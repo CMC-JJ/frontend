@@ -4,6 +4,7 @@ import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFt from 'react-native-vector-icons/Feather';
 import IconOct from 'react-native-vector-icons/Octicons';
+import {ThinBar} from '../BarSeparator';
 
 export interface AirDetailProps {
   airportId: number;
@@ -46,19 +47,28 @@ export function ServiceCard({
     () => (
       <View style={infoStyles.info}>
         {list &&
-          list?.map(v => (
-            <View style={infoStyles.textContainer} key={v.id}>
-              <IconOct
-                style={infoStyles.dot}
-                size={20}
-                color="#0066FF"
-                name="dot-fill"
-              />
-              <FontText
-                style={infoStyles.text}
-                onPress={() => Linking.openURL(`${v.website}`)}>
-                {v.name}
-              </FontText>
+          list?.map((v, i) => (
+            <View>
+              <View style={infoStyles.textContainer} key={v.id}>
+                <IconOct
+                  style={infoStyles.dot}
+                  size={20}
+                  color="#0066FF"
+                  name="dot-fill"
+                />
+                <FontText
+                  style={infoStyles.text}
+                  onPress={() => Linking.openURL(`${v.website}`)}>
+                  {v.name}
+                </FontText>
+              </View>
+              {i !== list.length - 1 ? (
+                <View style={{paddingVertical: 8}}>
+                  <ThinBar />
+                </View>
+              ) : (
+                ''
+              )}
             </View>
           ))}
       </View>
@@ -145,7 +155,6 @@ const infoStyles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
   },
   dot: {
     marginLeft: 10,
@@ -196,7 +205,7 @@ const titleStyles = StyleSheet.create({
     transform: [{rotate: '15deg'}],
   },
   link: {
-    marginLeft: 10,
+    marginLeft: 15,
   },
   phNumContainer: {
     width: 100,
@@ -217,7 +226,7 @@ const titleStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 34,
+    paddingVertical: 25,
   },
 
   image: {

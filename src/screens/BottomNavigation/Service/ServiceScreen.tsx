@@ -1,5 +1,11 @@
 import React, {ComponentProps, useEffect, useRef, useState} from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FontText} from '@/components/FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -188,7 +194,7 @@ const styleReview = StyleSheet.create({
   },
   titleContainer: {
     marginHorizontal: 5,
-    marginBottom: 20,
+    marginBottom: 15,
   },
 });
 const styleBody = StyleSheet.create({
@@ -201,7 +207,7 @@ const styleBody = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#DEDEDE',
     marginTop: 25,
-    marginBottom: 20,
+    marginBottom: 30,
     marginHorizontal: 5,
   },
   container: {
