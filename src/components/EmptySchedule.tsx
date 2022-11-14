@@ -1,7 +1,7 @@
 import type {ScheduleNavigationProp} from '@/screens';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {FontText} from './FontText';
 
@@ -16,7 +16,11 @@ export function EmptySchedule({firstText, secondText}: EmptyScheduleProps) {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.circle} />
+        <Image
+          resizeMode="contain"
+          style={styles.addScheduleLogo}
+          source={require('@/assets/images/addSchedule.png')}
+        />
         <View style={styles.announcementMessage}>
           <FontText style={styles.message}>{firstText}</FontText>
           <FontText style={styles.message}>{secondText}</FontText>
@@ -41,11 +45,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  circle: {
-    borderRadius: 120,
-    width: 120,
-    height: 120,
-    backgroundColor: '#D9D9D9',
+  addScheduleLogo: {
+    width: 94,
+    height: 82,
   },
   announcementMessage: {
     marginTop: 33,

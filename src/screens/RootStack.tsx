@@ -15,7 +15,7 @@ import {
   PermissionScreen,
   OnboardingScreen,
   StartScreen,
-  TermsScreen,
+  TermsScreen
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {usePermission} from '@/store';
@@ -43,6 +43,7 @@ export type RootStackParamList = {
   SignUpComplete: undefined;
   NickName: undefined;
   MainTab: MainTabNavigationScreenParams;
+
 };
 
 export type RootStackNavigationProp =

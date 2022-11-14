@@ -40,7 +40,7 @@ export function ScheduleComplete() {
       auth.jwtToken,
     );
 
-    // 이 부분 수정 필요!
+    // TODO: 이 부분 수정 필요!
     if (result.isSuccess) {
       initializeSchedule();
       navigation.navigate('Home');

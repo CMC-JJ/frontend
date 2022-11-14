@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Alert,
+  Image,
   Keyboard,
   Platform,
   SafeAreaView,
@@ -52,19 +53,27 @@ export function SignUpComplete() {
 
   return (
     <SafeAreaView style={styles.fill}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <StatusBar barStyle="dark-content" backgroundColor="#0066FF" />
       <View style={styles.back}>
-        {Platform.OS === 'ios' && <ArrowBack size={28} />}
+        {Platform.OS === 'ios' && <ArrowBack size={28} color="white" />}
       </View>
       <View style={styles.header}>
         <Text style={styles.name}>안녕하세요 {signUpForm.nickName}!</Text>
         <Text style={styles.welcome}>가치가자 회원이 되신걸 환영합니다.</Text>
       </View>
       <View style={styles.centerImage}>
-        <View style={styles.box} />
+        <Image
+          style={styles.logo}
+          source={require('@/assets/images/signupCongratulation.png')}
+        />
       </View>
       <View style={styles.footer}>
-        <SignButton isValid buttonText="가치가자 시작하기" onPress={onPress} />
+        <SignButton
+          isValid
+          buttonText="가치가자 시작하기"
+          onPress={onPress}
+          isbackgroundWhite
+        />
       </View>
     </SafeAreaView>
   );
@@ -73,7 +82,7 @@ export function SignUpComplete() {
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#0066FF',
   },
   back: {
     paddingTop: 5,
@@ -90,26 +99,27 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 30,
     lineHeight: 34,
-    color: '#0066FF',
+    color: 'white',
   },
   welcome: {
+    marginTop: 8,
     fontFamily: 'Pretendard',
     fontWeight: '700',
     fontSize: 18,
     lineHeight: 34,
 
-    color: '#121212',
+    color: 'white',
   },
   centerImage: {
     flex: 1.5,
 
-    paddingTop: 0,
-    paddingHorizontal: 80,
+    marginTop: -70,
+    justifyContent: 'center',
+    marginLeft: 60,
   },
-  box: {
-    borderColor: 'black',
-    borderWidth: 2,
-    height: 300,
+  logo: {
+    width: 230,
+    height: 190,
   },
   footer: {
     flex: 0.3,

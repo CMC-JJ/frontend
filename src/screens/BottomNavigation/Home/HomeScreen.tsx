@@ -68,7 +68,6 @@ export function HomeScreen() {
       'GET',
       auth.jwtToken,
     );
-
     setData(result.result);
   }, [auth.jwtToken]);
 
@@ -272,11 +271,8 @@ export function HomeScreen() {
                       <TouchableOpacity
                         style={styles.detailTouchableContainer}
                         onPress={() => {
-                          navigation.navigate('Schedule', {
-                            screen: 'ScheduleDetail',
-                            params: {
-                              scheduleId: data.schedule.scheduleId,
-                            },
+                          navigation.navigate('ScheduleDetail', {
+                            scheduleId: data.schedule.scheduleId,
                           });
                         }}>
                         <FontText style={styles.detailText}>
@@ -294,7 +290,11 @@ export function HomeScreen() {
               </>
             ) : (
               <View style={styles.noScheduleContainer}>
-                <View style={styles.tempCircle} />
+                <Image
+                  style={styles.addScheduleLogo}
+                  resizeMode="contain"
+                  source={require('@/assets/images/addSchedule.png')}
+                />
                 <View style={styles.noTextContainer}>
                   <FontText style={styles.noText}>현재 등록된 여행이</FontText>
                   <FontText style={styles.noText}>없습니다!</FontText>
@@ -357,14 +357,10 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 25,
   },
-  // jalnalFont: {
-  //   fontFamily: 'Jalnan',
-  //   fontWeight: '700',
-  //   fontSize: 18,
-  //   lineHeight: 19,
-
-  //   color: '#0066FF',
-  // },
+  addScheduleLogo: {
+    width: 95,
+    height: 82,
+  },
   logoHeader: {
     marginTop: 30,
     flexDirection: 'row',

@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -16,6 +17,7 @@ import {useQuery} from 'react-query';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import type {ScheduleNavigationProp} from '@/screens';
 import AIcon from 'react-native-vector-icons/AntDesign';
+import {request} from '@/utils';
 
 type currentTabType = 'future' | 'past';
 type currentFilterType = 'latest' | 'oldest' | 'boardingTime';
@@ -73,7 +75,6 @@ type QueryType = {
 
 //TODO: 무한 스크롤 구현 필요
 //TODO: 필터링 기능 추가(최신순, 오래된 순, 탑승시간순)
-// TODO: 삭제기능
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
@@ -106,6 +107,29 @@ export function ScheduleScreen() {
       });
     }, [navigation]),
   );
+
+  // TODO:  삭제 시 페이지 리로드 필요!
+  const onPressDeleteButton = async (id: number) => {
+    const result = await request(
+      'web/schedules/status',
+      {
+        scheduleId: id,
+      },
+      'PATCH',
+    );
+
+    if (result.isSuccess) {
+      Alert.alert('일정이 삭제되었습니다.');
+    } else {
+      Alert.alert(result.message);
+    }
+  };
+
+  const onPressReviewButton = (id: number) => {
+    navigation.navigate('Review', {
+      scheduleId: id,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -173,7 +197,11 @@ export function ScheduleScreen() {
                     departureAirportName={schedule.departureAirportName}
                     leftDay={schedule.leftDay}
                     scheduleName={schedule.scheduleName}
+                    scheduleId={schedule.scheduleId}
                     startAt={schedule.startAt}
+                    onPressDeleteButton={onPressDeleteButton}
+                    // 수정 버튼 위한 이벤트
+                    onPressReviewOrEditButton={() => {}}
                   />
                 </TouchableOpacity>
               ))}
@@ -251,7 +279,7 @@ export function ScheduleScreen() {
               <TouchableOpacity
                 key={schedule.scheduleId}
                 onPress={() => {
-                  navigation.navigate('Detail', {
+                  navigation.navigate('ScheduleDetail', {
                     scheduleId: schedule.scheduleId,
                   });
                 }}>
@@ -261,7 +289,10 @@ export function ScheduleScreen() {
                   departureAirportName={schedule.departureAirportName}
                   scheduleName={schedule.scheduleName}
                   startAt={schedule.startAt}
+                  scheduleId={schedule.scheduleId}
                   isPast={true}
+                  onPressDeleteButton={onPressDeleteButton}
+                  onPressReviewOrEditButton={onPressReviewButton}
                 />
               </TouchableOpacity>
             ))}
