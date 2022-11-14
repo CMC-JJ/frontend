@@ -5,6 +5,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import React from 'react';
 import {
@@ -47,6 +48,7 @@ export function PermissionScreen() {
 
   return (
     <SafeAreaView style={styles.fill}>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={styles.logo}>
         <Image
           style={styles.logo}

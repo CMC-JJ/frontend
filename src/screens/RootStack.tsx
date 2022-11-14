@@ -16,6 +16,7 @@ import {
   OnboardingScreen,
   StartScreen,
   TermsScreen,
+  ScheduleDetail,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {usePermission} from '@/store';
@@ -43,6 +44,9 @@ export type RootStackParamList = {
   SignUpComplete: undefined;
   NickName: undefined;
   MainTab: MainTabNavigationScreenParams;
+  ScheduleDetail: {
+    scheduleId: number;
+  };
 };
 
 export type RootStackNavigationProp =
@@ -131,6 +135,11 @@ function RootStack() {
       <Stack.Screen
         name="SignUpComplete"
         component={SignUpComplete}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ScheduleDetail"
+        component={ScheduleDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
