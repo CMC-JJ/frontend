@@ -61,7 +61,6 @@ export const fetchAirportReview = async (
   data: AirServiceProps,
   page: number,
 ) => {
-  console.log(data);
   try {
     const res = await request(
       `web/airports/${data.id}/reviews`,

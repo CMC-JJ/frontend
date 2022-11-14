@@ -9,6 +9,10 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {RootStackNavigationProp} from '@/screens';
 import ImageText from '@/components/ImageText';
+const image_1 = require('@/assets/images/onboarding/onboarding_1.png');
+const image_2 = require('@/assets/images/onboarding/onboarding_2.png');
+const image_3 = require('@/assets/images/onboarding/onboarding_3.png');
+const image_4 = require('@/assets/images/onboarding/onboarding_4.png');
 const Square = ({selected}: any) => {
   let backgroundColor;
   backgroundColor = selected ? '#fff' : 'rgba(255, 255, 255, 0.5)';
@@ -28,6 +32,7 @@ export function OnboardingScreen() {
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#0066FF" />
       <Onboarding
+        transitionAnimationDuration={1000}
         showDone={true}
         DotComponent={Square}
         SkipButtonComponent={SkipButton}
@@ -43,7 +48,10 @@ export function OnboardingScreen() {
             subtitle: '',
             backgroundColor: '#0066FF',
             image: (
-              <ImageText text={'오늘 비행기를 타고\n국내 여행을 떠나시나요?'} />
+              <ImageText
+                text={'오늘 비행기를 타고\n국내 여행을 떠나시나요?'}
+                image={image_1}
+              />
             ),
           },
           {
@@ -51,9 +59,12 @@ export function OnboardingScreen() {
             subtitle: '',
             backgroundColor: '#0066FF',
             image: (
-              <ImageText
-                text={'친구들을 등록해서\n서로의 위치를 확인할 수 있어요.'}
-              />
+              <View>
+                <ImageText
+                  text={'친구들을 등록해서\n서로의 위치를 확인할 수 있어요.'}
+                  image={image_2}
+                />
+              </View>
             ),
           },
           {
@@ -65,6 +76,7 @@ export function OnboardingScreen() {
                 text={
                   '공항, 항공사에서 제공하는\n교통약자 서비스를\n한눈에 살펴볼 수 있어요.'
                 }
+                image={image_3}
               />
             ),
           },
@@ -77,6 +89,7 @@ export function OnboardingScreen() {
                 text={
                   '고객센터, 사이트로 바로 연결해\n교통약자 서비를 쉽게신청해보세요.'
                 }
+                image={image_4}
               />
             ),
           },

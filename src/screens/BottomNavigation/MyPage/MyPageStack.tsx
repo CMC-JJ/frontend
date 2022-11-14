@@ -2,14 +2,20 @@ import React from 'react';
 import type {CompositeNavigationProp} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {InfoDetailScreen, MyPageScreen, TermMypageScreen} from '@/screens';
+import {
+  DeleteConfirmScreen,
+  DeleteScreen,
+  InfoDetailScreen,
+  InfoModifyScreen,
+  ModifyConfirmPassword,
+  ModifyPasswordScreen,
+  MyPageScreen,
+  OwnReviewScreen,
+  QuestionScreen,
+  TermMypageScreen,
+} from '@/screens';
 import type {MainTabNavigationProp} from '@/screens';
 import {Auth} from '@/store/useAuthStore';
-import DeleteScreen from './DeleteScreen';
-import DeleteConfirmScreen from './DeleteConfirmScreen';
-import InfoModifyScreen from './InfoModifyScreen';
-import {ModifyPassword} from './ModifyPassword';
-import {ModifyConfirmPassword} from './ModifyConfirmPassword';
 
 export type MypageStackParamList = {
   Home: undefined;
@@ -34,6 +40,9 @@ export type MypageStackParamList = {
   ModifyConfirmPassword: {
     auth: Auth;
   };
+  OwnReview: {
+    auth: Auth;
+  };
 };
 
 export type MypageNavigationProp = CompositeNavigationProp<
@@ -43,48 +52,22 @@ export type MypageNavigationProp = CompositeNavigationProp<
 const Stack = createNativeStackNavigator<MypageStackParamList>();
 export function MyPageStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={MyPageScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="InfoDetail"
-        component={InfoDetailScreen}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name="Delete"
-        component={DeleteScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="DeleteConfirm"
-        component={DeleteConfirmScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="InfoModify"
-        component={InfoModifyScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ModifyPassword"
-        component={ModifyPassword}
-        options={{headerShown: false}}
-      />
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Home" component={MyPageScreen} />
+      <Stack.Screen name="InfoDetail" component={InfoDetailScreen} />
+      <Stack.Screen name="Delete" component={DeleteScreen} />
+      <Stack.Screen name="DeleteConfirm" component={DeleteConfirmScreen} />
+      <Stack.Screen name="InfoModify" component={InfoModifyScreen} />
+      <Stack.Screen name="ModifyPassword" component={ModifyPasswordScreen} />
       <Stack.Screen
         name="ModifyConfirmPassword"
         component={ModifyConfirmPassword}
-        options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="TermMyPage"
-        component={TermMypageScreen}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="TermMyPage" component={TermMypageScreen} />
+      <Stack.Screen name="Question" component={QuestionScreen} />
+      <Stack.Screen name="OwnReview" component={OwnReviewScreen} />
     </Stack.Navigator>
   );
 }

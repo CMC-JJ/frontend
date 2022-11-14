@@ -15,16 +15,10 @@ import {
   PermissionScreen,
   OnboardingScreen,
   StartScreen,
-  TermsScreen,
-  AirSearchScreen,
-  ReportScreen,
-  TermMypageScreen,
-  QuestionScreen,
-  ScheduleDetail,
+  TermsScreen
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
-import {Auth, usePermission} from '@/store';
-// import OwnReviewScreen from './BottomNavigation/MyPage/OwnReviewScreen';
+import {usePermission} from '@/store';
 
 export type RootStackParamList = {
   Permission: undefined;
@@ -49,19 +43,7 @@ export type RootStackParamList = {
   SignUpComplete: undefined;
   NickName: undefined;
   MainTab: MainTabNavigationScreenParams;
-  AirSearch: undefined;
-  TermMyPage: undefined;
-  Report: {
-    id: number | undefined;
-    type: string;
-  };
-  Question: undefined;
-  OwnReview: {
-    auth: Auth;
-  };
-  ScheduleDetail: {
-    scheduleId: number;
-  };
+
 };
 
 export type RootStackNavigationProp =
@@ -150,36 +132,6 @@ function RootStack() {
       <Stack.Screen
         name="SignUpComplete"
         component={SignUpComplete}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="AirSearch"
-        component={AirSearchScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="TermMyPage"
-        component={TermMypageScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Question"
-        component={QuestionScreen}
-        options={{headerShown: false}}
-      />
-      {/* <Stack.Screen
-        name="OwnReview"
-        component={OwnReviewScreen}
-        options={{headerShown: false}}
-      /> */}
-      <Stack.Screen
-        name="Report"
-        component={ReportScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ScheduleDetail"
-        component={ScheduleDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -10,12 +10,17 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack} from '@/components';
 import {FontText} from '@/components/FontText';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {ThickBar} from '@/components/BarSeparator';
 import TextRightIcon from '@/components/TextRightIcon';
 import {InfoDetailCompleteRouteProp} from './MyPageScreen';
-import {MypageNavigationProp} from './MyPageStack';
 import {initialState, useAuthStore} from '@/store';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {MypageNavigationProp} from '@/screens';
 
 export function InfoDetailScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
@@ -35,6 +40,7 @@ export function InfoDetailScreen() {
       },
     ]);
   };
+  useFocusEffect(useHideTabBar(navigation));
   return (
     <SafeAreaView style={styles.fill}>
       <View style={styles.header}>

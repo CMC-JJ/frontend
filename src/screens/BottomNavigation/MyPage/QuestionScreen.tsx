@@ -4,8 +4,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ArrowBack, TabHeader} from '@/components';
 import DropDownItem from '@/components/DropDownItem';
 import {ThinBar} from '@/components/BarSeparator';
+import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {MypageNavigationProp} from './MyPageStack';
 
 export function QuestionScreen() {
+  const navigation = useNavigation<MypageNavigationProp>();
+  useFocusEffect(useHideTabBar(navigation));
   const data = useMemo(
     () => [
       {
