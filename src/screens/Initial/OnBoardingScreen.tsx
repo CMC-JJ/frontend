@@ -50,6 +50,7 @@ export function OnboardingScreen() {
               <ImageText
                 text={'오늘 비행기를 타고\n국내 여행을 떠나시나요?'}
                 image={image_1}
+                style={{top: 35}}
               />
             ),
           },
@@ -62,6 +63,7 @@ export function OnboardingScreen() {
                 <ImageText
                   text={'친구들을 등록해서\n서로의 위치를 확인할 수 있어요.'}
                   image={image_2}
+                  style={{top: 20}}
                 />
               </View>
             ),
@@ -76,6 +78,7 @@ export function OnboardingScreen() {
                   '공항, 항공사에서 제공하는\n교통약자 서비스를\n한눈에 살펴볼 수 있어요.'
                 }
                 image={image_3}
+                style={{top: 25}}
               />
             ),
           },
@@ -89,6 +92,7 @@ export function OnboardingScreen() {
                   '고객센터, 사이트로 바로 연결해\n교통약자 서비를 쉽게신청해보세요.'
                 }
                 image={image_4}
+                style={{top: 20}}
               />
             ),
           },
@@ -107,5 +111,8 @@ const navBarStyle = (backgroundColor: string) =>
       backgroundColor: backgroundColor,
       borderWidth: 0,
       borderRadius: 5,
+    },
+    textPosition: {
+      bottom: 10,
     },
   });

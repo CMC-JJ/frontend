@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   airlineList: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 25,
+    marginRight: 15,
     paddingBottom: 10,
   },
 
