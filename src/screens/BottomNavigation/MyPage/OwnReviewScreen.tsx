@@ -349,6 +349,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: 32,
   },
   back: {
     position: 'absolute',
@@ -359,13 +360,13 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
-    marginTop: 5,
+    marginTop: 7,
+    top: '50%',
   },
   cardContainer: {paddingHorizontal: 30, paddingTop: 5},
   noticeContainer: {
     paddingHorizontal: 30,
     marginBottom: 20,
-    marginTop: 32,
   },
   notice: {
     backgroundColor: '#FAFAFA',
