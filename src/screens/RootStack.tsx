@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
@@ -20,6 +20,7 @@ import {
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
 import {useAuthStore} from '@/store';
+import AsyncStorage from '@react-native-community/async-storage';
 // import {usePermission} from '@/store';
 
 export type RootStackParamList = {
@@ -62,7 +63,10 @@ function RootStack() {
 
   // const {permissionAllow} = usePermission();
   const {auth} = useAuthStore();
-
+  useEffect(() => {
+    console.log('auth', auth);
+    AsyncStorage.getItem('user').then(result => console.log('storage', result));
+  }, [auth]);
   return (
     <Stack.Navigator>
       {/* {!permissionAllow.allow && (

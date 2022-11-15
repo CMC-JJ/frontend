@@ -19,13 +19,14 @@ import {changeNickName} from '@/utils/fetchMypage';
 import {MypageNavigationProp} from './MyPageStack';
 import {useAuthStore} from '@/store';
 import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export function InfoModifyScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
   const [nickName, setNickName] = useState<string>(params.auth.nickName);
   const [isNickNameValid, setIsNickNameValid] = useState<boolean>(false);
   const navigation = useNavigation<MypageNavigationProp>();
-  const {setOnlyNickName} = useAuthStore();
+  const {auth, setOnlyNickName} = useAuthStore();
 
   const regex = useMemo(() => /^[가-힣]+$/, []);
   useEffect(() => {
@@ -76,9 +77,18 @@ export function InfoModifyScreen() {
             onPress={() => {
               changeNickName(params.auth.userId, nickName).then(res => {
                 res && setOnlyNickName(nickName);
-
-                navigation.navigate('Home');
               });
+              AsyncStorage.clear();
+              const authForm = {
+                phoneNumber: auth.phoneNumber,
+                userId: auth.userId,
+                nickName: nickName,
+                userName: auth.userName,
+                jwtToken: auth.jwtToken,
+              };
+
+              AsyncStorage.setItem('user', JSON.stringify({user: authForm}));
+              navigation.navigate('Home');
             }}>
             <View
               style={[isNickNameValid ? styles.button : styles.blockButton]}>
