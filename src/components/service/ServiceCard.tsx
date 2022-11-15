@@ -4,6 +4,7 @@ import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFt from 'react-native-vector-icons/Feather';
 import IconOct from 'react-native-vector-icons/Octicons';
+import {ThinBar} from '../BarSeparator';
 
 export interface AirDetailProps {
   airportId: number;
@@ -46,19 +47,28 @@ export function ServiceCard({
     () => (
       <View style={infoStyles.info}>
         {list &&
-          list?.map(v => (
-            <View style={infoStyles.textContainer} key={v.id}>
-              <IconOct
-                style={infoStyles.dot}
-                size={20}
-                color="#0066FF"
-                name="dot-fill"
-              />
-              <FontText
-                style={infoStyles.text}
-                onPress={() => Linking.openURL(`${v.website}`)}>
-                {v.name}
-              </FontText>
+          list?.map((v, i) => (
+            <View key={v.id}>
+              <View style={infoStyles.textContainer}>
+                <IconOct
+                  style={infoStyles.dot}
+                  size={20}
+                  color="#0066FF"
+                  name="dot-fill"
+                />
+                <FontText
+                  style={infoStyles.text}
+                  onPress={() => Linking.openURL(`${v.website}`)}>
+                  {v.name}
+                </FontText>
+              </View>
+              {i !== list.length - 1 ? (
+                <View style={{paddingVertical: 8}}>
+                  <ThinBar />
+                </View>
+              ) : (
+                ''
+              )}
             </View>
           ))}
       </View>
@@ -126,6 +136,8 @@ export function ServiceCard({
       <View style={availableAt.container}>
         <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
         <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+      </View>
+      <View style={{alignItems: 'center'}}>
         <View style={styles.noticeContainer}>
           <FontText style={styles.notice}>
             서비스 클릭시 안내페이지로 이동
@@ -145,7 +157,6 @@ const infoStyles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
   },
   dot: {
     marginLeft: 10,
@@ -196,7 +207,7 @@ const titleStyles = StyleSheet.create({
     transform: [{rotate: '15deg'}],
   },
   link: {
-    marginLeft: 10,
+    marginLeft: 15,
   },
   phNumContainer: {
     width: 100,
@@ -217,7 +228,7 @@ const titleStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 34,
+    paddingVertical: 25,
   },
 
   image: {
@@ -234,8 +245,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
     borderColor: '#0066FF',
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     paddingVertical: 5,
     width: 190,
+    alignItems: 'center',
   },
 });

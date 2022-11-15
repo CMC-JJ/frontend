@@ -40,5 +40,3 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 });
-
-// Platform.OS === 'android' &&

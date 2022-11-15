@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
@@ -12,14 +12,16 @@ import {
   MainTab,
   FindIdComplete,
   FindPasswordComplete,
-  PermissionScreen,
+  // PermissionScreen,
   OnboardingScreen,
   StartScreen,
   TermsScreen,
   ScheduleDetail,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
-import {useAuthStore, usePermission} from '@/store';
+import AsyncStorage from '@react-native-community/async-storage';
+// import {usePermission} from '@/store';
+import {useAuthStore} from '@/store';
 
 export type RootStackParamList = {
   Permission: undefined;
@@ -60,18 +62,20 @@ function RootStack() {
   // TODO: 유저의 정보가 있으면 Stack에서 필요없는 screen 제거!
   const {auth} = useAuthStore();
 
-  const {permissionAllow} = usePermission();
-  //permissionAllow = 모두허용되어있을 때 true
-
+  // const {permissionAllow} = usePermission();
+  useEffect(() => {
+    console.log('auth', auth);
+    AsyncStorage.getItem('user').then(result => console.log('storage', result));
+  }, [auth]);
   return (
     <Stack.Navigator>
-      {!permissionAllow.allow && (
+      {/* {!permissionAllow.allow && (
         <Stack.Screen
           name="Permission"
           component={PermissionScreen}
           options={{headerShown: false}}
         />
-      )}
+      )} */}
       {auth.userId === 0 ? (
         <>
           <Stack.Screen
@@ -82,11 +86,6 @@ function RootStack() {
           <Stack.Screen
             name="Start"
             component={StartScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Terms"
-            component={TermsScreen}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -149,6 +148,11 @@ function RootStack() {
           />
         </>
       )}
+      <Stack.Screen
+        name="Terms"
+        component={TermsScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

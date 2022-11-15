@@ -109,7 +109,7 @@ export function ReportScreen() {
   }, []);
 
   const submit = () => {
-    if (menu) {
+    if (menu && params) {
       (params.type === 'airport'
         ? reportAirportReview(params.id, menu.id, text)
         : reportAirlineReview(params.id, menu.id, text)
@@ -118,7 +118,7 @@ export function ReportScreen() {
           ? Alert.alert('\n신고가 접수되었습니다.\n ', '', [
               {
                 text: '확인',
-                onPress: () => navigation.navigate('Service'),
+                onPress: () => navigation.pop(),
               },
             ])
           : Alert.alert('\n오류가 발생했습니다.\n다시 시도해주세요.\n'),

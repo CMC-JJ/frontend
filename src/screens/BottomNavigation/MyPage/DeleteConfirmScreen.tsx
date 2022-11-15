@@ -7,6 +7,8 @@ import {FontText} from '@/components/FontText';
 import {ArrowBack, SignButton, TabHeader} from '@/components';
 import IconOct from 'react-native-vector-icons/Octicons';
 import {accountDelete} from '@/utils/fetchMypage';
+import AsyncStorage from '@react-native-community/async-storage';
+import {initialState, useAuthStore} from '@/store';
 export type DeleteConfirmCompleteRouteProp = RouteProp<
   MypageStackParamList,
   'DeleteConfirm'
@@ -20,14 +22,17 @@ export function DeleteConfirmScreen() {
   ];
   const {params} = useRoute<DeleteConfirmCompleteRouteProp>();
   const navigation = useNavigation<MypageNavigationProp>();
-
+  const {setAuth} = useAuthStore();
   const onDelete = () => {
     Alert.alert('계정을 삭제하시겠습니까?', '', [
       {
         text: '네',
         onPress: () => {
-          accountDelete(params.userId, params.deleteId),
-            navigation.navigate('Start');
+          accountDelete(params.userId, params.deleteId);
+          setAuth(initialState);
+          // AsyncStorage.removeItem('user');
+          AsyncStorage.clear();
+          navigation.navigate('Start');
         },
       },
       {

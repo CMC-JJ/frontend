@@ -17,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-community/picker": "^1.8.1",
     "@react-navigation/bottom-tabs": "^6.4.0",
@@ -29,7 +30,6 @@
     "react-native-date-picker": "^4.2.6",
     "react-native-elements": "^3.4.2",
     "react-native-onboarding-swiper": "^1.2.0",
-    "react-native-permissions": "^3.6.1",
     "react-native-picker-select": "^8.0.4",
     "react-native-ratings": "^8.1.0",
     "react-native-responsive-screen": "^1.4.2",

@@ -1,4 +1,4 @@
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {ComponentProps} from 'react';
 import {FontText} from '../FontText';
 
@@ -19,31 +19,36 @@ export default function AirportIcon({
 }: ServiceIconProps) {
   return (
     <>
-      <TouchableOpacity
-        {...rest}
-        style={[styles.circle, isActived && styles.activeIcon, style]}>
-        {region ? (
-          <FontText
-            style={[styles.iconText, isActived && styles.activeIconText]}>
-            {region}
-          </FontText>
-        ) : (
-          <Image
-            source={{
-              uri: logoImageUrl,
-            }}
-            style={styles.image}
-          />
-        )}
+      <TouchableOpacity style={styles.iconContainer} {...rest}>
+        <View style={[styles.circle, isActived && styles.activeIcon, style]}>
+          {region ? (
+            <FontText
+              style={[styles.iconText, isActived && styles.activeIconText]}>
+              {region}
+            </FontText>
+          ) : (
+            <Image
+              source={{
+                uri: logoImageUrl,
+              }}
+              style={styles.image}
+            />
+          )}
+        </View>
+        <FontText style={[styles.name, isActived && styles.activeText]}>
+          {name}
+        </FontText>
       </TouchableOpacity>
-      <FontText style={[styles.name, isActived && styles.activeText]}>
-        {name}
-      </FontText>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  iconContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    margin: 5,
+  },
   circle: {
     width: 66,
     height: 66,
@@ -59,9 +64,14 @@ const styles = StyleSheet.create({
       width: 1,
     },
     elevation: 10,
-    margin: 5,
   },
-  name: {marginTop: 13, fontWeight: '500', fontSize: 15, color: '#979797'},
+  name: {
+    marginTop: 13,
+    fontWeight: '500',
+    fontSize: 15,
+    color: '#979797',
+    left: 1,
+  },
   activeIcon: {
     shadowColor: '#0066FF',
     shadowOpacity: 0.6,

@@ -21,6 +21,7 @@ import {InfoDetailCompleteRouteProp} from './MyPageScreen';
 import {initialState, useAuthStore} from '@/store';
 import {useHideTabBar} from '@/hooks/useVisibleTabBar';
 import {MypageNavigationProp} from '@/screens';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export function InfoDetailScreen() {
   const {params} = useRoute<InfoDetailCompleteRouteProp>();
@@ -32,6 +33,8 @@ export function InfoDetailScreen() {
         text: '네',
         onPress: () => {
           setAuth(initialState);
+          // AsyncStorage.removeItem('user');
+          AsyncStorage.clear();
           navigation.navigate('Start');
         },
       },
@@ -58,7 +61,9 @@ export function InfoDetailScreen() {
           <FontText style={styles.userName}>{params.auth.userName}</FontText>
         </View>
       </View>
-      <ThickBar />
+      <View style={{marginTop: 18}}>
+        <ThickBar />
+      </View>
       <TextRightIcon
         text={'내 정보 수정하기'}
         onPress={() => {
@@ -123,9 +128,9 @@ const styles = StyleSheet.create({
     marginTop: 46,
     alignItems: 'center',
   },
-  textContainer: {marginTop: 28, alignItems: 'center', marginBottom: 30},
-  nickName: {fontSize: 18, fontWeight: '600', marginBottom: 11},
-  userName: {fontSize: 15, fontWeight: '500', color: '#979797'},
+  textContainer: {marginTop: 12, alignItems: 'center'},
+  nickName: {fontSize: 19, fontWeight: '600', marginBottom: 7},
+  userName: {fontSize: 17, fontWeight: '400', color: '#979797'},
   delete: {
     textDecorationLine: 'underline',
     fontSize: 13,

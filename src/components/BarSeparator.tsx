@@ -7,6 +7,7 @@ export function ThickBar({style}: {style?: ComponentProps<typeof View>}) {
 export function ThinBar({style}: {style?: ComponentProps<typeof View>}) {
   return <View style={[styles.thinBar, style]} />;
 }
+
 const styles = StyleSheet.create({
   thinBar: {borderWidth: 0.5, borderColor: '#DEDEDE'},
   thickBar: {
