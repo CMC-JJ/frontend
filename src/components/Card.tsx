@@ -100,7 +100,7 @@ export function Card({
       </View>
       <View style={styles.buttonContainer}>
         {/* TODO: onPress 이벤트 */}
-        {isPast ? (
+        {isPast && (
           <TouchableOpacity
             style={[styles.editButton, styles.reviewButton]}
             onPress={() => {
@@ -108,13 +108,16 @@ export function Card({
             }}>
             <FontText style={styles.reviewButtonText}>리뷰쓰기</FontText>
           </TouchableOpacity>
-        ) : (
+        )}
+        {/* TODO: 나중에 앱 업데이트시 수정하기 버튼 기능 넣기 */}
+        {/* (
           <TouchableOpacity style={styles.editButton} onPress={() => {}}>
             <FontText style={styles.buttonText}>수정하기</FontText>
           </TouchableOpacity>
-        )}
+        ) */}
+        {/* TODO: 이 부분 나중에 수정하기 기능 업데이트 시 스타일제거 */}
         <TouchableOpacity
-          style={styles.deleteButton}
+          style={[styles.deleteButton, !isPast && {flex: 1}]}
           onPress={() => {
             onPressDeleteButton(scheduleId);
           }}>

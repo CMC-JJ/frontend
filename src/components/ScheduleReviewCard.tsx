@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   cardHeader: {
     marginTop: 4,
-    marginLeft: 10,
+    marginLeft: 12,
     fontWeight: '700',
     fontSize: 18,
     lineHeight: 25,

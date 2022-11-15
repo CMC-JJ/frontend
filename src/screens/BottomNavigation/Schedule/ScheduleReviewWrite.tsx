@@ -71,13 +71,6 @@ export function ScheduleReviewWrite() {
       'POST',
     );
 
-    console.log(
-      services.map(service => (service as AirportServices).airportServiceId),
-    );
-    console.log(bodyData);
-
-    console.log(res);
-
     if (res.isSuccess) {
       Alert.alert('등록이 완료되었습니다.');
       navigation.navigate('Review', {

@@ -47,14 +47,28 @@ export function PhoneAuth({
 
   const onPressAuth = async () => {
     Keyboard.dismiss();
+
+    if (isSignUp) {
+      setSignUpForm('phoneNumber', convertPhoneNumberFormat(phoneNumber));
+
+      const res = await request(
+        'web/auth/duplicate-phonenumber',
+        {
+          phoneNumber: convertPhoneNumberFormat(phoneNumber),
+        },
+        'GET',
+      );
+
+      if (!res.isSuccess) {
+        Alert.alert(res.message);
+        return;
+      }
+    }
+
     Alert.alert('인증번호가 발송되었습니다. 3분 안에 인증번호를 입력해주세요.');
 
     if (!didPressAuthButton) {
       setDidPressAuthButton(true);
-    }
-
-    if (isSignUp) {
-      setSignUpForm('phoneNumber', convertPhoneNumberFormat(phoneNumber));
     }
 
     setTime(AUTHENTICATION_TIME);
