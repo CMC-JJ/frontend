@@ -12,22 +12,10 @@ type CardProps = {
   startAt: string;
   scheduleId: number;
   isPast?: boolean;
+  isReviewComplete?: boolean;
   onPressDeleteButton: (scheduleId: number) => void;
   onPressReviewOrEditButton: (scheduleId: number) => void;
 };
-
-// TODO: useMutation으로 관리!
-// const deleteSchedule = (scheduleId: number, jwtToken: string) => {
-//   return fetch('https://dev.jj-gotogether.shop/web/schedules/status', {
-//     method: 'PATCH',
-//     body: JSON.stringify({
-//       scheduleId,
-//     }),
-//     headers: {
-//       'x-access-token': `${jwtToken}`,
-//     },
-//   }).then(res => res.json());
-// };
 
 // TODO: 카드 컴포넌트 분리 필요!
 // TODO: 카드 컴포넌트 눌렀을 때, 일정 상세 페이지로 이동!
@@ -39,26 +27,11 @@ export function Card({
   scheduleName,
   startAt,
   scheduleId,
+  isReviewComplete,
   onPressDeleteButton,
   onPressReviewOrEditButton,
   isPast = false,
 }: CardProps) {
-  // const onPressDeleteButton = async () => {
-  //   const result = await request(
-  //     'web/schedules/status',
-  //     {
-  //       scheduleId: scheduleId,
-  //     },
-  //     'PATCH',
-  //   );
-
-  //   if (result.isSuccess) {
-  //     Alert.alert('일정이 삭제되었습니다.');
-  //   } else {
-  //     Alert.alert(result.message);
-  //   }
-  // };
-
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardHeaderContainer}>
@@ -78,7 +51,7 @@ export function Card({
           <FontText style={styles.startAtText}>{startAt}</FontText>
         </View>
       )}
-      <View style={[styles.airSummary]}>
+      <View style={styles.airSummary}>
         <View style={styles.airports}>
           <FontText style={styles.airportText}>{departureAirportName}</FontText>
           <Icon
@@ -98,24 +71,35 @@ export function Card({
           <FontText style={styles.airlineText}>{airlineName}</FontText>
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        {/* TODO: onPress 이벤트 */}
-        {isPast && (
-          <TouchableOpacity
-            style={[styles.editButton, styles.reviewButton]}
-            onPress={() => {
-              onPressReviewOrEditButton(scheduleId);
-            }}>
-            <FontText style={styles.reviewButtonText}>리뷰쓰기</FontText>
-          </TouchableOpacity>
-        )}
-        {/* TODO: 나중에 앱 업데이트시 수정하기 버튼 기능 넣기 */}
-        {/* (
+      {/* TODO: onPress 이벤트 */}
+      {/* TODO: 나중에 앱 업데이트시 수정하기 버튼 기능 넣기 */}
+      {/* (
           <TouchableOpacity style={styles.editButton} onPress={() => {}}>
             <FontText style={styles.buttonText}>수정하기</FontText>
           </TouchableOpacity>
         ) */}
-        {/* TODO: 이 부분 나중에 수정하기 기능 업데이트 시 스타일제거 */}
+      {/* TODO: 이 부분 나중에 수정하기 기능 업데이트 시 스타일제거 */}
+      <View style={styles.buttonContainer}>
+        {isPast && (
+          <TouchableOpacity
+            style={[
+              styles.editButton,
+              styles.reviewButton,
+              isReviewComplete === true && styles.disabledButton,
+            ]}
+            disabled={isReviewComplete === true}
+            onPress={() => {
+              onPressReviewOrEditButton(scheduleId);
+            }}>
+            <FontText
+              style={[
+                styles.reviewButtonText,
+                isReviewComplete === true && styles.buttonText,
+              ]}>
+              {isReviewComplete === true ? '작성완료' : '리뷰쓰기'}
+            </FontText>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={[styles.deleteButton, !isPast && {flex: 1}]}
           onPress={() => {
@@ -232,8 +216,8 @@ const styles = StyleSheet.create({
     color: '#0066FF',
   },
   buttonContainer: {
-    marginTop: 28,
-    flex: 1,
+    marginTop: 20,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 23,
@@ -248,6 +232,9 @@ const styles = StyleSheet.create({
   },
   reviewButton: {
     backgroundColor: '#0066FF',
+  },
+  disabledButton: {
+    backgroundColor: '#EFEFEF',
   },
   deleteButton: {
     flex: 0.25,
