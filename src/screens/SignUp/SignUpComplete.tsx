@@ -37,7 +37,7 @@ export function SignUpComplete() {
     if (result.isSuccess) {
       const form = {
         phoneNumber: result.result.phoneNumber,
-        userId: result.result.createdUserId,
+        userId: result.result.createUserId,
         nickName: result.result.nickName,
         userName: result.result.userName,
         jwtToken: result.result.jwt,
