@@ -2,7 +2,6 @@ import {View, StyleSheet, Image, TouchableOpacity, Linking} from 'react-native';
 import React, {useMemo} from 'react';
 import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
-import IconFt from 'react-native-vector-icons/Feather';
 import IconOct from 'react-native-vector-icons/Octicons';
 import {ThinBar} from '../BarSeparator';
 
@@ -101,13 +100,21 @@ export function ServiceCard({
           />
           <FontText style={titleStyles.avgReview}>{data?.avgReview}</FontText>
         </View>
-        <View style={{flexDirection: 'row', zIndex: 10, alignItems: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            zIndex: 10,
+            alignItems: 'center',
+          }}>
           <TouchableOpacity
             onPress={() => {
               Linking.openURL(`tel:${data?.customerServiceNumber}`);
             }}
             style={titleStyles.phone}>
-            <IconFt name="phone" size={20} color="#0066FF" />
+            <Image
+              style={{width: 16, height: 21}}
+              source={require('@/assets/images/callIcon.png')}
+            />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -115,7 +122,10 @@ export function ServiceCard({
               Linking.openURL(`${data?.website}`);
             }}
             style={titleStyles.link}>
-            <IconFt name="external-link" size={22} color="#0066FF" />
+            <Image
+              style={{width: 17, height: 16}}
+              source={require('@/assets/images/linkIcon.png')}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -160,7 +170,7 @@ const infoStyles = StyleSheet.create({
   },
   dot: {
     marginLeft: 10,
-    marginRight: 31,
+    marginRight: 27,
   },
 });
 const availableAt = StyleSheet.create({
@@ -192,7 +202,7 @@ const titleStyles = StyleSheet.create({
       width: 1,
     },
     elevation: 10,
-    marginRight: 20,
+    marginRight: 12,
   },
   star: {
     marginLeft: 10,
@@ -203,11 +213,9 @@ const titleStyles = StyleSheet.create({
     color: '#0066FF',
     marginLeft: 4,
   },
-  phone: {
-    transform: [{rotate: '15deg'}],
-  },
+  phone: {},
   link: {
-    marginLeft: 15,
+    marginLeft: 18,
   },
   phNumContainer: {
     width: 100,

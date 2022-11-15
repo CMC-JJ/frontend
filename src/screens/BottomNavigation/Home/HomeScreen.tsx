@@ -75,8 +75,6 @@ export function HomeScreen() {
     fetchSchedule();
   }, [fetchSchedule]);
 
-  console.log(data);
-
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />

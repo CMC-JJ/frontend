@@ -33,7 +33,6 @@ export function SignUpComplete() {
       },
       'POST',
     );
-
     if (result.isSuccess) {
       const form = {
         phoneNumber: result.result.phoneNumber,
