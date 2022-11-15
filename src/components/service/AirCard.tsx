@@ -2,7 +2,6 @@ import {Image, Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {FontText} from '../FontText';
 import Icon from 'react-native-vector-icons/AntDesign';
-import IconFt from 'react-native-vector-icons/Feather';
 import {AirCardProps} from '@/screens';
 
 export default function AirCard({data}: {data: AirCardProps | undefined}) {
@@ -26,13 +25,21 @@ export default function AirCard({data}: {data: AirCardProps | undefined}) {
             <FontText style={styles.avgReview}>{data?.avgReview}</FontText>
           </View>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', zIndex: 10}}>
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              zIndex: 10,
+            }}>
             <TouchableOpacity
               onPress={() => {
                 Linking.openURL(`tel:${data?.customerServiceNumber}`);
               }}
               style={styles.phone}>
-              <IconFt name="phone" size={20} color="#0066FF" />
+              <Image
+                style={{width: 16, height: 21}}
+                source={require('@/assets/images/callIcon.png')}
+              />
+              {/* <IconFt name="phone" size={20} color="#0066FF" /> */}
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -40,7 +47,11 @@ export default function AirCard({data}: {data: AirCardProps | undefined}) {
                 Linking.openURL(`${data?.website}`);
               }}
               style={styles.link}>
-              <IconFt name="external-link" size={22} color="#0066FF" />
+              {/* <IconFt name="external-link" size={22} color="#0066FF" /> */}
+              <Image
+                style={{width: 17, height: 16}}
+                source={require('@/assets/images/linkIcon.png')}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -112,10 +123,10 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   phone: {
-    transform: [{rotate: '15deg'}],
+    // transform: [{rotate: '15deg'}],
   },
   link: {
-    marginLeft: 10,
+    marginLeft: 18,
   },
   phNumContainer: {
     width: 100,

@@ -64,7 +64,6 @@ function RootStack() {
 
   // const {permissionAllow} = usePermission();
   useEffect(() => {
-    console.log('auth', auth);
     AsyncStorage.getItem('user').then(result => console.log('storage', result));
   }, [auth]);
   return (
