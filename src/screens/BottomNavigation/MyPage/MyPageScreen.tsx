@@ -53,7 +53,7 @@ export function MyPageScreen() {
 
         {/* infoBox */}
       </View>
-      <View style={{marginTop: 30}}>
+      <View style={{marginTop: 23}}>
         <ThickBar />
       </View>
       {/* 하단 */}

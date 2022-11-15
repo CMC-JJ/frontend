@@ -15,6 +15,7 @@ import {ArrowBack, SignButton, FormHeader, SignInForm} from '@/components';
 import {useAuthStore, useSignUpStore} from '@/store';
 import {request} from '@/utils';
 import type {RootStackNavigationProp} from '@/screens';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export function SignInScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -63,8 +64,9 @@ export function SignInScreen() {
         userName: result.result.userName,
         jwtToken: result.result.jwt,
       };
-
       setAuth(authForm);
+      isCheckBoxSelected === true &&
+        AsyncStorage.setItem('user', JSON.stringify({user: authForm}));
       initializeSignUpForm();
       navigation.navigate('MainTab', {screen: 'Home'});
     } else {

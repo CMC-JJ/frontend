@@ -126,7 +126,7 @@ export function OwnReviewScreen() {
         </View>
       </View>
 
-      {reviewList.length !== 0 ? (
+      {reviewList.length === 0 ? (
         <NoneReview navigation={navigationSchedule} />
       ) : (
         <FlatList

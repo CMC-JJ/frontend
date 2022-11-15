@@ -48,8 +48,8 @@ export function ServiceCard({
       <View style={infoStyles.info}>
         {list &&
           list?.map((v, i) => (
-            <View>
-              <View style={infoStyles.textContainer} key={v.id}>
+            <View key={v.id}>
+              <View style={infoStyles.textContainer}>
                 <IconOct
                   style={infoStyles.dot}
                   size={20}
@@ -150,7 +150,7 @@ const infoStyles = StyleSheet.create({
     marginBottom: 32,
     marginTop: 30,
   },
-  text: {fontWeight: '500', fontSize: 14},
+  text: {fontWeight: '500', fontSize: 16},
 
   textContainer: {
     flexDirection: 'row',
