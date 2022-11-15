@@ -21,14 +21,20 @@ import type {
 } from '@/screens';
 
 export type ScheduleStackParamList = {
-  ScheduleScreen: undefined;
+  ScheduleScreen?: {
+    refresh: true;
+  };
   Title: undefined;
   Date: undefined;
   AirService: undefined;
   Time: undefined;
   ChooseAirline: undefined;
   Convenience: undefined;
-  Complete: undefined;
+  Complete: {
+    departureAirportService: string[];
+    arrivalAirportService: string[];
+    airlineService: string[];
+  };
   Review: {
     scheduleId: number;
   };

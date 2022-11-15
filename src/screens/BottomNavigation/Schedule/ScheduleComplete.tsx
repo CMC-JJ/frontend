@@ -1,11 +1,9 @@
 import {ArrowBack, FontText, SignButton} from '@/components';
 import {AIRLINE, AIRPORT} from '@/constants';
-import {useAuthStore, useScheduleStore} from '@/store';
-import {request} from '@/utils';
-import {useNavigation} from '@react-navigation/native';
+import {useScheduleStore} from '@/store';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {
-  Alert,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -14,39 +12,25 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import type {ScheduleNavigationProp} from './ScheduleStack';
+import type {
+  ScheduleNavigationProp,
+  ScheduleStackParamList,
+} from './ScheduleStack';
 
-// TODO: 공항 서비스 연동 필요!
+type ScheduleCompleteRouteProp = RouteProp<ScheduleStackParamList, 'Complete'>;
+
 export function ScheduleComplete() {
+  const {
+    params: {departureAirportService, arrivalAirportService, airlineService},
+  } = useRoute<ScheduleCompleteRouteProp>();
   const navigation = useNavigation<ScheduleNavigationProp>();
   const {schedule, initializeSchedule} = useScheduleStore();
-  const {auth} = useAuthStore();
 
-  const onPress = async () => {
-    const result = await request(
-      'web/schedules',
-      {
-        userId: auth.userId,
-        startAt: schedule.startAt,
-        name: schedule.name,
-        departureAirportId: schedule.departureAirportId,
-        arrivalAirportId: schedule.arrivalAirportId,
-        airlineId: schedule.airlineId,
-        departureAirportServiceIds: schedule.departureAirportServiceIds,
-        arrivalAirportServiceIds: schedule.arrivalAirportServiceIds,
-        airlineServiceIds: schedule.airlineServiceIds,
-      },
-      'POST',
-      auth.jwtToken,
-    );
-
-    // TODO: 이 부분 수정 필요!
-    if (result.isSuccess) {
-      initializeSchedule();
-      navigation.navigate('Home');
-    } else {
-      Alert.alert(result.message);
-    }
+  const onPress = () => {
+    navigation.navigate('ScheduleScreen', {
+      refresh: true,
+    });
+    initializeSchedule();
   };
 
   return (
@@ -107,17 +91,11 @@ export function ScheduleComplete() {
                     <FontText style={styles.serviceTextHeader}>
                       {AIRPORT[schedule.departureAirportId]}
                     </FontText>
-                    <FontText style={styles.serviceText}>
-                      임산부, 유아, 어린이 동반
-                    </FontText>
-                    <FontText style={styles.serviceText}>
-                      장애인, 고령자 동반
-                    </FontText>
-                    {/* {schedule.departureAirportServiceIds.map(item => (
-                      <FontText key={item} style={styles.serviceText}>
+                    {departureAirportService.map((item, index) => (
+                      <FontText key={index} style={styles.serviceText}>
                         {item}
                       </FontText>
-                    ))} */}
+                    ))}
                   </View>
                 </View>
                 <View style={styles.serviceContainer}>
@@ -126,17 +104,11 @@ export function ScheduleComplete() {
                     <FontText style={styles.serviceTextHeader}>
                       {AIRPORT[schedule.arrivalAirportId]}
                     </FontText>
-                    {/* {schedule.arrivalAirportServiceIds.map(item => (
-                      <FontText key={item} style={styles.serviceText}>
+                    {arrivalAirportService.map((item, index) => (
+                      <FontText key={index} style={styles.serviceText}>
                         {item}
                       </FontText>
-                    ))} */}
-                    <FontText style={styles.serviceText}>
-                      교통약자 동반
-                    </FontText>
-                    <FontText style={styles.serviceText}>
-                      반려동물 동반
-                    </FontText>
+                    ))}
                   </View>
                 </View>
                 {/* TODO: scrollView 깨지는거 확인되면 marginBottom 넣기 */}
@@ -146,20 +118,11 @@ export function ScheduleComplete() {
                     <FontText style={styles.serviceTextHeader}>
                       {AIRLINE[schedule.airlineId].name}
                     </FontText>
-                    {/* {schedule.airlineServiceIds.map(item => (
-                      <FontText key={item} style={styles.serviceText}>
+                    {airlineService.map((item, index) => (
+                      <FontText key={index} style={styles.serviceText}>
                         {item}
                       </FontText>
-                    ))} */}
-                    <FontText style={styles.serviceText}>
-                      임산부/유아동반 손님
-                    </FontText>
-                    <FontText style={styles.serviceText}>
-                      반려동물 동반 손님
-                    </FontText>
-                    <FontText style={styles.serviceText}>
-                      휠체어 서비스 필요 손님
-                    </FontText>
+                    ))}
                   </View>
                 </View>
               </View>
