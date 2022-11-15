@@ -75,6 +75,8 @@ export function HomeScreen() {
     fetchSchedule();
   }, [fetchSchedule]);
 
+  console.log(data);
+
   return (
     <SafeAreaView style={styles.fill}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -208,22 +210,19 @@ export function HomeScreen() {
                     <View style={styles.serviceInfoContainer}>
                       <View style={styles.dotContainer}>
                         <View style={styles.circle} />
-                        {currentTab === 'airport'
-                          ? (data.schedule.departureAirportService.length !==
-                              0 ||
-                              data.schedule.arrivalAirportService.length !==
-                                0) && (
-                              <>
-                                <View style={styles.dashedLine} />
-                                <View style={styles.circle} />
-                              </>
-                            )
-                          : data.schedule.airlineService.length !== 0 && (
-                              <>
-                                <View style={styles.dashedLine} />
-                                <View style={styles.circle} />
-                              </>
-                            )}
+                        {currentTab === 'airport' ? (
+                          <>
+                            <View style={styles.dashedLine} />
+                            <View style={styles.circle} />
+                          </>
+                        ) : (
+                          data.schedule.airlineService.length !== 0 && (
+                            <>
+                              <View style={styles.dashedLine} />
+                              <View style={styles.circle} />
+                            </>
+                          )
+                        )}
                       </View>
                       <View style={styles.serviceTextContainer}>
                         {currentTab === 'airport' ? (

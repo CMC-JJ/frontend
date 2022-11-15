@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -13,8 +13,14 @@ import {
 } from 'react-native';
 import {Card, EmptySchedule, FontText, TabHeader} from '@/components';
 import {useAuthStore} from '@/store';
-import {useQuery} from 'react-query';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import type {ScheduleStackParamList} from '@/screens';
+// import {useQuery} from 'react-query';
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import type {ScheduleNavigationProp} from '@/screens';
 import AIcon from 'react-native-vector-icons/AntDesign';
 import {request} from '@/utils';
@@ -28,26 +34,26 @@ type queryParamsType = {
   page?: string;
 };
 
-const fetchSchedule = (type: currentTabType, jwtToken: string) => {
-  const params: queryParamsType = {type};
+// const fetchSchedule = (type: currentTabType, jwtToken: string) => {
+//   const params: queryParamsType = {type};
 
-  if (type === 'past') {
-    params.sort = 'latest';
-    params.page = '1';
-  }
+//   if (type === 'past') {
+//     params.sort = 'latest';
+//     params.page = '1';
+//   }
 
-  return fetch(
-    `https://dev.jj-gotogether.shop/web/schedules?${new URLSearchParams(
-      params,
-    ).toString()}`,
-    {
-      method: 'GET',
-      headers: {
-        'x-access-token': `${jwtToken}`,
-      },
-    },
-  ).then(res => res.json());
-};
+//   return fetch(
+//     `https://dev.jj-gotogether.shop/web/schedules?${new URLSearchParams(
+//       params,
+//     ).toString()}`,
+//     {
+//       method: 'GET',
+//       headers: {
+//         'x-access-token': `${jwtToken}`,
+//       },
+//     },
+//   ).then(res => res.json());
+// };
 
 type Schedule = {
   scheduleId: number;
@@ -62,29 +68,60 @@ type Schedule = {
   startAt: string;
 };
 
-type ScheduleType = {
-  schedules: Schedule[];
-};
+// type ScheduleType = {
+//   schedules: Schedule[];
+// };
 
-type QueryType = {
-  code: number;
-  isSuccess: boolean;
-  message: string;
-  result: ScheduleType;
-};
+// type QueryType = {
+//   code: number;
+//   isSuccess: boolean;
+//   message: string;
+//   result: ScheduleType;
+// };
+
+// const {data, isLoading} = useQuery<QueryType, Error>(currentTab, () =>
+//   fetchSchedule(currentTab, auth.jwtToken),
+// );
+
+type ScheduleScreenRouteProp = RouteProp<
+  ScheduleStackParamList,
+  'ScheduleScreen'
+>;
 
 //TODO: 무한 스크롤 구현 필요
 //TODO: 필터링 기능 추가(최신순, 오래된 순, 탑승시간순)
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
+  const {params} = useRoute<ScheduleScreenRouteProp>();
+
   const navigation = useNavigation<ScheduleNavigationProp>();
   const [currentTab, setCurrentTab] = useState<currentTabType>('future');
   const [currentFilterTab, setCurrentFilterTab] =
     useState<currentFilterType>('latest');
 
-  const {data, isLoading} = useQuery<QueryType, Error>(currentTab, () =>
-    fetchSchedule(currentTab, auth.jwtToken),
-  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [refresh, setRefresh] = useState<boolean>(false);
+
+  const [data, setData] = useState<Schedule[]>([]);
+
+  // TODO: 이 부분 필터링에 맞게 수정
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      const params: queryParamsType = {type: currentTab};
+
+      if (currentTab === 'past') {
+        params.sort = 'latest';
+        params.page = '1';
+      }
+
+      const res = await request('web/schedules/', params, 'GET');
+
+      setData(res.result.schedules);
+      setIsLoading(false);
+    })();
+  }, [auth.jwtToken, currentTab, refresh, params]);
 
   const isCurrentFutureTabActive = currentTab === 'future';
 
@@ -108,7 +145,6 @@ export function ScheduleScreen() {
     }, [navigation]),
   );
 
-  // TODO:  삭제 시 페이지 리로드 필요!
   const onPressDeleteButton = async (id: number) => {
     const result = await request(
       'web/schedules/status',
@@ -120,6 +156,7 @@ export function ScheduleScreen() {
 
     if (result.isSuccess) {
       Alert.alert('일정이 삭제되었습니다.');
+      setRefresh(!refresh);
     } else {
       Alert.alert(result.message);
     }
@@ -176,14 +213,14 @@ export function ScheduleScreen() {
             <ActivityIndicator color="#0066ff" />
           </View>
         ) : isCurrentFutureTabActive ? (
-          data?.result.schedules.length === 0 ? (
+          data?.length === 0 ? (
             <EmptySchedule
               firstText="즐거운 여행길"
               secondText="일정과 항공편을 등록해 보세요"
             />
           ) : (
             <>
-              {data?.result.schedules.map(schedule => (
+              {data?.map(schedule => (
                 <TouchableOpacity
                   key={schedule.scheduleId}
                   onPress={() => {
@@ -214,7 +251,7 @@ export function ScheduleScreen() {
               </TouchableOpacity>
             </>
           )
-        ) : data?.isSuccess === false ? (
+        ) : data?.length === 0 ? (
           <EmptySchedule
             firstText="지난 일정이 없습니다!"
             secondText="일정을 추가해주세요"
@@ -275,7 +312,7 @@ export function ScheduleScreen() {
                 </FontText>
               </TouchableOpacity>
             </View>
-            {data?.result.schedules.map(schedule => (
+            {data?.map(schedule => (
               <TouchableOpacity
                 key={schedule.scheduleId}
                 onPress={() => {
@@ -349,6 +386,7 @@ const styles = StyleSheet.create({
   },
   addSchedule: {
     marginTop: 20,
+    marginHorizontal: 5,
     marginBottom: 100,
     borderRadius: 12,
     height: 64,
@@ -360,7 +398,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowColor: '#000000',
     shadowOpacity: 0.25,
-    elevation: 2,
+    elevation: 5,
   },
   filterContainer: {
     marginTop: 15,

@@ -2,7 +2,7 @@ import {ArrowBack, DateDisplay, SignButton, FontText} from '@/components';
 import {useScheduleStore} from '@/store';
 import {dateFormat} from '@/utils';
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -16,13 +16,13 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 export function ScheduleDate() {
   const {schedule, setSchedule} = useScheduleStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 10);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 10);
+  // }, []);
 
   const today = dateFormat(new Date());
   const markedDates = {
@@ -61,16 +61,16 @@ export function ScheduleDate() {
       </View>
       <View style={styles.divideLine} />
       <View style={styles.calendarConatiner}>
-        {/* 몇초 로딩 보여줄지? 결정 */}
         <View style={styles.calendar}>
           <CalendarList
-            style={[styles.calendarList, !isLoading && {opacity: 1}]}
+            // style={[styles.calendarList, !isLoading && {opacity: 1}]}
+            style={styles.calendarList}
             theme={{
               todayBackgroundColor: 'black',
               todayTextColor: 'blue',
             }}
             pastScrollRange={1}
-            futureScrollRange={24}
+            futureScrollRange={12}
             hideDayNames={true}
             onDayPress={day => setSchedule('startAt', day.dateString)}
             markedDates={markedDates}
@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
   },
   calendarList: {
     maxHeight: 470,
-    opacity: 0,
   },
   footer: {
     flex: 0.1,

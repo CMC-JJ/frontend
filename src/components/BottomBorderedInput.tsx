@@ -38,6 +38,7 @@ export const BottomBorderedInput = forwardRef<
           isCharacterExisted && isFocused && styles.focused,
           !isValid && styles.warning,
         ]}
+        placeholderTextColor="#7C7C7C"
         {...rest}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}

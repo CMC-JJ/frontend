@@ -12,7 +12,7 @@ function App() {
   // useEffect(() => {
   //   checkMultiplePermissions();
   // }, []);
-
+  const {setAuth} = useAuthStore();
   useEffect(() => {
     try {
       setTimeout(() => {
@@ -22,7 +22,7 @@ function App() {
       console.warn(e);
     }
   });
-  const {setAuth} = useAuthStore();
+
   useEffect(() => {
     try {
       const load = async () => {

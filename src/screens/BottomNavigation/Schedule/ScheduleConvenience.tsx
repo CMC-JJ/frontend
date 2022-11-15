@@ -11,6 +11,7 @@ import {request} from '@/utils';
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
+  Alert,
   Platform,
   SafeAreaView,
   ScrollView,
@@ -39,7 +40,7 @@ type AirlineServiceData = AirlineService[];
 
 export function ScheduleConvenience() {
   const navigation = useNavigation<ScheduleNavigationProp>();
-  const {schedule, setSchedule} = useScheduleStore();
+  const {schedule} = useScheduleStore();
   const {auth} = useAuthStore();
 
   const [departureAirportService, setDepartureAirportService] =
@@ -145,18 +146,41 @@ export function ScheduleConvenience() {
     [selectedAirlineServiceIds],
   );
 
-  const onPress = () => {
-    setSchedule('departureAirportServiceIds', [
-      ...selectedDepartureServiceIds.filter(id => id !== 0),
-    ]);
-    setSchedule('arrivalAirportServiceIds', [
-      ...selectedArrivalServiceIds.filter(id => id !== 0),
-    ]);
-    setSchedule('airlineServiceIds', [
-      ...selectedAirlineServiceIds.filter(id => id !== 0),
-    ]);
+  const onPress = async () => {
+    const result = await request(
+      'web/schedules',
+      {
+        userId: auth.userId,
+        startAt: schedule.startAt,
+        name: schedule.name,
+        departureAirportId: schedule.departureAirportId,
+        arrivalAirportId: schedule.arrivalAirportId,
+        airlineId: schedule.airlineId,
+        departureAirportServiceIds: [
+          ...selectedDepartureServiceIds.filter(id => id !== 0),
+        ],
+        arrivalAirportServiceIds: [
+          ...selectedArrivalServiceIds.filter(id => id !== 0),
+        ],
+        airlineServiceIds: [
+          ...selectedAirlineServiceIds.filter(id => id !== 0),
+        ],
+      },
+      'POST',
+      auth.jwtToken,
+    );
 
-    navigation.navigate('Complete');
+    if (result.isSuccess) {
+      navigation.navigate('Complete', {
+        departureAirportService:
+          result.result.createdSchedule.departureAirportService,
+        arrivalAirportService:
+          result.result.createdSchedule.arrivalAirportService,
+        airlineService: result.result.createdSchedule.airlineService,
+      });
+    } else {
+      Alert.alert(result.message);
+    }
   };
 
   return (

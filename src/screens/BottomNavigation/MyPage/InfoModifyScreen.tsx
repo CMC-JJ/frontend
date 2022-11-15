@@ -86,7 +86,6 @@ export function InfoModifyScreen() {
                 userName: auth.userName,
                 jwtToken: auth.jwtToken,
               };
-
               AsyncStorage.setItem('user', JSON.stringify({user: authForm}));
               navigation.navigate('Home');
             }}>

@@ -136,6 +136,8 @@ export function ServiceCard({
       <View style={availableAt.container}>
         <FontText style={availableAt.title}>고객센터 이용 시간</FontText>
         <FontText style={availableAt.time}>{data?.availableAt}</FontText>
+      </View>
+      <View style={{alignItems: 'center'}}>
         <View style={styles.noticeContainer}>
           <FontText style={styles.notice}>
             서비스 클릭시 안내페이지로 이동
@@ -150,7 +152,7 @@ const infoStyles = StyleSheet.create({
     marginBottom: 32,
     marginTop: 30,
   },
-  text: {fontWeight: '500', fontSize: 16},
+  text: {fontWeight: '500', fontSize: 14},
 
   textContainer: {
     flexDirection: 'row',
