@@ -60,8 +60,6 @@ function RootStack() {
   // TODO: 유저의 정보가 있으면 Stack에서 필요없는 screen 제거!
   const {auth} = useAuthStore();
 
-  console.log(auth);
-
   const {permissionAllow} = usePermission();
   //permissionAllow = 모두허용되어있을 때 true
 

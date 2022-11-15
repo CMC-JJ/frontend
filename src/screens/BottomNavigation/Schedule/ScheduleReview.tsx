@@ -11,7 +11,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -63,30 +63,34 @@ export function ScheduleReview() {
   const [data, setData] = useState<Review>();
   const [isValid, setIsValid] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (
-      data?.departureAirport.reviewStatus === '작성완료' ||
-      data?.arrivalAirport.reviewStatus === '작성완료' ||
-      data?.airline.reviewStatus === '작성완료'
-    ) {
-      setIsValid(true);
-    }
-  }, [
-    data?.airline.reviewStatus,
-    data?.arrivalAirport.reviewStatus,
-    data?.departureAirport.reviewStatus,
-  ]);
+  console.log(data);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       const res = await request(
         `web/schedules/${scheduleId.scheduleId}/reviews`,
         {},
         'GET',
       );
+      console.log(res);
+
       setData(res.result);
     })();
   }, [scheduleId]);
+
+  useEffect(() => {
+    if (
+      data?.departureAirport?.reviewStatus === '작성완료' ||
+      data?.arrivalAirport?.reviewStatus === '작성완료' ||
+      data?.airline?.reviewStatus === '작성완료'
+    ) {
+      setIsValid(true);
+    }
+  }, [
+    data?.airline?.reviewStatus,
+    data?.arrivalAirport?.reviewStatus,
+    data?.departureAirport?.reviewStatus,
+  ]);
 
   useFocusEffect(
     useCallback(() => {
@@ -110,7 +114,7 @@ export function ScheduleReview() {
         </View>
         <ScrollView>
           <View style={styles.marginBottomForScroll}>
-            {data && (
+            {data?.departureAirport && (
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('Write', {
@@ -130,7 +134,7 @@ export function ScheduleReview() {
                 />
               </TouchableOpacity>
             )}
-            {data && (
+            {data?.arrivalAirport && (
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('Write', {
@@ -150,7 +154,7 @@ export function ScheduleReview() {
                 />
               </TouchableOpacity>
             )}
-            {data && (
+            {data?.airline && (
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('Write', {
@@ -178,7 +182,9 @@ export function ScheduleReview() {
           isValid={isValid}
           buttonText="확인"
           onPress={() => {
-            navigation.navigate('ScheduleScreen');
+            navigation.navigate('ScheduleScreen', {
+              refresh: true,
+            });
           }}
         />
       </View>

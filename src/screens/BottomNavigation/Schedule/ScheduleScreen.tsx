@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
+  FlatList,
   Platform,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -14,7 +14,6 @@ import {
 import {Card, EmptySchedule, FontText, TabHeader} from '@/components';
 import {useAuthStore} from '@/store';
 import type {ScheduleStackParamList} from '@/screens';
-// import {useQuery} from 'react-query';
 import {
   RouteProp,
   useFocusEffect,
@@ -31,29 +30,8 @@ type currentFilterType = 'latest' | 'oldest' | 'boardingTime';
 type queryParamsType = {
   type: currentTabType;
   sort?: 'latest' | 'oldest' | 'boardingTime';
-  page?: string;
+  page?: number;
 };
-
-// const fetchSchedule = (type: currentTabType, jwtToken: string) => {
-//   const params: queryParamsType = {type};
-
-//   if (type === 'past') {
-//     params.sort = 'latest';
-//     params.page = '1';
-//   }
-
-//   return fetch(
-//     `https://dev.jj-gotogether.shop/web/schedules?${new URLSearchParams(
-//       params,
-//     ).toString()}`,
-//     {
-//       method: 'GET',
-//       headers: {
-//         'x-access-token': `${jwtToken}`,
-//       },
-//     },
-//   ).then(res => res.json());
-// };
 
 type Schedule = {
   scheduleId: number;
@@ -64,32 +42,16 @@ type Schedule = {
   departureAirportId: number;
   departureAirportName: string;
   leftDay?: string;
+  reviewStatus: string;
   scheduleName: string;
   startAt: string;
 };
-
-// type ScheduleType = {
-//   schedules: Schedule[];
-// };
-
-// type QueryType = {
-//   code: number;
-//   isSuccess: boolean;
-//   message: string;
-//   result: ScheduleType;
-// };
-
-// const {data, isLoading} = useQuery<QueryType, Error>(currentTab, () =>
-//   fetchSchedule(currentTab, auth.jwtToken),
-// );
 
 type ScheduleScreenRouteProp = RouteProp<
   ScheduleStackParamList,
   'ScheduleScreen'
 >;
 
-//TODO: 무한 스크롤 구현 필요
-//TODO: 필터링 기능 추가(최신순, 오래된 순, 탑승시간순)
 export function ScheduleScreen() {
   const {auth} = useAuthStore();
   const {params} = useRoute<ScheduleScreenRouteProp>();
@@ -98,13 +60,13 @@ export function ScheduleScreen() {
   const [currentTab, setCurrentTab] = useState<currentTabType>('future');
   const [currentFilterTab, setCurrentFilterTab] =
     useState<currentFilterType>('latest');
+  const page = useRef(1);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
 
   const [data, setData] = useState<Schedule[]>([]);
 
-  // TODO: 이 부분 필터링에 맞게 수정
   useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -112,8 +74,8 @@ export function ScheduleScreen() {
       const params: queryParamsType = {type: currentTab};
 
       if (currentTab === 'past') {
-        params.sort = 'latest';
-        params.page = '1';
+        params.sort = currentFilterTab;
+        params.page = page.current;
       }
 
       const res = await request('web/schedules/', params, 'GET');
@@ -121,7 +83,7 @@ export function ScheduleScreen() {
       setData(res.result.schedules);
       setIsLoading(false);
     })();
-  }, [auth.jwtToken, currentTab, refresh, params]);
+  }, [auth.jwtToken, currentTab, refresh, params, currentFilterTab]);
 
   const isCurrentFutureTabActive = currentTab === 'future';
 
@@ -144,6 +106,26 @@ export function ScheduleScreen() {
       });
     }, [navigation]),
   );
+
+  const fetchScheduleScroll = async () => {
+    if (data.length) {
+      page.current += 1;
+
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      const params: queryParamsType = {type: currentTab};
+
+      if (currentTab === 'past') {
+        params.sort = currentFilterTab;
+        params.page = page.current;
+      }
+
+      const res = await request('web/schedules/', params, 'GET');
+
+      if (res.isSuccess) {
+        setData(prev => [...prev, ...res.result.schedules]);
+      }
+    }
+  };
 
   const onPressDeleteButton = async (id: number) => {
     const result = await request(
@@ -180,6 +162,7 @@ export function ScheduleScreen() {
           ]}
           onPress={() => {
             setCurrentTab('future');
+            page.current = 1;
           }}>
           <Text
             style={[
@@ -196,6 +179,7 @@ export function ScheduleScreen() {
           ]}
           onPress={() => {
             setCurrentTab('past');
+            page.current = 1;
           }}>
           <Text
             style={[
@@ -206,8 +190,7 @@ export function ScheduleScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* TODO: 데이터 있고 없고 분리(flat list로 데이터 보여주기) */}
-      <ScrollView style={styles.scrollContainer}>
+      <View style={styles.scrollContainer}>
         {isLoading ? (
           <View style={styles.loading}>
             <ActivityIndicator color="#0066ff" />
@@ -219,37 +202,41 @@ export function ScheduleScreen() {
               secondText="일정과 항공편을 등록해 보세요"
             />
           ) : (
-            <>
-              {data?.map(schedule => (
+            <FlatList
+              renderItem={({item}) => (
                 <TouchableOpacity
-                  key={schedule.scheduleId}
+                  key={item.scheduleId}
                   onPress={() => {
                     navigation.navigate('ScheduleDetail', {
-                      scheduleId: schedule.scheduleId,
+                      scheduleId: item.scheduleId,
                     });
                   }}>
                   <Card
-                    airlineName={schedule.airlineName}
-                    arrivalAirportName={schedule.arrivalAirportName}
-                    departureAirportName={schedule.departureAirportName}
-                    leftDay={schedule.leftDay}
-                    scheduleName={schedule.scheduleName}
-                    scheduleId={schedule.scheduleId}
-                    startAt={schedule.startAt}
+                    airlineName={item.airlineName}
+                    arrivalAirportName={item.arrivalAirportName}
+                    departureAirportName={item.departureAirportName}
+                    leftDay={item.leftDay}
+                    scheduleName={item.scheduleName}
+                    scheduleId={item.scheduleId}
+                    startAt={item.startAt}
                     onPressDeleteButton={onPressDeleteButton}
                     // 수정 버튼 위한 이벤트
                     onPressReviewOrEditButton={() => {}}
                   />
                 </TouchableOpacity>
-              ))}
-              <TouchableOpacity
-                style={styles.addSchedule}
-                onPress={() => {
-                  navigation.navigate('Title');
-                }}>
-                <AIcon name="pluscircleo" size={20} color="#0066FF" />
-              </TouchableOpacity>
-            </>
+              )}
+              data={data}
+              keyExtractor={item => item.scheduleId.toString()}
+              ListFooterComponent={
+                <TouchableOpacity
+                  style={styles.addSchedule}
+                  onPress={() => {
+                    navigation.navigate('Title');
+                  }}>
+                  <AIcon name="pluscircleo" size={20} color="#0066FF" />
+                </TouchableOpacity>
+              }
+            />
           )
         ) : data?.length === 0 ? (
           <EmptySchedule
@@ -266,6 +253,7 @@ export function ScheduleScreen() {
                 ]}
                 onPress={() => {
                   setCurrentFilterTab('latest');
+                  page.current = 1;
                 }}>
                 <FontText
                   style={[
@@ -283,6 +271,7 @@ export function ScheduleScreen() {
                 ]}
                 onPress={() => {
                   setCurrentFilterTab('oldest');
+                  page.current = 1;
                 }}>
                 <FontText
                   style={[
@@ -301,6 +290,7 @@ export function ScheduleScreen() {
                 ]}
                 onPress={() => {
                   setCurrentFilterTab('boardingTime');
+                  page.current = 1;
                 }}>
                 <FontText
                   style={[
@@ -312,30 +302,38 @@ export function ScheduleScreen() {
                 </FontText>
               </TouchableOpacity>
             </View>
-            {data?.map(schedule => (
-              <TouchableOpacity
-                key={schedule.scheduleId}
-                onPress={() => {
-                  navigation.navigate('ScheduleDetail', {
-                    scheduleId: schedule.scheduleId,
-                  });
-                }}>
-                <Card
-                  airlineName={schedule.airlineName}
-                  arrivalAirportName={schedule.arrivalAirportName}
-                  departureAirportName={schedule.departureAirportName}
-                  scheduleName={schedule.scheduleName}
-                  startAt={schedule.startAt}
-                  scheduleId={schedule.scheduleId}
-                  isPast={true}
-                  onPressDeleteButton={onPressDeleteButton}
-                  onPressReviewOrEditButton={onPressReviewButton}
-                />
-              </TouchableOpacity>
-            ))}
+            <FlatList
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  key={item.scheduleId}
+                  onPress={() => {
+                    navigation.navigate('ScheduleDetail', {
+                      scheduleId: item.scheduleId,
+                    });
+                  }}>
+                  <Card
+                    airlineName={item.airlineName}
+                    arrivalAirportName={item.arrivalAirportName}
+                    departureAirportName={item.departureAirportName}
+                    scheduleName={item.scheduleName}
+                    startAt={item.startAt}
+                    scheduleId={item.scheduleId}
+                    isPast={true}
+                    isReviewComplete={item.reviewStatus === '작성완료'}
+                    onPressDeleteButton={onPressDeleteButton}
+                    onPressReviewOrEditButton={onPressReviewButton}
+                  />
+                </TouchableOpacity>
+              )}
+              data={data}
+              keyExtractor={item => item.scheduleId.toString()}
+              onEndReachedThreshold={0.7}
+              onEndReached={fetchScheduleScroll}
+              ListFooterComponent={<View style={{height: 100, flex: 1}} />}
+            />
           </>
         )}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
