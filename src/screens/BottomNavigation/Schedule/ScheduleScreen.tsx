@@ -80,7 +80,10 @@ export function ScheduleScreen() {
 
       const res = await request('web/schedules/', params, 'GET');
 
-      setData(res.result.schedules);
+      if (res.isSuccess) {
+        setData(res.result.schedules);
+      }
+
       setIsLoading(false);
     })();
   }, [auth.jwtToken, currentTab, refresh, params, currentFilterTab]);
@@ -139,6 +142,7 @@ export function ScheduleScreen() {
     if (result.isSuccess) {
       Alert.alert('일정이 삭제되었습니다.');
       setRefresh(!refresh);
+      page.current = 1;
     } else {
       Alert.alert(result.message);
     }
