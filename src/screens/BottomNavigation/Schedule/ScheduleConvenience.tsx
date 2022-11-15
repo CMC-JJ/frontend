@@ -169,7 +169,6 @@ export function ScheduleConvenience() {
       'POST',
       auth.jwtToken,
     );
-
     if (result.isSuccess) {
       navigation.navigate('Complete', {
         departureAirportService:

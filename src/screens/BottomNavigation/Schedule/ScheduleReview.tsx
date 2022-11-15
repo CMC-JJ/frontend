@@ -63,8 +63,6 @@ export function ScheduleReview() {
   const [data, setData] = useState<Review>();
   const [isValid, setIsValid] = useState<boolean>(false);
 
-  console.log(data);
-
   useLayoutEffect(() => {
     (async () => {
       const res = await request(
@@ -72,7 +70,6 @@ export function ScheduleReview() {
         {},
         'GET',
       );
-      console.log(res);
 
       setData(res.result);
     })();
