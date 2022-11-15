@@ -19,7 +19,7 @@ import {
   ScheduleDetail,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
-import {usePermission} from '@/store';
+import {useAuthStore, usePermission} from '@/store';
 
 export type RootStackParamList = {
   Permission: undefined;
@@ -58,6 +58,9 @@ function RootStack() {
   //   const navigation = useNavigation<RootStackNavigationProp>();
 
   // TODO: 유저의 정보가 있으면 Stack에서 필요없는 screen 제거!
+  const {auth} = useAuthStore();
+
+  console.log(auth);
 
   const {permissionAllow} = usePermission();
   //permissionAllow = 모두허용되어있을 때 true
@@ -71,77 +74,83 @@ function RootStack() {
           options={{headerShown: false}}
         />
       )}
-      {/* 유저정보있으면 온보딩 제거 */}
-      <Stack.Screen
-        name="OnBoarding"
-        component={OnboardingScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Start"
-        component={StartScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Terms"
-        component={TermsScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="MainTab"
-        component={MainTab}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SignIn"
-        component={SignInScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="FindId"
-        component={FindIdScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="FindIdComplete"
-        component={FindIdComplete}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="FindPassword"
-        component={FindPasswordScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="FindPasswordComplete"
-        component={FindPasswordComplete}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="PhoneAuth"
-        component={SignUpPhoneAuth}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUpScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="NickName"
-        component={SignUpNickName}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="SignUpComplete"
-        component={SignUpComplete}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ScheduleDetail"
-        component={ScheduleDetail}
-        options={{headerShown: false}}
-      />
+      {auth.userId === 0 ? (
+        <>
+          <Stack.Screen
+            name="OnBoarding"
+            component={OnboardingScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Start"
+            component={StartScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Terms"
+            component={TermsScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FindId"
+            component={FindIdScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FindIdComplete"
+            component={FindIdComplete}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FindPassword"
+            component={FindPasswordScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FindPasswordComplete"
+            component={FindPasswordComplete}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="PhoneAuth"
+            component={SignUpPhoneAuth}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="NickName"
+            component={SignUpNickName}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignUpComplete"
+            component={SignUpComplete}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{headerShown: false}}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="MainTab"
+            component={MainTab}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ScheduleDetail"
+            component={ScheduleDetail}
+            options={{headerShown: false}}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 }

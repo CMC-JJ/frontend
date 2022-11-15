@@ -1,4 +1,4 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StatusBar, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SignButton, FontText} from '@/components';
@@ -10,12 +10,12 @@ export function StartScreen() {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <SafeAreaView style={styles.fill}>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={styles.container}>
         <Image
           style={styles.logo}
           source={require('@/assets/images/loginLogo.png')}
         />
-
         <FontText style={styles.header}>
           {'설레는 항공여행\n가치가자와\n쉽고 빠르게 떠나요'}
         </FontText>
