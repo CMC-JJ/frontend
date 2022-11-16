@@ -63,8 +63,6 @@ export function ScheduleScreen() {
   const page = useRef(1);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [refresh, setRefresh] = useState<boolean>(false);
-
   const [data, setData] = useState<Schedule[]>([]);
 
   useEffect(() => {
@@ -84,9 +82,13 @@ export function ScheduleScreen() {
         setData(res.result.schedules);
       }
 
+      if (page.current === 1 && !res.isSuccess) {
+        setData([]);
+      }
+
       setIsLoading(false);
     })();
-  }, [auth.jwtToken, currentTab, refresh, params, currentFilterTab]);
+  }, [auth.jwtToken, currentTab, params, currentFilterTab]);
 
   const isCurrentFutureTabActive = currentTab === 'future';
 
@@ -111,7 +113,7 @@ export function ScheduleScreen() {
   );
 
   const fetchScheduleScroll = async () => {
-    if (data.length) {
+    if (data.length > 3) {
       page.current += 1;
 
       // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -131,21 +133,29 @@ export function ScheduleScreen() {
   };
 
   const onPressDeleteButton = async (id: number) => {
-    const result = await request(
-      'web/schedules/status',
+    Alert.alert('삭제하시겠습니까?', '', [
       {
-        scheduleId: id,
-      },
-      'PATCH',
-    );
+        text: '네',
+        onPress: async () => {
+          const result = await request(
+            'web/schedules/status',
+            {
+              scheduleId: id,
+            },
+            'PATCH',
+          );
 
-    if (result.isSuccess) {
-      Alert.alert('일정이 삭제되었습니다.');
-      setRefresh(!refresh);
-      page.current = 1;
-    } else {
-      Alert.alert(result.message);
-    }
+          if (result.isSuccess) {
+            Alert.alert('일정이 삭제되었습니다.');
+            setData([...data.filter(item => item.scheduleId !== id)]);
+            page.current = 1;
+          } else {
+            Alert.alert(result.message);
+          }
+        },
+      },
+      {text: '아니오'},
+    ]);
   };
 
   const onPressReviewButton = (id: number) => {

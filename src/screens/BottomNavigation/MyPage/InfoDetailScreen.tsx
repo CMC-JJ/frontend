@@ -31,11 +31,18 @@ export function InfoDetailScreen() {
     Alert.alert('로그아웃 하시겠습니까?', '', [
       {
         text: '네',
-        onPress: () => {
-          setAuth(initialState);
-          // AsyncStorage.removeItem('user');
-          AsyncStorage.clear();
-          navigation.navigate('Start');
+        onPress: async () => {
+          try {
+            setAuth(initialState);
+            if (Platform.OS === 'ios') {
+              AsyncStorage.removeItem('user');
+            } else {
+              await AsyncStorage.clear();
+            }
+            navigation.navigate('Start');
+          } catch (error) {
+            console.log(error);
+          }
         },
       },
       {

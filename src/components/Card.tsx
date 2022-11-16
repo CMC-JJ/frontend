@@ -136,8 +136,10 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   dayleft: {
-    minWidth: 45,
-    height: 27,
+    // minWidth: 45,
+    // height: 27,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
     borderRadius: 59,
     backgroundColor: '#0066FF',
     justifyContent: 'center',

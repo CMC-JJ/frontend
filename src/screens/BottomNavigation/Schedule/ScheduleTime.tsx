@@ -2,6 +2,7 @@ import {ArrowBack, DateDisplay, FontText, SignButton} from '@/components';
 import {useScheduleStore} from '@/store';
 import React, {useState} from 'react';
 import {
+  Alert,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -29,6 +30,17 @@ export function ScheduleTime() {
 
   const onPress = () => {
     const YYMMDD = schedule.startAt;
+
+    if (new Date(schedule.startAt) < new Date()) {
+      if (date.getHours() <= new Date().getHours()) {
+        Alert.alert(
+          '과거 날짜는 선택할 수 없습니다.',
+          '시간을 조정하거나 뒤로 돌아가 날짜를 다시 선택해 주세요.',
+        );
+        return;
+      }
+    }
+
     setSchedule(
       'startAt',
       `${YYMMDD.slice(0, 10)} ${formatTenDigit(
