@@ -39,6 +39,7 @@ export default function ServiceIcon({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    paddingLeft: 20,
   },
   airlineList: {
     justifyContent: 'center',

@@ -204,7 +204,7 @@ const styleReview = StyleSheet.create({
 const styleBody = StyleSheet.create({
   icon: {
     marginTop: 26,
-    paddingLeft: 20,
+    // paddingLeft: 20,
   },
   line: {},
   lineReview: {
@@ -266,21 +266,5 @@ const styles = StyleSheet.create({
     height: 21,
     backgroundColor: '#DEDEDE',
     marginHorizontal: 13,
-  },
-  allShow: {
-    width: 76,
-    height: 26,
-    borderRadius: 12,
-    backgroundColor: 'black',
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-  },
-  allShowText: {
-    color: 'white',
-    fontSize: 13,
-    textAlign: 'center',
-    fontWeight: '700',
   },
 });
