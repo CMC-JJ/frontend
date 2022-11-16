@@ -230,7 +230,7 @@ export function ScheduleConvenience() {
             <FontText style={styles.serviceHeader}>출발지 제공 서비스</FontText>
             <MIcon
               name={
-                departureExpanded ? 'keyboard-arrow-down' : 'keyboard-arrow-up'
+                departureExpanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
               }
               size={24}
               color="#000000"
@@ -257,7 +257,7 @@ export function ScheduleConvenience() {
             <FontText style={styles.serviceHeader}>도착지 제공 서비스</FontText>
             <MIcon
               name={
-                arrivalExpanded ? 'keyboard-arrow-down' : 'keyboard-arrow-up'
+                arrivalExpanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
               }
               size={24}
               color="#000000"

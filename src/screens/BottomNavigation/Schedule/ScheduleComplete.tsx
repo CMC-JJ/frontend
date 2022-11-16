@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
     color: '#7C7C7C',
   },
   wrapper: {
-    marginRight: 10,
+    // marginRight: 10,
+    alignItems: 'center',
   },
   airInfo: {
     marginTop: 40,

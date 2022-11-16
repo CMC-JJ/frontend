@@ -1,5 +1,5 @@
-import {Animated, StyleSheet, TouchableHighlight, View} from 'react-native';
-import React, {useRef, useState} from 'react';
+import {StyleSheet, TouchableHighlight, View} from 'react-native';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {FontText} from './FontText';
 
@@ -11,21 +11,12 @@ export default function DropDownItem({
   text: string;
 }) {
   const [isShow, setIsShow] = useState<boolean>();
-  const animationController = useRef(new Animated.Value(0)).current;
+  // const animationController = useRef(new Animated.Value(0)).current;
 
   const toggleListItem = () => {
-    const config = {
-      duraiton: 50,
-      toValue: isShow ? 0 : 1,
-      useNativeDriver: true,
-    };
-    Animated.timing(animationController, config).start();
     setIsShow(!isShow);
   };
-  const arrowTransform = animationController.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '-180deg'],
-  });
+  // const arrow
   return (
     <View style={styles.container}>
       <TouchableHighlight
@@ -33,9 +24,11 @@ export default function DropDownItem({
         onPress={() => toggleListItem()}>
         <View style={styles.titleContainer}>
           <FontText style={styles.title}>{title}</FontText>
-          <Animated.View style={{transform: [{rotateZ: arrowTransform}]}}>
+          {isShow ? (
+            <Icon name="up" color="black" size={20} />
+          ) : (
             <Icon name="down" color="black" size={20} />
-          </Animated.View>
+          )}
         </View>
       </TouchableHighlight>
       {isShow && (
