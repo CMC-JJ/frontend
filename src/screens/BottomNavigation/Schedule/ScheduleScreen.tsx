@@ -204,6 +204,7 @@ export function ScheduleScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.divideLine} />
       <View style={styles.scrollContainer}>
         {isLoading ? (
           <View style={styles.loading}>
@@ -369,8 +370,6 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#DEDEDE',
   },
   tabText: {
     paddingVertical: 10,
@@ -382,12 +381,17 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   activeContainer: {
+    marginTop: -2,
     borderBottomWidth: 2,
     borderBottomColor: '#0066FF',
   },
   activeText: {
     fontWeight: '600',
     color: '#0066FF',
+  },
+  divideLine: {
+    borderBottomColor: '#DEDEDE',
+    borderBottomWidth: 1,
   },
   scrollContainer: {
     flex: 1,
