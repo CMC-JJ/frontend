@@ -18,7 +18,6 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 
 // TODO: switch-selector 개선
 // TODO: 여기도 성능개선 필요
-// TODO: switch-selector 선택 시, 시간도 변경되게 조절해야함!
 export function ScheduleTime() {
   const navigation = useNavigation<ScheduleNavigationProp>();
   const {schedule, setSchedule} = useScheduleStore();
@@ -32,8 +31,15 @@ export function ScheduleTime() {
   const onPress = () => {
     const YYMMDD = schedule.startAt;
 
+    const curHours =
+      isAM && formatTenDigit(date.getHours()) >= 12
+        ? Number(formatTenDigit(date.getHours())) - 12
+        : !isAM && formatTenDigit(date.getHours()) < 12
+        ? Number(formatTenDigit(date.getHours())) + 12
+        : formatTenDigit(date.getHours());
+
     if (new Date(schedule.startAt) < new Date()) {
-      if (date.getHours() <= new Date().getHours()) {
+      if (curHours <= new Date().getHours()) {
         Alert.alert(
           '과거 날짜는 선택할 수 없습니다.',
           '시간을 조정하거나 뒤로 돌아가 날짜를 다시 선택해 주세요.',
@@ -45,7 +51,7 @@ export function ScheduleTime() {
     setSchedule(
       'startAt',
       `${YYMMDD.slice(0, 10)} ${formatTenDigit(
-        date.getHours(),
+        Number(curHours),
       )}:${formatTenDigit(date.getMinutes())}`,
     );
 
@@ -115,6 +121,7 @@ export function ScheduleTime() {
                   } else {
                     setIsAM(true);
                   }
+
                   setDate(val);
                 }}
                 onCancel={() => setOpen(false)}
