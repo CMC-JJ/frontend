@@ -18,6 +18,7 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 
 // TODO: switch-selector 개선
 // TODO: 여기도 성능개선 필요
+// TODO: switch-selector 선택 시, 시간도 변경되게 조절해야함!
 export function ScheduleTime() {
   const navigation = useNavigation<ScheduleNavigationProp>();
   const {schedule, setSchedule} = useScheduleStore();
