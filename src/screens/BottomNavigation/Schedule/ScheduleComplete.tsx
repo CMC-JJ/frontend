@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     color: '#7C7C7C',
   },
   wrapper: {
-    marginRight: 10,
+    // marginRight: 10,
   },
   airInfo: {
     marginTop: 40,
@@ -197,11 +197,13 @@ const styles = StyleSheet.create({
   airInfoTextContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    // width: '30%',
   },
   airInfoImageContainer: {
     marginTop: -30,
     justifyContent: 'center',
     alignItems: 'center',
+    // width: '40%',
   },
   direction: {
     fontWeight: '600',
@@ -234,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0066FF',
   },
   dotBorder: {
-    width: '55%',
+    width: '53%',
     borderColor: '#0066FF',
     borderWidth: 1,
     height: 1,
