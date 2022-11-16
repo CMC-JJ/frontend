@@ -16,13 +16,6 @@ import type {ScheduleNavigationProp} from './ScheduleStack';
 export function ScheduleDate() {
   const {schedule, setSchedule} = useScheduleStore();
   const navigation = useNavigation<ScheduleNavigationProp>();
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 10);
-  // }, []);
 
   const today = dateFormat(new Date());
   const markedDates = {
@@ -77,7 +70,6 @@ export function ScheduleDate() {
             monthFormat={'yyyy년 MM월'}
           />
         </View>
-
         <View style={styles.footer}>
           <SignButton
             isValid={!!schedule.startAt}

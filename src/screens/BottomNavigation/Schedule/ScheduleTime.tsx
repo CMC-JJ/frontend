@@ -97,7 +97,7 @@ export function ScheduleTime() {
                 onConfirm={val => {
                   setOpen(false);
                   const hours = val.getHours();
-                  if (hours > 12) {
+                  if (hours >= 12) {
                     setIsAM(false);
                   } else {
                     setIsAM(true);

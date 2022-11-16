@@ -61,8 +61,6 @@ function RootStack() {
   // TODO: 유저의 정보가 있으면 Stack에서 필요없는 screen 제거!
   const {auth} = useAuthStore();
 
-  // const {permissionAllow} = usePermission();
-
   return (
     <Stack.Navigator>
       {/* {!permissionAllow.allow && (
