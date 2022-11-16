@@ -145,7 +145,7 @@ export function ServiceScreen() {
         </View>
       </View>
       {/* 아이콘&이름 */}
-      <View style={styleBody.icon}>
+      <View style={[styleBody.icon]}>
         <ServiceIcon
           list={currentTab === 'airport' ? airportLists : airlineLists}
           menu={menu}
@@ -176,7 +176,11 @@ export function ServiceScreen() {
             <View style={styleBody.lineReview} />
             {/* 리뷰 정보 */}
             <View style={styleReview.titleContainer}>
-              <FontText style={styleReview.title}>항공사 리뷰</FontText>
+              <FontText style={styleReview.title}>{`항공사 리뷰(${
+                currentTab === 'airport'
+                  ? airportReview.length
+                  : airlineReview.length
+              })`}</FontText>
             </View>
           </View>
         }
@@ -200,7 +204,7 @@ const styleReview = StyleSheet.create({
 const styleBody = StyleSheet.create({
   icon: {
     marginTop: 26,
-    paddingHorizontal: 25,
+    paddingLeft: 20,
   },
   line: {},
   lineReview: {
@@ -237,7 +241,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   icon: {
     color: 'black',
@@ -249,7 +253,7 @@ const styles = StyleSheet.create({
     color: '#979797',
   },
   activeText: {
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#0066FF',
   },
   buttonContainer: {

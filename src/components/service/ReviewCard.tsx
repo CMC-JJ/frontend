@@ -91,8 +91,7 @@ const styles = StyleSheet.create({
   },
   review: {
     paddingHorizontal: 20,
-    paddingVertical: 34,
-    marginBottom: 10,
+    paddingVertical: 20,
   },
   reviewTitle: {
     flexDirection: 'row',
