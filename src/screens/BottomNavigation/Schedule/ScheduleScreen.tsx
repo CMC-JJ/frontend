@@ -80,7 +80,9 @@ export function ScheduleScreen() {
 
       if (res.isSuccess) {
         setData(res.result.schedules);
-      } else {
+      }
+
+      if (page.current === 1 && !res.isSuccess) {
         setData([]);
       }
 
@@ -111,7 +113,7 @@ export function ScheduleScreen() {
   );
 
   const fetchScheduleScroll = async () => {
-    if (data.length) {
+    if (data.length > 3) {
       page.current += 1;
 
       // eslint-disable-next-line @typescript-eslint/no-shadow

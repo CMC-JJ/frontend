@@ -3,10 +3,8 @@ import type {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import type {CompositeNavigationProp} from '@react-navigation/native';
 import React from 'react';
-import OctIcon from 'react-native-vector-icons/Octicons';
-import FontIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {Platform} from 'react-native';
+import {Image, Platform} from 'react-native';
 import {HomeScreen, ScheduleStack, MyPageStack, ServiceStack} from '@/screens';
 import type {
   RootStackNavigationProp,
@@ -62,8 +60,15 @@ export function MainTab() {
         component={HomeScreen}
         options={{
           title: '홈',
-          tabBarIcon: ({color = '#D9D9D9', size}) => (
-            <OctIcon name="home" size={size} color={color} />
+          tabBarIcon: ({size, focused}) => (
+            <Image
+              source={
+                focused
+                  ? require('@/assets/images/HomeFocused.png')
+                  : require('@/assets/images/Home.png')
+              }
+              style={{width: size * 1.2, height: size * 1.2}}
+            />
           ),
         }}
       />
@@ -87,8 +92,15 @@ export function MainTab() {
         component={ScheduleStack}
         options={{
           title: '일정',
-          tabBarIcon: ({color, size}) => (
-            <FontIcon name="calendar-check-o" size={size} color={color} />
+          tabBarIcon: ({size, focused}) => (
+            <Image
+              source={
+                focused
+                  ? require('@/assets/images/ScheduleFocused.png')
+                  : require('@/assets/images/Schedule.png')
+              }
+              style={{width: size * 1.2, height: size * 1.2}}
+            />
           ),
         }}
       />
@@ -97,8 +109,16 @@ export function MainTab() {
         component={MyPageStack}
         options={{
           title: '마이페이지',
-          tabBarIcon: ({color, size}) => (
-            <IonIcon name="person-outline" size={size} color={color} />
+          tabBarIcon: ({size, focused}) => (
+            <Image
+              source={
+                focused
+                  ? require('@/assets/images/ProfileFocused.png')
+                  : require('@/assets/images/Profile.png')
+              }
+              style={{width: size * 1.2, height: size * 1.2}}
+            />
+            // <IonIcon name="person-outline" size={size} color={color} />
           ),
         }}
       />
