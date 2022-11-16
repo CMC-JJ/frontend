@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
@@ -19,7 +19,6 @@ import {
   ScheduleDetail,
 } from '@/screens';
 import type {MainTabNavigationScreenParams} from '@/screens';
-import AsyncStorage from '@react-native-community/async-storage';
 // import {usePermission} from '@/store';
 import {useAuthStore} from '@/store';
 
@@ -63,9 +62,7 @@ function RootStack() {
   const {auth} = useAuthStore();
 
   // const {permissionAllow} = usePermission();
-  useEffect(() => {
-    AsyncStorage.getItem('user').then(result => console.log('storage', result));
-  }, [auth]);
+
   return (
     <Stack.Navigator>
       {/* {!permissionAllow.allow && (

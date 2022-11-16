@@ -186,7 +186,7 @@ const titleStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  name: {fontWeight: '700', fontSize: 20},
+  name: {fontWeight: '700', fontSize: 18},
   circle: {
     width: 33,
     height: 33,
