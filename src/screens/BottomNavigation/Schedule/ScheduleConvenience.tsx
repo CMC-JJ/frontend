@@ -284,7 +284,7 @@ export function ScheduleConvenience() {
             <FontText style={styles.serviceHeader}>항공사 제공 서비스</FontText>
             <MIcon
               name={
-                airlineExpanded ? 'keyboard-arrow-down' : 'keyboard-arrow-up'
+                airlineExpanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
               }
               size={24}
               color="#000000"

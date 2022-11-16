@@ -11,12 +11,10 @@ export default function DropDownItem({
   text: string;
 }) {
   const [isShow, setIsShow] = useState<boolean>();
-  // const animationController = useRef(new Animated.Value(0)).current;
 
   const toggleListItem = () => {
     setIsShow(!isShow);
   };
-  // const arrow
   return (
     <View style={styles.container}>
       <TouchableHighlight
