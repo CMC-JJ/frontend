@@ -47,44 +47,44 @@ export function ScheduleComplete() {
             </FontText>
           </View>
           <View style={styles.ticketContainer}>
-            <ScrollView>
-              <View style={styles.scheduleInfo}>
-                <FontText style={styles.scheduleInfoText}>
-                  {schedule.name}
-                </FontText>
-                <FontText style={styles.scheduleInfoText}>
-                  {schedule.startAt.slice(0, 10)}
-                </FontText>
-              </View>
-              <View style={styles.wrapper}>
-                <View style={styles.airInfo}>
-                  <View style={styles.airInfoTextContainer}>
-                    <FontText style={styles.direction}>출발</FontText>
-                    <FontText style={styles.place}>
-                      {AIRPORT[schedule.departureAirportId]}
-                    </FontText>
+            <View style={styles.scheduleInfo}>
+              <FontText style={styles.scheduleInfoText}>
+                {schedule.name}
+              </FontText>
+              <FontText style={styles.scheduleInfoText}>
+                {schedule.startAt.slice(0, 10)}
+              </FontText>
+            </View>
+            <View style={styles.wrapper}>
+              <View style={styles.airInfo}>
+                <View style={styles.airInfoTextContainer}>
+                  <FontText style={styles.direction}>출발</FontText>
+                  <FontText style={styles.place}>
+                    {AIRPORT[schedule.departureAirportId]}
+                  </FontText>
+                </View>
+                <View style={styles.airInfoImageContainer}>
+                  <Icon name="aircraft-take-off" size={20} color="#0066ff" />
+                  <View style={styles.dotContainer}>
+                    <View style={styles.circle} />
+                    <View style={styles.dotBorder} />
+                    <View style={styles.circle} />
                   </View>
-                  <View style={styles.airInfoImageContainer}>
-                    <Icon name="aircraft-take-off" size={20} color="#0066ff" />
-                    <View style={styles.dotContainer}>
-                      <View style={styles.circle} />
-                      <View style={styles.dotBorder} />
-                      <View style={styles.circle} />
-                    </View>
-                    <FontText style={styles.airlineName}>
-                      {AIRLINE[schedule.airlineId].name}
-                    </FontText>
-                  </View>
-                  <View style={styles.airInfoTextContainer}>
-                    <FontText style={styles.direction}>도착</FontText>
-                    <FontText style={styles.place}>
-                      {AIRPORT[schedule.arrivalAirportId]}
-                    </FontText>
-                  </View>
+                  <FontText style={styles.airlineName}>
+                    {AIRLINE[schedule.airlineId].name}
+                  </FontText>
+                </View>
+                <View style={styles.airInfoTextContainer}>
+                  <FontText style={styles.direction}>도착</FontText>
+                  <FontText style={styles.place}>
+                    {AIRPORT[schedule.arrivalAirportId]}
+                  </FontText>
                 </View>
               </View>
-              <View style={styles.dotBorderLine} />
-              <View style={styles.serviceInfo}>
+            </View>
+            <View style={styles.dotBorderLine} />
+            <View style={styles.serviceInfo}>
+              <ScrollView>
                 <View style={styles.serviceContainer}>
                   <View style={styles.circle2} />
                   <View style={styles.serviceTextConatiner}>
@@ -125,13 +125,13 @@ export function ScheduleComplete() {
                     ))}
                   </View>
                 </View>
-              </View>
-              {/* <View style={styles.ticketRemove}>
-                <View style={styles.circle3} />
-                <View style={styles.dotBorderLine2} />
-                <View style={styles.circle4} />
-              </View> */}
-            </ScrollView>
+              </ScrollView>
+            </View>
+          </View>
+          <View style={styles.ticketRemove}>
+            <View style={styles.circle3} />
+            <View style={styles.dotBorderLine2} />
+            <View style={styles.circle4} />
           </View>
           <View style={styles.footer}>
             <SignButton isValid={true} buttonText="확인" onPress={onPress} />
@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 33,
     paddingHorizontal: 15,
+    marginBottom: -100,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
     backgroundColor: 'white',
@@ -250,17 +251,10 @@ const styles = StyleSheet.create({
     height: 1,
     borderStyle: 'dashed',
   },
-  dotBorderLine2: {
-    marginTop: 35,
-    paddingHorizontal: 15,
-    borderColor: '#D8D8D8',
-    borderWidth: 1,
-    height: 1,
-    borderStyle: 'dashed',
-  },
   serviceInfo: {
     marginTop: 8,
     paddingHorizontal: 30,
+    height: '40%',
   },
   serviceContainer: {
     flexDirection: 'row',
@@ -273,25 +267,35 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     backgroundColor: '#0066FF',
   },
-  ticketRemove: {},
+  ticketRemove: {
+    marginLeft: -5,
+    marginRight: -5,
+    bottom: '20%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
   circle3: {
-    position: 'absolute',
-    marginLeft: -20,
     width: 35,
     height: 35,
     borderRadius: 35,
     backgroundColor: '#0066FF',
     zIndex: 1000,
   },
+  dotBorderLine2: {
+    width: '100%',
+    paddingHorizontal: 15,
+    borderColor: '#D8D8D8',
+    borderWidth: 1,
+    height: 1,
+    borderStyle: 'dashed',
+  },
   circle4: {
-    position: 'absolute',
-    right: -20,
     width: 35,
     height: 35,
     borderRadius: 35,
     backgroundColor: '#0066FF',
     zIndex: 1000,
-    elevation: 1000,
   },
   serviceTextConatiner: {
     marginLeft: 17,
