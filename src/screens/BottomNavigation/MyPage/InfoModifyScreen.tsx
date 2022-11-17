@@ -50,8 +50,11 @@ export function InfoModifyScreen() {
       </View>
 
       <View style={styles.form}>
-        <View style={styles.userImg}>
-          <Image source={require('@/assets/images/userImg.png')} />
+        <View style={styles.userImgContainer}>
+          <Image
+            style={styles.useImg}
+            source={require('@/assets/images/userImg.png')}
+          />
         </View>
 
         <FontText style={styles.title}>닉네임</FontText>
@@ -135,10 +138,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 5,
   },
-  userImg: {
+  userImgContainer: {
     marginTop: 46,
     alignItems: 'center',
     marginBottom: 57,
+  },
+  useImg: {
+    width: 115,
+    height: 115,
   },
   form: {
     flex: 1,

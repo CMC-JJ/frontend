@@ -133,7 +133,10 @@ export function ServiceCard({
       <View
         style={
           data?.image
-            ? [titleStyles.phNumContainer, {marginLeft: 53}]
+            ? [
+                titleStyles.phNumContainer,
+                type === 'airline' && {marginLeft: 45},
+              ]
             : titleStyles.phNumContainer
         }>
         <FontText style={titleStyles.phNum}>

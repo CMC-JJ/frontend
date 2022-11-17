@@ -39,11 +39,13 @@ export default function ServiceIcon({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    paddingLeft: 20,
   },
   airlineList: {
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+    marginLeft: 5,
   },
 
   name: {marginTop: 13, fontWeight: '500', fontSize: 15, color: '#979797'},

@@ -23,8 +23,10 @@ export default function TextRightIcon({
           onPress={onPress}
           hitSlop={{top: 15, bottom: 15}}
           style={styles.body}>
+          {/* <View style={{}}> */}
           <FontText style={styles.text}>{text}</FontText>
           {isIcon && <Icon name="right" color={'black'} size={20} />}
+          {/* </View> */}
         </TouchableOpacity>
       </View>
       {isBar && <ThinBar />}
@@ -50,6 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 25,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   text: {
     fontSize: 16,

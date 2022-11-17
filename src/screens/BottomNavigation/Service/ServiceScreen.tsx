@@ -1,6 +1,9 @@
 import React, {ComponentProps, useEffect, useRef, useState} from 'react';
 import {
   FlatList,
+  Image,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   StyleSheet,
   TouchableOpacity,
@@ -24,6 +27,7 @@ import ReviewCard, {ReviewProps} from '@/components/service/ReviewCard';
 import {useShowTabBar} from '@/hooks/useVisibleTabBar';
 import {ServiceNavgationProp} from '@/screens';
 import {ThinBar} from '@/components/BarSeparator';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 export interface AirServiceProps
   extends ComponentProps<typeof TouchableOpacity> {
@@ -33,6 +37,7 @@ export interface AirServiceProps
   region?: string;
   onClick: boolean;
 }
+
 export function ServiceScreen() {
   const [airlineLists, setAirlineLists] = useState<AirServiceProps[]>([]);
   const [airportLists, setAirportLists] = useState<AirServiceProps[]>([]);
@@ -44,6 +49,8 @@ export function ServiceScreen() {
   const [menu, setMenu] = useState<AirServiceProps | null>(null);
   const [detail, setDetail] = useState<AirDetailProps | null>(null);
   const navigation = useNavigation<ServiceNavgationProp>();
+  const [toggleBtn, setToggleBtn] = useState(false);
+  const [totalReview, setTotalReview] = useState<Number>(0);
   const page = useRef(1);
   useFocusEffect(useShowTabBar(navigation));
   useEffect(() => {
@@ -52,20 +59,30 @@ export function ServiceScreen() {
         case 'airline':
           if (airlineLists) {
             page.current = 1;
-            fetchAirlinesDetail(menu).then(_detail => setDetail(_detail));
-            fetchAirlineReview(menu, page.current).then(review =>
-              setAirlineReview(review),
-            );
+            fetchAirlinesDetail(menu)
+              .then(_detail => setDetail(_detail))
+              .catch();
+            fetchAirlineReview(menu, page.current)
+              .then(review => {
+                setAirlineReview(review.airlineReview);
+                setTotalReview(review.total);
+              })
+              .catch();
           }
 
           break;
         case 'airport':
           if (airportLists) {
             page.current = 1;
-            fetchAirportsDetail(menu).then(_detail => setDetail(_detail));
-            fetchAirportReview(menu, page.current).then(review =>
-              setAirportReview(review),
-            );
+            fetchAirportsDetail(menu)
+              .then(_detail => setDetail(_detail))
+              .catch();
+            fetchAirportReview(menu, page.current)
+              .then(review => {
+                setAirportReview(review.airportReviews);
+                setTotalReview(review.total);
+              })
+              .catch();
           }
           break;
       }
@@ -75,16 +92,20 @@ export function ServiceScreen() {
   useEffect(() => {
     switch (currentTab) {
       case 'airline':
-        fetchAirlineLists().then(list => {
-          setAirlineLists(list);
-          setMenu(list[0]);
-        });
+        fetchAirlineLists()
+          .then(list => {
+            setAirlineLists(list);
+            setMenu(list[0]);
+          })
+          .catch();
         break;
       case 'airport':
-        fetchAirportLists().then(list => {
-          setAirportLists(list);
-          setMenu(list[0]);
-        });
+        fetchAirportLists()
+          .then(list => {
+            setAirportLists(list);
+            setMenu(list[0]);
+          })
+          .catch();
         break;
     }
   }, [currentTab]);
@@ -93,20 +114,39 @@ export function ServiceScreen() {
       switch (currentTab) {
         case 'airline':
           page.current += 1;
-          fetchAirlineReview(menu, page.current).then(review => {
-            review && setAirlineReview(prev => [...prev, ...review]);
-          });
+          fetchAirlineReview(menu, page.current)
+            .then(review => {
+              review.airlineReview &&
+                setAirlineReview(prev => [...prev, ...review.airlineReview]);
+            })
+            .catch();
           break;
         case 'airport':
           page.current += 1;
-          fetchAirportReview(menu, page.current).then(review => {
-            review && setAirportReview(prev => [...prev, ...review]);
-          });
+          fetchAirportReview(menu, page.current)
+            .then(review => {
+              review.airportReviews &&
+                setAirportReview(prev => [...prev, ...review.airportReviews]);
+            })
+            .catch();
           break;
       }
     }
   };
   useFocusEffect(useShowTabBar(navigation));
+
+  //맨 위로 스크롤 버튼
+  let listViewRef: FlatList<ReviewProps> | null;
+  const showButton = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (e.nativeEvent.contentOffset.y - 0 > 400) {
+      setToggleBtn(true);
+    } else {
+      setToggleBtn(false);
+    }
+  };
+  const scrollToTop = () => {
+    listViewRef?.scrollToOffset({offset: 0, animated: true});
+  };
   return (
     <SafeAreaView style={styles.fill}>
       <View style={{paddingHorizontal: 30}}>
@@ -145,7 +185,7 @@ export function ServiceScreen() {
         </View>
       </View>
       {/* 아이콘&이름 */}
-      <View style={styleBody.icon}>
+      <View style={[styleBody.icon]}>
         <ServiceIcon
           list={currentTab === 'airport' ? airportLists : airlineLists}
           menu={menu}
@@ -176,11 +216,37 @@ export function ServiceScreen() {
             <View style={styleBody.lineReview} />
             {/* 리뷰 정보 */}
             <View style={styleReview.titleContainer}>
-              <FontText style={styleReview.title}>항공사 리뷰</FontText>
+              <FontText
+                style={
+                  styleReview.title
+                }>{`항공사 리뷰(${totalReview})`}</FontText>
             </View>
           </View>
         }
+        ref={ref => {
+          listViewRef = ref;
+        }}
+        onScroll={e => showButton(e)}
       />
+      {toggleBtn && (
+        <TouchableOpacity
+          onPress={scrollToTop}
+          style={{
+            position: 'absolute',
+            right: 30,
+            bottom: heightPercentageToDP('15%'),
+          }}>
+          <Image
+            source={require('@/assets/images/topUp.png')}
+            style={{
+              backgroundColor: 'yellow',
+              width: 60,
+              height: 60,
+              borderRadius: 30,
+            }}
+          />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -199,8 +265,7 @@ const styleReview = StyleSheet.create({
 });
 const styleBody = StyleSheet.create({
   icon: {
-    marginTop: 26,
-    paddingHorizontal: 25,
+    marginTop: 23,
   },
   line: {},
   lineReview: {
@@ -237,7 +302,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   icon: {
     color: 'black',
@@ -249,7 +314,7 @@ const styles = StyleSheet.create({
     color: '#979797',
   },
   activeText: {
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#0066FF',
   },
   buttonContainer: {
@@ -262,21 +327,5 @@ const styles = StyleSheet.create({
     height: 21,
     backgroundColor: '#DEDEDE',
     marginHorizontal: 13,
-  },
-  allShow: {
-    width: 76,
-    height: 26,
-    borderRadius: 12,
-    backgroundColor: 'black',
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-  },
-  allShowText: {
-    color: 'white',
-    fontSize: 13,
-    textAlign: 'center',
-    fontWeight: '700',
   },
 });
