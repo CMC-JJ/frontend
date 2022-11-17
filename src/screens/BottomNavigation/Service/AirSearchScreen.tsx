@@ -55,7 +55,6 @@ export function AirSearchScreen() {
             onChangeText={text => onChangeText(text)}
             blurOnSubmit={true}
             placeholder={'검색어를 입력해주세요'}
-            onSubmitEditing={() => console.log('first')}
           />
           <TouchableOpacity onPress={fetchSearch} style={{paddingRight: 10}}>
             <Icon name="search1" size={18} color="gray" />

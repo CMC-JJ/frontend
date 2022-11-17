@@ -91,8 +91,7 @@ const styles = StyleSheet.create({
   },
   review: {
     paddingHorizontal: 20,
-    paddingVertical: 34,
-    marginBottom: 10,
+    paddingVertical: 20,
   },
   reviewTitle: {
     flexDirection: 'row',
@@ -100,8 +99,8 @@ const styles = StyleSheet.create({
     marginBottom: 7.5,
   },
   name: {
-    fontWeight: '700',
-    fontSize: 20,
+    fontWeight: '600',
+    fontSize: 17,
   },
   star: {
     marginLeft: 10,

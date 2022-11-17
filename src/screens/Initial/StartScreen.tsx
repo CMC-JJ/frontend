@@ -93,6 +93,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginLeft: -9,
+    width: 130,
+    height: 130,
   },
   button: {flex: 1},
   buttonGap: {

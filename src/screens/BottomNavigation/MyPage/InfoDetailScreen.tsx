@@ -61,8 +61,11 @@ export function InfoDetailScreen() {
           <FontText style={styles.headerTitle}>내 정보</FontText>
         </View>
       </View>
-      <View style={styles.userImg}>
-        <Image source={require('@/assets/images/userImg.png')} />
+      <View style={styles.userImgContainer}>
+        <Image
+          style={styles.userImg}
+          source={require('@/assets/images/userImg.png')}
+        />
         <View style={styles.textContainer}>
           <FontText style={styles.nickName}>{params.auth.nickName}</FontText>
           <FontText style={styles.userName}>{params.auth.userName}</FontText>
@@ -131,9 +134,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 5,
   },
-  userImg: {
+  userImgContainer: {
     marginTop: 46,
     alignItems: 'center',
+  },
+  userImg: {
+    width: 115,
+    height: 115,
   },
   textContainer: {marginTop: 12, alignItems: 'center'},
   nickName: {fontSize: 19, fontWeight: '600', marginBottom: 7},

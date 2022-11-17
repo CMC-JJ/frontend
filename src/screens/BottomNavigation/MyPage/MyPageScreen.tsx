@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#979797',
   },
-  image: {width: 64, height: 77, marginRight: 19, marginLeft: 18},
+  image: {width: 64, height: 77, marginRight: 23, marginLeft: 15},
   icon: {
     position: 'absolute',
     right: 0,

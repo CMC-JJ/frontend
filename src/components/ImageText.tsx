@@ -1,5 +1,6 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 export default function ImageText({
   text,
@@ -13,9 +14,11 @@ export default function ImageText({
   return (
     <View style={styles.form}>
       <View>
-        <Text style={[style, styles.title]}>{text}</Text>
+        <Text style={styles.title}>{text}</Text>
       </View>
-      <View>{image && <Image style={styles.image} source={image} />}</View>
+      <View>
+        {image && <Image style={[style, styles.image]} source={image} />}
+      </View>
     </View>
   );
 }
@@ -26,14 +29,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    lineHeight: 30,
   },
   image: {
-    top: 30,
+    resizeMode: 'contain',
   },
   form: {
     alignItems: 'center',
+    height: heightPercentageToDP('40%'),
   },
 });
