@@ -13,7 +13,6 @@ export const fetchAirportLists = async () => {
 export const fetchAirlineLists = async () => {
   try {
     const res = await request('web/airlines', {}, 'GET');
-    console.log('line');
     return res.result.airlines;
   } catch (e) {
     console.log('error', e);
