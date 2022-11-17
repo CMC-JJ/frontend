@@ -15,7 +15,7 @@ export const useShowTabBar = (navigation: any) => {
           shadowOpacity: 0.5,
           elevation: 10,
         },
-        Platform.OS === 'ios' && {height: 96},
+        Platform.OS === 'ios' && {height: 90},
       ],
     });
   }, [navigation]);

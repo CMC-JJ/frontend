@@ -52,7 +52,7 @@ export function MainTab() {
             shadowOpacity: 0.5,
             elevation: 10,
           },
-          Platform.OS === 'ios' && {height: 96},
+          Platform.OS === 'ios' && {height: 90},
         ],
       }}>
       <Tab.Screen
