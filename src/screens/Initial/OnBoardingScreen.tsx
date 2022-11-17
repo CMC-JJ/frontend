@@ -51,7 +51,7 @@ export function OnboardingScreen() {
               <ImageText
                 text={'오늘 비행기를 타고\n국내 여행을 떠나시나요?'}
                 image={image_1}
-                style={{width: 200, height: 330, marginTop: 30}}
+                style={{width: 200, height: 320, marginTop: 30}}
               />
             ),
           },
