@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   },
   airportText: {
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 17,
     lineHeight: 23,
   },
   aircraft: {
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
   },
   airlineText: {
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 17,
     lineHeight: 23,
     color: '#0066FF',
   },

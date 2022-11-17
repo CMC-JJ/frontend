@@ -2,7 +2,7 @@ import {FontText} from '@/components';
 import type {MainTabNavigationProp} from '@/screens';
 import {useAuthStore} from '@/store';
 import {request} from '@/utils';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
@@ -60,6 +60,7 @@ export function HomeScreen() {
   const {auth} = useAuthStore();
   const [data, setData] = useState<Data>();
   const [currentTab, setCurrentTab] = useState<currentTab>('airport');
+  const isFocused = useIsFocused();
 
   const fetchSchedule = useCallback(async () => {
     const result = await request(
@@ -72,8 +73,10 @@ export function HomeScreen() {
   }, [auth.jwtToken]);
 
   useEffect(() => {
-    fetchSchedule();
-  }, [fetchSchedule]);
+    if (isFocused) {
+      fetchSchedule();
+    }
+  }, [fetchSchedule, isFocused]);
 
   return (
     <SafeAreaView style={styles.fill}>
@@ -360,13 +363,13 @@ const styles = StyleSheet.create({
   },
   greetMessage: {
     fontWeight: '700',
-    fontSize: 24,
-    lineHeight: 34,
+    fontSize: 26,
+    lineHeight: 33,
   },
   guideText: {
     fontWeight: '400',
-    fontSize: 24,
-    lineHeight: 34,
+    fontSize: 26,
+    lineHeight: 33,
   },
   nickName: {
     color: '#0066FF',
@@ -374,6 +377,7 @@ const styles = StyleSheet.create({
   },
   mainLogoContainer: {
     width: '30%',
+    marginLeft: -15,
   },
   mainLogo: {
     width: 120,
@@ -384,6 +388,7 @@ const styles = StyleSheet.create({
   },
   serviceHeader: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   serviceHeaderText: {
     marginLeft: 2,

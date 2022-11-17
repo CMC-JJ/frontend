@@ -119,15 +119,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    shadowOffset: {width: 0, height: 2},
-    shadowColor: '#000000',
-    shadowOpacity: 0.25,
-    elevation: 8,
     backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+    elevation: 12,
   },
   selectedLogoContainer: {
     shadowColor: '#0066FF',
-    shadowOpacity: 0.9,
+    shadowOpacity: 0.8,
   },
   logo: {
     width: 40,

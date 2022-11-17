@@ -95,6 +95,7 @@ export function ScheduleAirService() {
             </View>
           </TouchableOpacity>
           <View style={styles.divideLine} />
+          <View style={styles.divideLineTransparent} />
           <TouchableOpacity
             onPress={() => {
               setCurrentDirection('arrival');
@@ -135,7 +136,12 @@ export function ScheduleAirService() {
         {toggleAirPortModal && (
           <Modal animationType="slide">
             <SafeAreaView>
-              <View style={styles.modalBar} />
+              <TouchableOpacity
+                style={styles.modalBar}
+                onPress={() => {
+                  setToggleAirportModal(false);
+                }}
+              />
               <View style={styles.modalContainer}>
                 <FlatList
                   ItemSeparatorComponent={() => (
@@ -208,6 +214,7 @@ const styles = StyleSheet.create({
   },
   airportSelection: {
     marginTop: 37,
+    width: '100%',
 
     flexDirection: 'row',
     alignItems: 'center',
@@ -247,7 +254,7 @@ const styles = StyleSheet.create({
   airlineText: {
     marginLeft: 15,
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 16,
     lineHeight: 23,
   },
   airport: {
@@ -258,7 +265,7 @@ const styles = StyleSheet.create({
   },
   airportHeader: {
     fontWeight: '500',
-    fontSize: 15,
+    fontSize: 16,
     lineHeight: 23,
 
     color: '#7C7C7C',
@@ -272,10 +279,13 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   divideLine: {
+    position: 'absolute',
     width: 1,
     height: 77,
+    left: '50%',
     backgroundColor: '#DEDEDE',
   },
+  divideLineTransparent: {},
   footer: {
     flex: 1,
 

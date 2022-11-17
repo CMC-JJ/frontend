@@ -27,7 +27,7 @@ export const formatTimeText = (date: Date) => {
   const hours = today.getHours();
   const minutes = today.getMinutes();
 
-  return `${hours <= 12 ? (hours === 0 ? 12 : hours) : hours - 12}:${
+  return `${hours <= 12 ? (hours === 0 ? 12 : hours) : hours - 12} : ${
     minutes < 10 ? '0' + minutes : minutes
   }`;
 };

@@ -36,7 +36,7 @@ export function ScheduleComplete() {
   return (
     <>
       <SafeAreaView style={styles.fill}>
-        <StatusBar barStyle="dark-content" backgroundColor="white" />
+        <StatusBar barStyle="dark-content" backgroundColor="#0066FF" />
         <View style={styles.back}>
           {Platform.OS === 'ios' && <ArrowBack size={28} color="white" />}
         </View>
@@ -207,14 +207,14 @@ const styles = StyleSheet.create({
   },
   direction: {
     fontWeight: '600',
-    fontSize: 22,
+    fontSize: 24,
     lineHeight: 26,
     color: '#0066FF',
   },
   place: {
     marginTop: 11,
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 17,
     lineHeight: 23,
   },
   airlineName: {
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0066FF',
   },
   dotBorder: {
-    width: '100%',
+    width: '80%',
     borderColor: '#0066FF',
     borderWidth: 1,
     height: 1,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   },
   serviceTextHeader: {
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: 17,
     lineHeight: 23,
     color: '#0066FF',
   },

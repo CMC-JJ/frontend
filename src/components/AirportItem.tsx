@@ -16,7 +16,7 @@ export function AirportItem({id, name, onSelect}: AirportItemProps) {
       }}
       style={styles.airportContainer}>
       <View style={styles.airportTextContainer}>
-        <FontText>{name}</FontText>
+        <FontText style={styles.airportText}>{name}</FontText>
       </View>
     </TouchableOpacity>
   );
@@ -29,5 +29,9 @@ const styles = StyleSheet.create({
   },
   airportTextContainer: {
     paddingHorizontal: 25,
+  },
+  airportText: {
+    fontSize: 17,
+    lineHeight: 25,
   },
 });

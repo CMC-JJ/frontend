@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: 82,
   },
   announcementMessage: {
-    marginTop: 33,
+    marginTop: 18,
     alignItems: 'center',
   },
   message: {

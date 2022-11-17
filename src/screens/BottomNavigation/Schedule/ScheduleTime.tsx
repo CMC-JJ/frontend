@@ -82,7 +82,7 @@ export function ScheduleTime() {
           <View style={styles.switchTimeContainer}>
             <View style={styles.switch}>
               <TouchableOpacity
-                style={isAM && styles.activeSwitch}
+                style={[isAM && styles.activeSwitch, !isAM && {marginLeft: 8}]}
                 onPress={() => {
                   setIsAM(true);
                 }}>
@@ -92,7 +92,7 @@ export function ScheduleTime() {
                 </FontText>
               </TouchableOpacity>
               <TouchableOpacity
-                style={!isAM && styles.activeSwitch}
+                style={[!isAM && styles.activeSwitch, isAM && {marginRight: 8}]}
                 onPress={() => {
                   setIsAM(false);
                 }}>
@@ -183,16 +183,17 @@ const styles = StyleSheet.create({
   directionText: {
     marginLeft: 12,
     fontWeight: '600',
-    fontSize: 17,
+    fontSize: 20,
     lineHeight: 23,
     color: '#0066FF',
   },
   switch: {
     width: 90,
     height: 36,
+    paddingHorizontal: 5,
 
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
 
     borderRadius: 46,
@@ -210,9 +211,9 @@ const styles = StyleSheet.create({
     color: '#979797',
   },
   activeSwitch: {
-    width: 35,
-    height: 30,
-    borderRadius: 14,
+    width: 42,
+    height: 28,
+    borderRadius: 20,
     backgroundColor: '#0066ff',
 
     alignItems: 'center',
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontWeight: '700',
-    fontSize: 20,
+    fontSize: 22,
     lineHeight: 30,
   },
   footer: {

@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Linking,
   Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {ArrowBack, FontText} from '@/components';
@@ -15,6 +17,18 @@ import {RootStackParamList} from '@/screens';
 import AirCard from '@/components/service/AirCard';
 
 type ScheduleDetailProp = RouteProp<RootStackParamList, 'ScheduleDetail'>;
+
+type AirportService = {
+  airportServiceId: number;
+  name: string;
+  website: string;
+};
+
+type AirlineService = {
+  airlineServiceId: number;
+  name: string;
+  website: string;
+};
 
 type Schedule = {
   scheduleId: number;
@@ -39,9 +53,9 @@ type Schedule = {
   airlineCustomerServiceNumber: string;
   airlineWebsite: string;
   airlineAvgReview: string;
-  departureAirportService: string[];
-  arrivalAirportService: string[];
-  airlineService: string[];
+  departureAirportService: AirportService[];
+  arrivalAirportService: AirportService[];
+  airlineService: AirlineService[];
 };
 
 type Data = {
@@ -59,6 +73,8 @@ export function ScheduleDetail() {
         {},
         'GET',
       );
+      console.log(result.result.airlineService);
+
       setData(result.result);
     })();
   }, [scheduleId]);
@@ -154,42 +170,73 @@ export function ScheduleDetail() {
               <View style={styles.serviceContainerWrapper}>
                 <View style={styles.serviceContainer}>
                   <View style={styles.circle2} />
-                  <FontText style={styles.serviceHeaderText}>
-                    {data.schedule.departureAirportName}
-                  </FontText>
-                  {data.schedule.departureAirportService.map(
-                    (service: string, index: number) => (
-                      <FontText key={index} style={styles.serviceItemText}>
-                        {service}
+                  <TouchableOpacity
+                    onPress={() => {
+                      Linking.openURL(
+                        `${data?.schedule.departureAirportWebsite}`,
+                      );
+                    }}>
+                    <FontText style={styles.serviceHeaderText}>
+                      {data.schedule.departureAirportName}
+                    </FontText>
+                  </TouchableOpacity>
+                  {data.schedule.departureAirportService.map(service => (
+                    <TouchableOpacity
+                      key={service.airportServiceId}
+                      onPress={() => {
+                        Linking.openURL(`${service.website}`);
+                      }}>
+                      <FontText style={styles.serviceItemText}>
+                        {service.name}
                       </FontText>
-                    ),
-                  )}
+                    </TouchableOpacity>
+                  ))}
                 </View>
                 <View style={styles.serviceContainer}>
                   <View style={styles.circle2} />
-                  <FontText style={styles.serviceHeaderText}>
-                    {data.schedule.arrivalAirportName}
-                  </FontText>
-                  {data.schedule.arrivalAirportService.map(
-                    (service: string, index: number) => (
-                      <FontText key={index} style={styles.serviceItemText}>
-                        {service}
+                  <TouchableOpacity
+                    onPress={() => {
+                      Linking.openURL(
+                        `${data?.schedule.arrivalAirportWebsite}`,
+                      );
+                    }}>
+                    <FontText style={styles.serviceHeaderText}>
+                      {data.schedule.arrivalAirportName}
+                    </FontText>
+                  </TouchableOpacity>
+                  {data.schedule.arrivalAirportService.map(service => (
+                    <TouchableOpacity
+                      key={service.airportServiceId}
+                      onPress={() => {
+                        Linking.openURL(`${service.website}`);
+                      }}>
+                      <FontText style={styles.serviceItemText}>
+                        {service.name}
                       </FontText>
-                    ),
-                  )}
+                    </TouchableOpacity>
+                  ))}
                 </View>
                 <View style={styles.serviceContainer}>
                   <View style={styles.circle2} />
-                  <FontText style={styles.serviceHeaderText}>
-                    {data.schedule.airlineName}
-                  </FontText>
-                  {data.schedule.airlineService.map(
-                    (service: string, index: number) => (
-                      <FontText key={index} style={styles.serviceItemText}>
-                        {service}
+                  <TouchableOpacity
+                    onPress={() => {
+                      Linking.openURL(`${data?.schedule.airlineWebsite}`);
+                    }}>
+                    <FontText style={styles.serviceHeaderText}>
+                      {data.schedule.airlineName}
+                    </FontText>
+                  </TouchableOpacity>
+                  {data.schedule.airlineService.map(service => (
+                    <TouchableOpacity
+                      key={service.airlineServiceId}
+                      onPress={() => {
+                        Linking.openURL(`${service.website}`);
+                      }}>
+                      <FontText style={styles.serviceItemText}>
+                        {service.name}
                       </FontText>
-                    ),
-                  )}
+                    </TouchableOpacity>
+                  ))}
                 </View>
               </View>
             </View>
