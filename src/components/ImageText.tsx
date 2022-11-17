@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+    lineHeight: 30,
   },
   image: {
     resizeMode: 'contain',

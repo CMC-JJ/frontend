@@ -47,10 +47,15 @@ export const fetchAirlineReview = async (
       {page: page},
       'GET',
     );
-    return res.result.airlineReview.map((review: any) => ({
-      ...review,
-      uid: nanoid(),
-    }));
+    if (res.result) {
+      res.result.airlineReview = res.result.airlineReview.map(
+        (review: any) => ({
+          ...review,
+          uid: nanoid(),
+        }),
+      );
+    }
+    return res.result;
   } catch (e) {
     console.log('airline 리뷰 요청 실패', e);
   }
@@ -66,10 +71,16 @@ export const fetchAirportReview = async (
       {page: page},
       'GET',
     );
-    return res.result.airportReviews.map((review: any) => ({
-      ...review,
-      uid: nanoid(),
-    }));
+    console.log('@@@@', res);
+    if (res) {
+      res.result.airportReviews = res.result.airportReviews.map(
+        (review: any) => ({
+          ...review,
+          uid: nanoid(),
+        }),
+      );
+    }
+    return res.result;
   } catch (e) {
     console.log('airport 리뷰 요청 실패', e);
   }

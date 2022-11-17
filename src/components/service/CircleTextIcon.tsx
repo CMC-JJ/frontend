@@ -60,10 +60,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     shadowOffset: {
-      height: 1,
-      width: 1,
+      height: 0,
+      width: 0,
     },
     elevation: 10,
+    marginTop: 3,
   },
   name: {
     marginTop: 13,
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 5,
     shadowOffset: {
-      height: 1,
-      width: 1,
+      height: 0,
+      width: 0,
     },
     elevation: 10,
   },

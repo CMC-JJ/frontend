@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     marginBottom: 7.5,
   },
   name: {
-    fontWeight: '700',
-    fontSize: 20,
+    fontWeight: '600',
+    fontSize: 17,
   },
   star: {
     marginLeft: 10,

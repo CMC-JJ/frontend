@@ -79,7 +79,7 @@ export function OnboardingScreen() {
                   '공항, 항공사에서 제공하는\n교통약자 서비스를\n한눈에 살펴볼 수 있어요.'
                 }
                 image={image_3}
-                style={{width: 265, height: 305, marginTop: 30}}
+                style={{width: 265, height: 305, marginTop: 20}}
               />
             ),
           },
@@ -93,7 +93,7 @@ export function OnboardingScreen() {
                   '고객센터, 사이트로 바로 연결해\n교통약자 서비를 쉽게신청해보세요.'
                 }
                 image={image_4}
-                style={{width: 280, height: 300, marginTop: 65}}
+                style={{width: 280, height: 300, marginTop: 60}}
               />
             ),
           },
