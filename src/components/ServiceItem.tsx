@@ -21,7 +21,7 @@ export function ServiceItem({id, name, isChecked, onSelect}: ServiceItemProps) {
             onSelect(id);
           }}
           boxType="square"
-          onTintColor="#BCBCBC"
+          onTintColor="#0066ff"
           onFillColor="#0066ff"
           onCheckColor="#FFF9F9"
           lineWidth={2}

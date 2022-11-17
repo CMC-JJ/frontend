@@ -93,7 +93,7 @@ export function SignInScreen() {
                 value={isCheckBoxSelected}
                 onValueChange={setIsCheckBoxSelected}
                 boxType="square"
-                onTintColor="#7C7C7C"
+                onTintColor="#121212"
                 onFillColor="#121212"
                 onCheckColor="#FFF9F9"
                 lineWidth={1}
