@@ -227,8 +227,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   timeBox: {
-    width: 90,
+    minWidth: 100,
     height: 36,
+    paddingHorizontal: 12,
 
     marginLeft: 12,
     justifyContent: 'center',
