@@ -64,7 +64,7 @@ export function OnboardingScreen() {
                 <ImageText
                   text={'친구들을 등록해서\n서로의 위치를 확인할 수 있어요.'}
                   image={image_2}
-                  style={{width: 280, height: 290, marginTop: 75}}
+                  style={{width: 280, height: 280, marginTop: 75}}
                 />
               </View>
             ),
@@ -79,7 +79,7 @@ export function OnboardingScreen() {
                   '공항, 항공사에서 제공하는\n교통약자 서비스를\n한눈에 살펴볼 수 있어요.'
                 }
                 image={image_3}
-                style={{width: 265, height: 295, marginTop: 35}}
+                style={{width: 265, height: 305, marginTop: 30}}
               />
             ),
           },
@@ -93,7 +93,7 @@ export function OnboardingScreen() {
                   '고객센터, 사이트로 바로 연결해\n교통약자 서비를 쉽게신청해보세요.'
                 }
                 image={image_4}
-                style={{width: 280, height: 290, marginTop: 70}}
+                style={{width: 280, height: 300, marginTop: 65}}
               />
             ),
           },

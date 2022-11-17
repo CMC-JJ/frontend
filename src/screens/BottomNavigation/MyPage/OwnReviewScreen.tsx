@@ -85,8 +85,10 @@ const NoneReview = ({navigation}: {navigation: ScheduleNavigationProp}) => {
       <View style={styleNoReview.nullReview}>
         <View style={styleNoReview.form}>
           <View style={styleNoReview.NoneText}>
-            {/* <View style={styleNoReview.circle} /> */}
-            <Image source={require('@/assets/images/ownReviewIcon.png')} />
+            <Image
+              style={{width: 140, height: 120}}
+              source={require('@/assets/images/ownReviewIcon.png')}
+            />
             <View style={styleNoReview.announcementMessage}>
               <FontText style={styleNoReview.message}>
                 {'작성하신 리뷰가 없습니다!\n리뷰를 작성해주세요!'}
@@ -321,7 +323,7 @@ const styleNoReview = StyleSheet.create({
     backgroundColor: '#D9D9D9',
   },
   announcementMessage: {
-    marginTop: 33,
+    marginTop: 30,
     alignItems: 'center',
   },
   message: {
