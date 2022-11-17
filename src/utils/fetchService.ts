@@ -47,7 +47,7 @@ export const fetchAirlineReview = async (
       {page: page},
       'GET',
     );
-    if (res.result) {
+    if (res) {
       res.result.airlineReview = res.result.airlineReview.map(
         (review: any) => ({
           ...review,
@@ -71,7 +71,6 @@ export const fetchAirportReview = async (
       {page: page},
       'GET',
     );
-    console.log('@@@@', res);
     if (res) {
       res.result.airportReviews = res.result.airportReviews.map(
         (review: any) => ({

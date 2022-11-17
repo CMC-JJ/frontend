@@ -79,7 +79,6 @@ export function ServiceScreen() {
               .catch();
             fetchAirportReview(menu, page.current)
               .then(review => {
-                console.log(review.airportReviews);
                 setAirportReview(review.airportReviews);
                 setTotalReview(review.total);
               })
