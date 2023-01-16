@@ -1,21 +1,15 @@
-import {BasicType} from './common';
+import {BasicType, CommonReviewType} from './common';
 
-export type Airline = BasicType & {
+export type AirlineService = BasicType & {
   logoImageUrl: string;
   website: string;
 };
 
-export type AirlineWithImage = Omit<Airline, 'website'>;
-export type AirlineWithWebsite = Omit<Airline, 'logoImageUrl'>;
+export type AirlineListItem = Omit<AirlineService, 'website'>;
 
-/* /web/airlines/{airlineId}/services -> 항공사 서비스 리스트 조회 API */
-export type AirlineService = {
-  id: number;
-  name: string;
-  website?: string;
-};
+export type AirlineServiceListItem = Pick<AirlineService, 'id' | 'name'>;
 
-/* /web/airlines/{airlineId}/services -> 항공사 상세 조회 API */
+export type AirlineDetailServiceItem = Omit<AirlineService, 'logoImageUrl'>;
 
 export type AirlineDetail = {
   airlineId: number;
@@ -24,25 +18,11 @@ export type AirlineDetail = {
   website: string;
   avgReview: string;
   availableAt: string;
-  airlineServices: Omit<Airline, 'logoImageUrl'>[];
+  airlineServices: AirlineDetailServiceItem[];
 };
 
-// export type Airline_Detail = {
-//   airline: AirlineDetail;
-// };
-
-/* /web/airlines/{airlineId}/reviews -> 항공사 리뷰 리스트 조회 API */
-
-export type AirlineReview = {
+export type AirlineReviewListItem = CommonReviewType & {
   airlineReviewId: number;
   nickName: string;
-  score: string;
-  content: string;
-  createdAt: string;
   reviewedAirlineServices: string[];
-};
-
-export type AirlineReviewList = {
-  total: number;
-  airlineReviews: AirlineReview[];
 };
