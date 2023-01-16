@@ -1,5 +1,4 @@
-import {AirlineDetail} from './airline';
-import {AirportDetail} from './airport';
+import type {AirlineDetail, AirportDetail} from './';
 
 export type ScheduleAirportService = {
   airportServiceId: number;

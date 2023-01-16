@@ -1,4 +1,4 @@
-import {BasicType, CommonReviewType} from './common';
+import type {BasicType, CommonReviewType} from './common';
 
 export type Airport = BasicType & {
   region: string;
