@@ -211,7 +211,7 @@ export function HomeScreen() {
                     <View style={styles.serviceInfoContainer}>
                       <View style={styles.dotContainer}>
                         <View style={styles.circle} />
-                        {currentTab === 'airport' ? (
+                        {currentTab === 'airline' ? (
                           <>
                             <View style={styles.dashedLine} />
                             <View style={styles.circle} />
@@ -226,7 +226,7 @@ export function HomeScreen() {
                         )}
                       </View>
                       <View style={styles.serviceTextContainer}>
-                        {currentTab === 'airport' ? (
+                        {currentTab === 'airline' ? (
                           <>
                             <FontText style={styles.serviceProvider}>
                               {data.schedule.departureAirportName}
