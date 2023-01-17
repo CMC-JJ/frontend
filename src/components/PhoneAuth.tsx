@@ -95,7 +95,7 @@ export function PhoneAuth({
       <View style={didPressAuthButton && styles.none}>
         {isSignUp && (
           <Text style={styles.warning}>
-            *개인정보 보안을 위해 보인이 직접 사용하는 휴대폰으로 인증해주세요.
+            *개인정보 보안을 위해 본인이 직접 사용하는 휴대폰으로 인증해주세요.
           </Text>
         )}
         <View style={[styles.verifyCode, isSignUp && {marginTop: 8}]}>
