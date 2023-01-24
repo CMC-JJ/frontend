@@ -108,18 +108,35 @@ export function PhoneAuth({
       </View>
       <View style={!didPressAuthButton && styles.none}>
         <View style={styles.verifyCodeInputContainer}>
-          <BottomBorderedInput
-            isCharacterExisted={verifyCode.length > 0}
-            value={verifyCode}
-            onChangeText={(text: string) => {
-              setVerifyCode(forceNumber(text));
-            }}
-            placeholder="인증번호"
-            keyboardType="number-pad"
-            returnKeyType={'done'}
-            maxLength={AUTH_NUMBER_LENGTH}
-            style={styles.verifyCodeInput}
-          />
+          {Platform.OS === 'android' ? (
+            <BottomBorderedInput
+              isCharacterExisted={verifyCode.length > 0}
+              value={verifyCode}
+              onChangeText={(text: string) => {
+                setVerifyCode(forceNumber(text));
+              }}
+              autoComplete="sms-otp"
+              placeholder="인증번호"
+              keyboardType="number-pad"
+              returnKeyType={'done'}
+              maxLength={AUTH_NUMBER_LENGTH}
+              style={styles.verifyCodeInput}
+            />
+          ) : (
+            <BottomBorderedInput
+              isCharacterExisted={verifyCode.length > 0}
+              value={verifyCode}
+              onChangeText={(text: string) => {
+                setVerifyCode(forceNumber(text));
+              }}
+              placeholder="인증번호"
+              keyboardType="number-pad"
+              textContentType="oneTimeCode"
+              returnKeyType={'done'}
+              maxLength={AUTH_NUMBER_LENGTH}
+              style={styles.verifyCodeInput}
+            />
+          )}
           <TouchableOpacity
             onPress={onPressAuth}
             style={[
