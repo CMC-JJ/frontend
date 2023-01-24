@@ -6,6 +6,8 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import SplashScreen from 'react-native-splash-screen';
 import {useAuthStore} from './store';
 import AsyncStorage from '@react-native-community/async-storage';
+import CodePush from 'react-native-code-push';
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -42,4 +44,17 @@ function App() {
     </QueryClientProvider>
   );
 }
-export default App;
+
+const codePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+  updateDialog: {
+    title: '업데이트',
+    optionalUpdateMessage:
+      '새로운 업데이트가 준비되어있습니다 업데이트 하시겠습니까?',
+    optionalInstallButtonLabel: '업데이트',
+    optionalIgnoreButtonLabel: '아니요.',
+  },
+  installMode: CodePush.InstallMode.IMMEDIATE,
+};
+
+export default CodePush(codePushOptions)(App);
