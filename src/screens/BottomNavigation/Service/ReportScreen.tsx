@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  // KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -17,8 +18,8 @@ import {
 } from '@react-navigation/native';
 import {
   MainTabNavigationProp,
-  RootStackParamList,
   ServiceNavgationProp,
+  ServiceStackParamList,
 } from '@/screens';
 import {ArrowBack, SignButton} from '@/components';
 import {FontText} from '@/components/FontText';
@@ -91,7 +92,7 @@ function RadioButton({
     </>
   );
 }
-type ReportCompleteRouteProp = RouteProp<RootStackParamList, 'Report'>;
+type ReportCompleteRouteProp = RouteProp<ServiceStackParamList, 'Report'>;
 interface ReportReason {
   id: number;
   name: string;
@@ -147,6 +148,7 @@ export function ReportScreen() {
         setText={_text => setText(_text)}
         text={text}
       />
+
       {/* </View> */}
       <View style={styles.submit}>
         <SignButton buttonText={'신고하기'} isValid onPress={() => submit()} />

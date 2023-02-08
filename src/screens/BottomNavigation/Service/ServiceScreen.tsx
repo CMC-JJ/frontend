@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  // KeyboardAvoidingView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FontText} from '@/components/FontText';
@@ -116,8 +117,9 @@ export function ServiceScreen() {
           page.current += 1;
           fetchAirlineReview(menu, page.current)
             .then(review => {
-              review.airlineReview &&
-                setAirlineReview(prev => [...prev, ...review.airlineReview]);
+              console.log('fe review : ', review);
+              review.airlineReviews &&
+                setAirlineReview(prev => [...prev, ...review.airlineReviews]);
             })
             .catch();
           break;

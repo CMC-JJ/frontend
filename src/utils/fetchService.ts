@@ -48,7 +48,8 @@ export const fetchAirlineReview = async (
       'GET',
     );
     if (res) {
-      res.result.airlineReview = res.result.airlineReview.map(
+      console.log('@@@@@@@ ', res.result);
+      res.result.airlineReviews = res.result.airlineReviews.map(
         (review: any) => ({
           ...review,
           uid: nanoid(),

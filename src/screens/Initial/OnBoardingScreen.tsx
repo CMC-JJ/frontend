@@ -90,7 +90,7 @@ export function OnboardingScreen() {
             image: (
               <ImageText
                 text={
-                  '고객센터, 사이트로 바로 연결해\n교통약자 서비를 쉽게신청해보세요.'
+                  '고객센터, 사이트로 바로 연결해\n교통약자 서비스를 쉽게 신청해보세요.'
                 }
                 image={image_4}
                 style={{width: 280, height: 300, marginTop: 60}}
