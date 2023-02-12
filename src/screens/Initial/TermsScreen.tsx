@@ -14,7 +14,7 @@ export function TermsScreen() {
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <ScrollView>
-        <View style={{paddingHorizontal: 25}}>
+        <View style={{paddingHorizontal: 25, marginBottom: 100}}>
           <FontText style={styles.title}>{params.title}</FontText>
           <FontText style={styles.text}>{params.text}</FontText>
         </View>
