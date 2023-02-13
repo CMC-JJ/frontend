@@ -29,15 +29,6 @@ const styles = StyleSheet.create({
     color: COLOR['GC-50'],
     ...TYPOGRAPHY.HT2,
   },
-  // title: {
-  //   color: 'white',
-  //   fontSize: 20,
-  //   fontWeight: '700',
-  //   textAlign: 'center',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   lineHeight: 30,
-  // },
   image: {
     resizeMode: 'contain',
   },
