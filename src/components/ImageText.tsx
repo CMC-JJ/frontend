@@ -1,6 +1,7 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
+import {COLOR, TYPOGRAPHY} from '@/constants';
 
 export default function ImageText({
   text,
@@ -25,14 +26,18 @@ export default function ImageText({
 
 const styles = StyleSheet.create({
   title: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    lineHeight: 30,
+    color: COLOR['GC-50'],
+    ...TYPOGRAPHY.HT2,
   },
+  // title: {
+  //   color: 'white',
+  //   fontSize: 20,
+  //   fontWeight: '700',
+  //   textAlign: 'center',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   lineHeight: 30,
+  // },
   image: {
     resizeMode: 'contain',
   },
