@@ -10,6 +10,13 @@ export const TYPOGRAPHY = {
     fontFamily: 'Pretendard-Bold',
     fontStyle: 'normal' as const,
     fontWeight: '700' as const,
+    fontSize: 28,
+    lineHeight: 34,
+  },
+  DT3: {
+    fontFamily: 'Pretendard-Bold',
+    fontStyle: 'normal' as const,
+    fontWeight: '700' as const,
     fontSize: 26,
     lineHeight: 34,
   },
