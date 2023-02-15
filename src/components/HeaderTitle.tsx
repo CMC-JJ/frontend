@@ -2,13 +2,13 @@ import {COLOR, TYPOGRAPHY} from '@/constants';
 import React from 'react';
 import {StyleSheet, Text, TextStyle, View, ViewStyle} from 'react-native';
 
-type HeaderProps = {
+type HeaderTitleProps = {
   text: string;
   viewStyle?: ViewStyle;
   textStyle?: TextStyle;
 };
 
-export function Header({text, viewStyle, textStyle}: HeaderProps) {
+export function HeaderTitle({text, viewStyle, textStyle}: HeaderTitleProps) {
   return (
     <View style={[styles.header, viewStyle]}>
       <Text style={[styles.title, textStyle]}>{text}</Text>
