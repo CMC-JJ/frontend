@@ -14,7 +14,7 @@ export function TermsScreen() {
         {Platform.OS === 'ios' && <ArrowBack size={28} />}
       </View>
       <ScrollView>
-        <View style={{paddingHorizontal: 25}}>
+        <View style={styles.body}>
           <FontText style={styles.title}>{params.title}</FontText>
           <FontText style={styles.text}>{params.text}</FontText>
         </View>
@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
   container: {
     // paddingHorizontal: 25,
     // marginTop: 10,
+  },
+  body: {
+    paddingHorizontal: 25,
+    marginBottom: 100,
   },
   title: {
     fontWeight: '700',
