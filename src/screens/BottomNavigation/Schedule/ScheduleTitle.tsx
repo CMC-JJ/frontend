@@ -44,7 +44,7 @@ export function ScheduleTitle() {
             value={schedule.name}
             isCharacterExisted={schedule.name.length > 0}
             onChangeText={text => setSchedule('name', text)}
-            placeholder="10자 이내 작성"
+            label="10자 이내 작성"
             returnKeyType="done"
           />
         </View>

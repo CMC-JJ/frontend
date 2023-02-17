@@ -34,7 +34,7 @@ export function ModifyPasswordScreen() {
         <FontText style={styles.title}>현재 비밀번호</FontText>
         <BottomBorderedInput
           isCharacterExisted={false}
-          placeholder="현재 비밀번호를 입력해주세요."
+          label="현재 비밀번호를 입력해주세요."
           value={password}
           onChangeText={value => setPassword(value)}
           secureTextEntry

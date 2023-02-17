@@ -64,7 +64,7 @@ export function InfoModifyScreen() {
             value={nickName}
             hasMarginBottom
             onChangeText={setNickName}
-            placeholder="닉네임(한글 2자 이상)"
+            label="닉네임"
             autoCapitalize="none"
             autoCorrect={false}
             style={styles.duplicateId}
