@@ -17,8 +17,8 @@ import {
 } from '@react-navigation/native';
 import {
   MainTabNavigationProp,
-  RootStackParamList,
   ServiceNavgationProp,
+  ServiceStackParamList,
 } from '@/screens';
 import {ArrowBack, SignButton} from '@/components';
 import {FontText} from '@/components/FontText';
@@ -91,7 +91,7 @@ function RadioButton({
     </>
   );
 }
-type ReportCompleteRouteProp = RouteProp<RootStackParamList, 'Report'>;
+type ReportCompleteRouteProp = RouteProp<ServiceStackParamList, 'Report'>;
 interface ReportReason {
   id: number;
   name: string;
