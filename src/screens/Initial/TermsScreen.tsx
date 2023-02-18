@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   text: {
-    overflow: 'scroll',
     color: '#121212',
     lineHeight: 20,
   },

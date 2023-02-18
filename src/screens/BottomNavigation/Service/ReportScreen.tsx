@@ -4,11 +4,12 @@ import {
   Platform,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   View,
   KeyboardAvoidingView,
-  NativeModules,
+  // NativeModules,
+  Pressable,
   ScrollView,
+  Text,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -32,6 +33,7 @@ import {
 } from '@/utils/fetchService';
 import {ThinBar} from '@/components/BarSeparator';
 import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {COLOR, TYPOGRAPHY} from '@/constants';
 
 function RadioButton({
   menu,
@@ -48,33 +50,34 @@ function RadioButton({
 }) {
   const navigation = useNavigation<ServiceNavgationProp>();
   useFocusEffect(useHideTabBar(navigation));
-  useEffect(() => {
-    Platform.OS === 'ios'
-      ? StatusBarManager.getHeight(
-          (statusBarFrameData: {height: React.SetStateAction<number>}) => {
-            setStatusBarHeight(statusBarFrameData.height);
-          },
-        )
-      : null;
-  }, []);
+  // useEffect(() => {
+  //   Platform.OS === 'ios'
+  //     ? StatusBarManager.getHeight(
+  //         (statusBarFrameData: {height: React.SetStateAction<number>}) => {
+  //           setStatusBarHeight(statusBarFrameData.height);
+  //         },
+  //       )
+  //     : null;
+  // }, []);
 
-  const [statusBarHeight, setStatusBarHeight] = useState(0);
+  // const [statusBarHeight, setStatusBarHeight] = useState(0);
   return (
     <KeyboardAvoidingView
       style={styles.avoid}
       behavior={'padding'}
-      keyboardVerticalOffset={statusBarHeight + 40}>
+      // keyboardVerticalOffset={statusBarHeight + 40}
+    >
       <ScrollView>
         {reportList &&
-          reportList.map((v: ReportReason, i: number) => (
+          reportList.map((report: ReportReason, i: number) => (
             <View key={i}>
-              <TouchableOpacity
+              <Pressable
                 style={styles.button}
                 onPress={() => {
-                  onMenuPress?.(v);
+                  onMenuPress?.(report);
                   menu && (menu.name === '직접입력' ? setText('') : '');
                 }}>
-                {menu?.id === v.id ? (
+                {menu?.id === report.id ? (
                   <Image
                     style={styles.icon}
                     source={require('@/assets/images/onRadio.png')}
@@ -85,10 +88,12 @@ function RadioButton({
                     source={require('@/assets/images/offRadio.png')}
                   />
                 )}
-                <FontText style={styles.buttonText}>{v.name}</FontText>
-              </TouchableOpacity>
+                <Text style={[styles.buttonText, TYPOGRAPHY.BT3]}>
+                  {report.name}
+                </Text>
+              </Pressable>
               <View>
-                {reportList.length !== v.id ? (
+                {reportList.length !== report.id ? (
                   <ThinBar />
                 ) : (
                   <TextInput
@@ -116,7 +121,7 @@ interface ReportReason {
   id: number;
   name: string;
 }
-const {StatusBarManager} = NativeModules;
+// const {StatusBarManager} = NativeModules;
 export function ReportScreen() {
   const {params} = useRoute<ReportCompleteRouteProp>();
   const [menu, setMenu] = useState<ReportReason>({id: 0, name: ''});
@@ -184,7 +189,7 @@ const styles = StyleSheet.create({
   avoid: {
     flex: 1,
   },
-  fill: {flex: 1, backgroundColor: 'white', overflow: 'scroll'},
+  fill: {flex: 1, backgroundColor: COLOR['GC-50']},
   header: {
     display: 'flex',
     flexDirection: 'row',
@@ -210,10 +215,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   buttonText: {
-    fontSize: 15,
-    fontWeight: '500',
     marginLeft: 17,
-    lineHeight: 24,
   },
   icon: {},
   inputForm: {
@@ -226,7 +228,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     marginHorizontal: 25,
-    backgroundColor: 'white',
+    backgroundColor: COLOR['GC-50'],
     marginBottom: 10,
   },
   submit: {
