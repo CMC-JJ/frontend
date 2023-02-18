@@ -4,8 +4,12 @@ import {
   Platform,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   View,
+  KeyboardAvoidingView,
+  // NativeModules,
+  Pressable,
+  ScrollView,
+  Text,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -17,8 +21,8 @@ import {
 } from '@react-navigation/native';
 import {
   MainTabNavigationProp,
-  RootStackParamList,
   ServiceNavgationProp,
+  ServiceStackParamList,
 } from '@/screens';
 import {ArrowBack, SignButton} from '@/components';
 import {FontText} from '@/components/FontText';
@@ -29,6 +33,7 @@ import {
 } from '@/utils/fetchService';
 import {ThinBar} from '@/components/BarSeparator';
 import {useHideTabBar} from '@/hooks/useVisibleTabBar';
+import {COLOR, TYPOGRAPHY} from '@/constants';
 
 function RadioButton({
   menu,
@@ -45,63 +50,85 @@ function RadioButton({
 }) {
   const navigation = useNavigation<ServiceNavgationProp>();
   useFocusEffect(useHideTabBar(navigation));
+  // useEffect(() => {
+  //   Platform.OS === 'ios'
+  //     ? StatusBarManager.getHeight(
+  //         (statusBarFrameData: {height: React.SetStateAction<number>}) => {
+  //           setStatusBarHeight(statusBarFrameData.height);
+  //         },
+  //       )
+  //     : null;
+  // }, []);
+
+  // const [statusBarHeight, setStatusBarHeight] = useState(0);
   return (
-    <>
-      {reportList &&
-        reportList.map((v: ReportReason, i: number) => (
-          <View key={i}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                onMenuPress?.(v);
-                menu && (menu.name === '직접입력' ? setText('') : '');
-              }}>
-              {menu?.id === v.id ? (
-                <Image
-                  style={styles.icon}
-                  source={require('@/assets/images/onRadio.png')}
-                />
-              ) : (
-                <Image
-                  style={styles.icon}
-                  source={require('@/assets/images/offRadio.png')}
-                />
-              )}
-              <FontText style={styles.buttonText}>{v.name}</FontText>
-            </TouchableOpacity>
-            <View>
-              {reportList.length !== v.id ? (
-                <ThinBar />
-              ) : (
-                <TextInput
-                  value={text}
-                  multiline={true}
-                  onChangeText={_text => setText(_text)}
-                  editable={
-                    menu !== undefined &&
-                    (reportList.length === menu.id ? true : false)
-                  }
-                  placeholder="신고 사유를 입력해주세요"
-                  style={styles.inputForm}
-                />
-              )}
+    <KeyboardAvoidingView
+      style={styles.avoid}
+      behavior={'padding'}
+      // keyboardVerticalOffset={statusBarHeight + 40}
+    >
+      <ScrollView>
+        {reportList &&
+          reportList.map((report: ReportReason, i: number) => (
+            <View key={i}>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  onMenuPress?.(report);
+                  menu && (menu.name === '직접입력' ? setText('') : '');
+                }}>
+                {menu?.id === report.id ? (
+                  <Image
+                    style={styles.icon}
+                    source={require('@/assets/images/onRadio.png')}
+                  />
+                ) : (
+                  <Image
+                    style={styles.icon}
+                    source={require('@/assets/images/offRadio.png')}
+                  />
+                )}
+                <Text style={[styles.buttonText, TYPOGRAPHY.BT3]}>
+                  {report.name}
+                </Text>
+              </Pressable>
+              <View>
+                {reportList.length !== report.id ? (
+                  <ThinBar />
+                ) : (
+                  <TextInput
+                    value={text}
+                    multiline={true}
+                    onChangeText={_text => setText(_text)}
+                    editable={
+                      menu !== undefined &&
+                      (reportList.length === menu.id ? true : false)
+                    }
+                    placeholder="신고 사유를 입력해주세요"
+                    style={styles.inputForm}
+                    returnKeyType="done"
+                  />
+                )}
+              </View>
             </View>
-          </View>
-        ))}
-    </>
+          ))}
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
-type ReportCompleteRouteProp = RouteProp<RootStackParamList, 'Report'>;
+type ReportCompleteRouteProp = RouteProp<ServiceStackParamList, 'Report'>;
 interface ReportReason {
   id: number;
   name: string;
 }
+// const {StatusBarManager} = NativeModules;
 export function ReportScreen() {
   const {params} = useRoute<ReportCompleteRouteProp>();
   const [menu, setMenu] = useState<ReportReason>({id: 0, name: ''});
   const [reportList, setReportList] = useState<ReportReason[]>();
   const [text, setText] = useState<string>('');
   const navigation = useNavigation<MainTabNavigationProp>();
+
   useEffect(() => {
     reviewReportList().then(list => {
       setReportList(list);
@@ -138,6 +165,7 @@ export function ReportScreen() {
         </View>
       </View>
       {/* <View> */}
+      {/* <ScrollView> */}
       <RadioButton
         menu={menu}
         onMenuPress={_menu => {
@@ -147,16 +175,21 @@ export function ReportScreen() {
         setText={_text => setText(_text)}
         text={text}
       />
+
       {/* </View> */}
       <View style={styles.submit}>
         <SignButton buttonText={'신고하기'} isValid onPress={() => submit()} />
       </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  fill: {flex: 1, backgroundColor: 'white'},
+  avoid: {
+    flex: 1,
+  },
+  fill: {flex: 1, backgroundColor: COLOR['GC-50']},
   header: {
     display: 'flex',
     flexDirection: 'row',
@@ -182,10 +215,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
   },
   buttonText: {
-    fontSize: 15,
-    fontWeight: '500',
     marginLeft: 17,
-    lineHeight: 24,
   },
   icon: {},
   inputForm: {
@@ -198,7 +228,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     marginHorizontal: 25,
-    backgroundColor: 'white',
+    backgroundColor: COLOR['GC-50'],
+    marginBottom: 10,
   },
   submit: {
     position: 'absolute',
