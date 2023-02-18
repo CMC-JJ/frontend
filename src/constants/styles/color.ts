@@ -1,5 +1,6 @@
 export const COLOR = {
   PC: '#0066FF',
+  EC: '#FF0000',
   'GC-50': '#FFFFFF',
   'GC-100': '#FAFAFA',
   'GC-200': '#F5F5F5',

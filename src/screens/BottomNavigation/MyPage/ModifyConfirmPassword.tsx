@@ -49,7 +49,7 @@ export function ModifyConfirmPassword() {
         <View style={styles.passwordContainer}>
           <BottomBorderedInput
             isCharacterExisted={newPwd.password.length > 0}
-            placeholder="새로운 비밀번호 (영문,숫자 6~20자리)"
+            label="새로운 비밀번호 (영문, 숫자 6~20자리)"
             value={newPwd.password}
             isValid={newPwd.password.length > 0 ? isPasswordValid : true}
             onChangeText={createChangeTextHandler('password')}
@@ -72,7 +72,7 @@ export function ModifyConfirmPassword() {
         <View style={styles.confirmPasswordContainer}>
           <BottomBorderedInput
             isCharacterExisted={newPwd.confirmPassword.length > 0}
-            placeholder="새로운 비밀번호 재확인"
+            label="새로운 비밀번호 재확인"
             value={newPwd.confirmPassword}
             onChangeText={createChangeTextHandler('confirmPassword')}
             isValid={
