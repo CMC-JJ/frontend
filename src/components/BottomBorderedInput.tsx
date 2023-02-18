@@ -3,6 +3,7 @@ import React, {forwardRef, Ref, useCallback, useRef, useState} from 'react';
 import {
   Animated,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   TextInput,
@@ -36,7 +37,7 @@ export const BottomBorderedInput = forwardRef<
   ) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const animation = useRef(new Animated.Value(0)).current;
-    const isPasswordInput = secureTextEntry;
+    const isPasswordInput = Boolean(secureTextEntry);
     const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
 
     const labelStyle = {
@@ -64,14 +65,17 @@ export const BottomBorderedInput = forwardRef<
 
     const handleLabelAnimation = useCallback(
       (toValue: number) => {
-        if (!isCharacterExisted) {
-          Animated.timing(animation, {
-            toValue,
-            duration: 200,
-            useNativeDriver: true,
-          }).start();
+        if (isCharacterExisted) {
+          return;
         }
+
+        Animated.timing(animation, {
+          toValue,
+          duration: 200,
+          useNativeDriver: true,
+        }).start();
       },
+
       [animation, isCharacterExisted],
     );
 
@@ -89,12 +93,19 @@ export const BottomBorderedInput = forwardRef<
           ref={ref}
           style={[
             styles.input,
-            style,
             hasMarginBottom && styles.margin,
+            // 인풋에 글자가 존재하고 포커스 되어있을 때만 스타일 적용
             isCharacterExisted && isFocused && styles.focused,
+            // iOS에서 password input에서 secureText로 보일 때, 커서와 align이 맞도록 font size를 조정
+            Platform.OS === 'ios' &&
+              isPasswordInput &&
+              !isPasswordShown &&
+              styles.secure_input,
             !isValid && styles.warning,
+            style,
           ]}
-          secureTextEntry={isPasswordShown === true ? false : isPasswordInput}
+          // 인풋의 눈모양을 누르면 보이게하고 다른 경우는 password input인 경우 secureTextEntry 속성 적용
+          secureTextEntry={isPasswordShown ? false : isPasswordInput}
           {...rest}
           onBlur={() => {
             setIsFocused(false);
@@ -104,6 +115,8 @@ export const BottomBorderedInput = forwardRef<
             setIsFocused(true);
             handleLabelAnimation(1);
           }}
+          // 안드로이드 커서에 Primary Color 색상 적용
+          cursorColor={COLOR.PC}
         />
         {isPasswordInput && (
           <Pressable onPress={() => setIsPasswordShown(!isPasswordShown)}>
@@ -143,6 +156,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     color: COLOR['GC-950'],
     ...TYPOGRAPHY.BT1,
+  },
+  secure_input: {
+    fontSize: 19,
   },
   margin: {
     marginBottom: 50,
