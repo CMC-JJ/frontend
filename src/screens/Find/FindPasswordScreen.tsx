@@ -63,7 +63,7 @@ export function FindPasswordScreen() {
           isCharacterExisted={signUpForm.userName.length > 0}
           value={signUpForm.userName}
           onChangeText={text => setSignUpForm('userName', text)}
-          placeholder="아이디"
+          label="아이디"
           autoCapitalize="none"
           autoCorrect={false}
         />

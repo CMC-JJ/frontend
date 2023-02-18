@@ -88,7 +88,7 @@ export function PhoneAuth({
         onChangeText={(text: string) => {
           setSignUpForm('phoneNumber', forceNumber(text));
         }}
-        placeholder="전화번호"
+        label="전화번호"
         keyboardType="number-pad"
         maxLength={PHONE_NUMBER_INPUT_LENGTH}
       />
@@ -116,7 +116,7 @@ export function PhoneAuth({
                 setVerifyCode(forceNumber(text));
               }}
               autoComplete="sms-otp"
-              placeholder="인증번호"
+              label="인증번호"
               keyboardType="number-pad"
               returnKeyType={'done'}
               maxLength={AUTH_NUMBER_LENGTH}
@@ -129,7 +129,7 @@ export function PhoneAuth({
               onChangeText={(text: string) => {
                 setVerifyCode(forceNumber(text));
               }}
-              placeholder="인증번호"
+              label="인증번호"
               keyboardType="number-pad"
               textContentType="oneTimeCode"
               returnKeyType={'done'}
