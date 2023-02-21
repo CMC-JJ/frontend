@@ -7,7 +7,7 @@ import {
   Pressable,
   StyleSheet,
   TextInput,
-  TextInputProps,
+  type TextInputProps,
   View,
 } from 'react-native';
 
@@ -27,10 +27,10 @@ export const BottomBorderedInput = forwardRef<
     {
       label,
       hasMarginBottom,
-      isCharacterExisted = false,
-      style,
-      isValid = true,
       secureTextEntry,
+      isCharacterExisted = false,
+      isValid = true,
+      style,
       ...rest
     }: BottomBorderedInputProps,
     ref: Ref<TextInput>,

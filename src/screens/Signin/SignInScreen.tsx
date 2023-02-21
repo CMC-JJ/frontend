@@ -7,8 +7,9 @@ import {
   Keyboard,
   Alert,
   KeyboardAvoidingView,
+  Pressable,
 } from 'react-native';
-import {SignButton, SignInForm, HeaderTitle} from '@/components';
+import {SignInForm, HeaderTitle, Button} from '@/components';
 import {useAuthStore, useSignUpStore} from '@/store';
 import {request} from '@/utils';
 import type {RootStackNavigationProp} from '@/screens';
@@ -16,7 +17,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {COLOR, TYPOGRAPHY} from '@/constants';
 import {GeneralView} from '@/layouts';
 
-type SignInForm = {
+type Form = {
   userName: string;
   password: string;
 };
@@ -26,18 +27,16 @@ export function SignInScreen() {
   const {initializeSignUpForm} = useSignUpStore();
   const {setAuth} = useAuthStore();
 
-  const [form, setForm] = useState<SignInForm>({
+  const [form, setForm] = useState<Form>({
     userName: '',
     password: '',
   });
-
   const createChangeTextHandler = (name: string) => (value: string) => {
     setForm({...form, [name]: value});
   };
 
   // TODO: 자동 로그인 활용한 로직 추가 필요 (한번 로그인 하면 30일간 자동로그인 하게)
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
-
   useEffect(() => {
     setIsFormValid(
       form.userName.trim().length >= 1 && form.password.trim().length >= 1,
@@ -46,6 +45,7 @@ export function SignInScreen() {
 
   const onSubmit = async () => {
     Keyboard.dismiss();
+
     const result = await request(
       'web/auth/sign-in',
       {
@@ -85,35 +85,27 @@ export function SignInScreen() {
             createChangeTextHandler={createChangeTextHandler}
           />
           <View style={styles.findAccount}>
-            <Text
-              onPress={() => navigation.navigate('FindId')}
-              style={styles.findId}>
-              아이디 찾기
-            </Text>
-            <Text
-              onPress={() => navigation.navigate('FindPassword')}
-              style={styles.findPassword}>
-              비밀번호 찾기
-            </Text>
+            <Pressable onPress={() => navigation.navigate('FindId')}>
+              <Text style={styles.findId}>아이디 찾기</Text>
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate('FindPassword')}>
+              <Text style={styles.findPassword}>비밀번호 찾기</Text>
+            </Pressable>
           </View>
         </View>
         <View style={styles.footer}>
-          <SignButton
-            isValid={isFormValid}
-            buttonText="로그인"
-            onPress={onSubmit}
-          />
+          <Button text="로그인" isValid={isFormValid} onPress={onSubmit} />
         </View>
       </KeyboardAvoidingView>
       <View style={styles.footerQuestion}>
         <Text style={styles.question}>아직 가치가자 회원이 아니세요?</Text>
-        <Text
+        <Pressable
           onPress={() => {
             navigation.navigate('PhoneAuth');
           }}
           style={styles.signup}>
-          회원가입
-        </Text>
+          <Text style={styles.signupText}>회원가입</Text>
+        </Pressable>
       </View>
     </GeneralView>
   );
@@ -160,6 +152,8 @@ const styles = StyleSheet.create({
   },
   signup: {
     marginLeft: 12,
+  },
+  signupText: {
     color: COLOR['GC-950'],
     ...TYPOGRAPHY.BT4,
     textDecorationLine: 'underline',
