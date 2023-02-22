@@ -2,6 +2,7 @@ import {TabHeader} from '@/components';
 import {ThickBar} from '@/components/BarSeparator';
 import {FontText} from '@/components/FontText';
 import TextRightIcon from '@/components/TextRightIcon';
+import {COLOR, TYPOGRAPHY} from '@/constants';
 import {useShowTabBar} from '@/hooks/useVisibleTabBar';
 import {MypageNavigationProp, MypageStackParamList} from '@/screens';
 import {useAuthStore} from '@/store';
@@ -11,7 +12,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 export type InfoDetailCompleteRouteProp = RouteProp<
@@ -50,8 +51,27 @@ export function MyPageScreen() {
             <Icon style={styles.icon} name="right" color={'black'} size={20} />
           </TouchableOpacity>
         </View>
-
         {/* infoBox */}
+      </View>
+      <View style={styles.categoryContainer}>
+        <View style={styles.categoryBox}>
+          <View style={styles.category}>
+            <Image
+              style={styles.categoryIcon}
+              source={require('@/assets/images/friends-category.png')}
+            />
+            <Text style={styles.categoryText}>친구목록</Text>
+          </View>
+          <View style={styles.categoryBar} />
+
+          <View style={styles.category}>
+            <Image
+              style={styles.categoryIcon}
+              source={require('@/assets/images/review-category.png')}
+            />
+            <Text style={styles.categoryText}>내가 쓴 후기</Text>
+          </View>
+        </View>
       </View>
       <View style={{marginTop: 23}}>
         <ThickBar />
@@ -142,5 +162,35 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'white',
     marginTop: 10,
+  },
+  categoryBox: {
+    width: 326,
+    height: 110,
+    backgroundColor: COLOR.PC,
+    borderRadius: 12,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  categoryText: {
+    color: COLOR['GC-50'],
+    ...TYPOGRAPHY.BT5,
+  },
+  categoryContainer: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  categoryBar: {
+    width: 0,
+    height: 65,
+    borderWidth: 1,
+    borderColor: COLOR['GC-50'],
+  },
+  categoryIcon: {
+    width: 35,
+    height: 35,
+  },
+  category: {
+    alignItems: 'center',
   },
 });
